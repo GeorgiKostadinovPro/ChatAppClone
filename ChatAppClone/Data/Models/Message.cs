@@ -7,15 +7,13 @@
         public Message()
         {
             this.Id = Guid.NewGuid();
+
+            this.Images = new HashSet<Image>();
         }
 
         public string Content { get; set; } = null!;
 
         public bool IsSeen { get; set; }
-
-        public Guid? ImageId { get; set; }
-
-        public virtual Image? Image { get; set; }
 
         public Guid CreatorId { get; set; }
 
@@ -24,5 +22,7 @@
         public Guid ChatId { get; set; }
 
         public virtual Chat Chat { get; set; } = null!;
+
+        public virtual ICollection<Image> Images { get; set; }
     }
 }

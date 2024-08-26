@@ -12,9 +12,9 @@
             this.UsersChats = new HashSet<UserChat>();
         }
 
-        public Guid? ProfilePictureId { get; set; }
+        public string? ProfilePictureUrl { get; set; }
 
-        public virtual Image? ProfilePicture { get; set; }
+        public string? ProfilePicturePublicId { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }
 

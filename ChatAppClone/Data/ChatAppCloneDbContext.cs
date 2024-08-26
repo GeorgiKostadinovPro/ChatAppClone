@@ -5,20 +5,20 @@
     using Microsoft.EntityFrameworkCore;
     using System.Reflection;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class ChatAppCloneDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public ChatAppCloneDbContext(DbContextOptions<ChatAppCloneDbContext> options)
             : base(options)
         {
         }
 
-        public Image Images { get; set; }
+        public Image Images { get; set; } = null!;
 
-        public DbSet<Message> Messages { get; set; }
+        public DbSet<Message> Messages { get; set; } = null!;
 
-        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Chat> Chats { get; set; } = null!;
 
-        public DbSet<UserChat> UsersChats { get; set; }
+        public DbSet<UserChat> UsersChats { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,7 +27,7 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            Assembly assembly = Assembly.GetAssembly(typeof(ApplicationDbContext))
+            Assembly assembly = Assembly.GetAssembly(typeof(ChatAppCloneDbContext))
                 ?? Assembly.GetExecutingAssembly();
 
             builder.ApplyConfigurationsFromAssembly(assembly);

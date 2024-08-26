@@ -5,10 +5,9 @@ namespace ChatAppClone.Data.Migrations
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Metadata;
-    using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
     using System;
 
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(ChatAppCloneDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

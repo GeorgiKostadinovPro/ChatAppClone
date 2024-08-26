@@ -2,11 +2,11 @@
 {
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationRole : IdentityRole<Guid>
+    public class ApplicationRole : IdentityRole<string>
     {
         public ApplicationRole()
         {
-            this.Id = Guid.NewGuid();
+            this.Id = Guid.NewGuid().ToString();
         }
     }
 }

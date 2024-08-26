@@ -30,7 +30,7 @@
                 .HasOne(i => i.Message)
                 .WithMany(c => c.Images)
                 .HasForeignKey(i => i.MessageId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

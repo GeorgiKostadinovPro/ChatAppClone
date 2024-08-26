@@ -2,11 +2,11 @@
 {
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<string>
     {
         public ApplicationUser()
         {
-            this.Id = Guid.NewGuid();
+            this.Id = Guid.NewGuid().ToString();
 
             this.Messages = new HashSet<Message>();
             this.UsersChats = new HashSet<UserChat>();

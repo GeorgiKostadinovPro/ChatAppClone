@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using System.Reflection;
 
-    public class ChatAppCloneDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class ChatAppCloneDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ChatAppCloneDbContext(DbContextOptions<ChatAppCloneDbContext> options)
             : base(options)

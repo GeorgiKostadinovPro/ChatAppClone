@@ -1,18 +1,74 @@
 html {
-  font-size: 14px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+*, *::before, *::after {
+    box-sizing: inherit;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Ubuntu&display=swap');
 
 html {
-  position: relative;
-  min-height: 100%;
+    font: 16px/1.5 'Ubuntu', Helvetica, sans-serif;
+}
+
+*, *::before, *::after {
+    font: inherit
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 1em 0;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.8em;
+}
+
+h3 {
+    font-size: 1.5em;
+}
+
+h4 {
+    font-size: 1.4em;
+}
+
+h5 {
+    font-size: 1.2em;
+}
+
+h6 {
+    font-size: 1em;
+}
+
+li {
+    list-style-type: none;
+}
+
+a, input, img, i {
+    display: block;
+}
+
+a {
+    text-decoration: none;
 }
 
 body {
-  margin-bottom: 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper {
+    max-width: 1920px;
+    margin: 0 auto;
 }

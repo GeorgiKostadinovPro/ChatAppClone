@@ -2,7 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+
+<section class="hero">
+    <div class="wrapper">
+        <section class="content">
+            <h2>ChatAppClone</h2>
+            <p style="color: white">A simple online chat platform built with .NET Core and SignalR</p>
+            <section class="hero-buttons">
+                <a class="about-btn" href="./about.html">About</a>
+                <a class="contact-btn" href="./contact.html">Chat</a>
+            </section>
+        </section>
+        <img src="~/assets/hero.png" alt="">
+    </div>
+</section>

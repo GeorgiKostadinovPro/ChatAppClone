@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ChatAppClone</title>
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.png" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
@@ -21,8 +22,8 @@
                 </section>
                 <nav class="site-nav">
                     <ul>
-                        <li><a href="./index.html">Home</a></li>
-                        <li><a href="./services.html">Privacy</a></li>
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
                         <li><a href="./about.html">About</a></li>
                         <li><a href="./contact.html">Chat</a></li>
                         <li class="login"><i class="fa-solid fa-user"></i><a href="./login.html">Sign in</a></li>

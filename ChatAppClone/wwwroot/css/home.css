@@ -16,7 +16,7 @@
     }
 
 .hero img {
-    width: 40em;
+    max-width: 40em;
     flex: 0 1 auto;
     height: auto;
     -webkit-animation: floatYAnimation 3s infinite ease-in-out;

@@ -1,0 +1,21 @@
+﻿.privacy .wrapper {
+    min-height: 34em;
+    padding: 3em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.privacy .wrapper ul li {
+    list-style-type: lower-alpha;
+}
+
+.privacy .wrapper h2 {
+    margin-top: 1.2em;
+}
+
+.privacy .wrapper img {
+    max-width: 30em;
+    height: auto;
+    align-self: flex-start;
+}

@@ -15,40 +15,12 @@
         align-items: center;
     }
 
-@-webkit-keyframes floatYAnimation {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3em);
-    }
-}
-
-@keyframes floatYAnimation {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3em);
-    }
-}
-
 .hero img {
-    max-width: 35%;
-    min-width: 10em;
+    width: 40em;
     flex: 0 1 auto;
     height: auto;
     -webkit-animation: floatYAnimation 3s infinite ease-in-out;
     animation: floatYAnimation 3s infinite ease-in-out;
-}
-
-@media (width < 900px) {
-    .hero img {
-        -webkit-animation: none;
-        animation: none;
-    }
 }
 
 .hero .content {
@@ -88,12 +60,12 @@
         }
 
     .hero .hero-buttons .contact-btn {
-        background-color: #55DDB4;
+        background-color: #EEB439;
         border-radius: 0.5em;
-        border: 0.1em solid #55DDB4;
+        border: 0.1em solid #EEB439;
     }
 
         .hero .hero-buttons .contact-btn:hover {
             background: transparent;
-            color: #55DDB4;
+            color: #EEB439;
         }

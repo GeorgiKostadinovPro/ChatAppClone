@@ -1,1 +1,67 @@
-﻿
+﻿.site-header {
+    background-color: #ffffff;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.site-header .icon-wrapper {
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 1em;
+    position: relative;
+}
+
+.site-header .main {
+    padding: 1em;
+}
+
+    .site-header .main .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2em;
+    }
+
+    .site-header .main .site-title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5em;
+    }
+
+        .site-header .main .site-title h1 {
+            margin: 0;
+        }
+
+    .site-header .main .site-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5em;
+        margin: 0;
+    }
+
+    .site-header .main .login {
+        display: flex;
+        align-items: center;
+        gap: 0.2em;
+    }
+
+    .site-header .main a {
+        color: #000;
+        text-transform: uppercase;
+        font-size: 1.2em;
+    }
+
+    .site-header .main ul li {
+        transition: 0.4s;
+    }
+
+        .site-header .main ul li:hover {
+            transform: scale(1.10);
+        }
+
+            .site-header .main ul li:hover > * {
+                color: #1360C4;
+            }

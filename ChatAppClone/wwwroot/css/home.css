@@ -23,13 +23,6 @@
     animation: floatYAnimation 3s infinite ease-in-out;
 }
 
-@media (width < 900px) {
-    .hero img {
-        -webkit-animation: none;
-        animation: none;
-    }
-}
-
 .hero .content {
     max-width: 40em;
 }
@@ -67,12 +60,12 @@
         }
 
     .hero .hero-buttons .contact-btn {
-        background-color: #55DDB4;
+        background-color: #EEB439;
         border-radius: 0.5em;
-        border: 0.1em solid #55DDB4;
+        border: 0.1em solid #EEB439;
     }
 
         .hero .hero-buttons .contact-btn:hover {
             background: transparent;
-            color: #55DDB4;
+            color: #EEB439;
         }

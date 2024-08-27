@@ -15,29 +15,8 @@
         align-items: center;
     }
 
-@-webkit-keyframes floatYAnimation {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3em);
-    }
-}
-
-@keyframes floatYAnimation {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3em);
-    }
-}
-
 .hero img {
-    max-width: 35%;
-    min-width: 10em;
+    width: 40em;
     flex: 0 1 auto;
     height: auto;
     -webkit-animation: floatYAnimation 3s infinite ease-in-out;

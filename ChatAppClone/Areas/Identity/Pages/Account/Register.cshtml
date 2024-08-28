@@ -13,24 +13,28 @@
             <div class="forms">
                 <div class="form signup">
                     <span class="title">Registration</span>
-                    <form action="#">
+                    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                         <div class="input-field">
-                            <input type="text" placeholder="Enter your name" required>
+                            <input asp-for="Input.Username" type="text" placeholder="Enter your name" required>
                             <i class="uil uil-user"></i>
                         </div>
+                        <span asp-validation-for="Input.Username" class="text-danger"></span>
                         <div class="input-field">
-                            <input type="text" placeholder="Enter your email" required>
+                            <input asp-for="Input.Email" type="text" placeholder="Enter your email" required>
                             <i class="uil uil-envelope icon"></i>
                         </div>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
                         <div class="input-field">
-                            <input type="password" class="password" placeholder="Create a password" required>
+                            <input asp-for="Input.Password" type="password" class="password" placeholder="Create a password" required>
                             <i class="uil uil-lock icon"></i>
                         </div>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
                         <div class="input-field">
-                            <input type="password" class="password" placeholder="Confirm a password" required>
+                            <input asp-for="Input.ConfirmPassword" type="password" class="password" placeholder="Confirm a password" required>
                             <i class="uil uil-lock icon"></i>
                             <i class="uil uil-eye-slash showHidePw"></i>
                         </div>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                         @*<div class="checkbox-text">
                             <div class="checkbox-content">
                                 <input type="checkbox" id="termCon">
@@ -38,7 +42,7 @@
                             </div>
                         </div>*@
                         <div class="input-field button">
-                            <input type="button" value="Signup">
+                            <input type="submit" value="Signup">
                         </div>
                     </form>
                     <div class="login-signup">
@@ -52,32 +56,6 @@
         </div>
     </div>
 </section>
-
-@*<div class="wrapper">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                <label asp-for="Input.Email"></label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.Password"></label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
-                <label asp-for="Input.ConfirmPassword"></label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-</div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

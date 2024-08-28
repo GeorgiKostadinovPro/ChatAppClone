@@ -1,9 +1,9 @@
-﻿.register {
+﻿.register-form {
     background-color: #4070f4;
     padding: 3em 0;
 }
 
-.register .wrapper {
+.register-form .wrapper {
     display: flex;
     justify-content: center;
     align-items: center;

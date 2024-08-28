@@ -1,4 +1,15 @@
-﻿.container {
+﻿.login-form {
+    background-color: #4070f4;
+    padding: 3em 0;
+}
+
+.login-form .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
     position: relative;
     max-width: 430px;
     width: 100%;
@@ -28,16 +39,6 @@
         margin-left: -50%;
         opacity: 0;
         transition: margin-left 0.18s ease, opacity 0.15s ease;
-    }
-
-    .container .signup {
-        opacity: 0;
-        transition: opacity 0.09s ease;
-    }
-
-    .container.active .signup {
-        opacity: 1;
-        transition: opacity 0.2s ease;
     }
 
     .container.active .forms {
@@ -162,4 +163,8 @@
 .form .login-signup {
     margin-top: 30px;
     text-align: center;
+}
+
+.form .login-signup a {
+    display: inline;
 }

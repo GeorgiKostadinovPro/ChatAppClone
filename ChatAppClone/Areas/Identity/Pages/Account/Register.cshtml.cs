@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ChatAppClone.Common.Validators;
 
 namespace ChatAppClone.Areas.Identity.Pages.Account
 {
@@ -102,8 +103,11 @@ namespace ChatAppClone.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-        }
 
+            [MustBeTrue(ErrorMessage = "You must accept the terms and conditions.")]
+            [Display(Name = "Terms and Conditions")]
+            public bool AcceptTermsAndConditions { get; set; }
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {

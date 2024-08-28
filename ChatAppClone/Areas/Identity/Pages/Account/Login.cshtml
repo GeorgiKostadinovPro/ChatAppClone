@@ -14,32 +14,31 @@
             <div class="forms">
                 <div class="form login">
                     <span class="title">Login</span>
-                    <form action="#">
+                    <form id="account" method="post">
                         <div class="input-field">
-                            <input type="text" placeholder="Enter your email" required>
+                            <input asp-for="Input.Username" type="text" placeholder="Enter your name" required>
                             <i class="uil uil-envelope icon"></i>
                         </div>
                         <div class="input-field">
-                            <input type="password" class="password" placeholder="Enter your password" required>
+                            <input asp-for="Input.Password" type="password" class="password" placeholder="Enter your password" required>
                             <i class="uil uil-lock icon"></i>
                             <i class="uil uil-eye-slash showHidePw"></i>
                         </div>
                         <div class="checkbox-text">
                             <div class="checkbox-content">
-                                <input type="checkbox" id="logCheck">
+                                <input asp-for="Input.RememberMe" type="checkbox" id="logCheck">
                                 <label for="logCheck" class="text">Remember me</label>
                             </div>
-
-                            <a href="#" class="text">Forgot password?</a>
+                            <a asp-area="Identity" asp-page="/Account/ForgotPassword" class="text">Forgot password?</a>
                         </div>
                         <div class="input-field button">
-                            <input type="button" value="Login">
+                            <input type="submit" value="Login">
                         </div>
                     </form>
                     <div class="login-signup">
                         <span class="text">
                             Not a member?
-                            <a asp-area="Identity" asp-page="/Account/Register" class="text signup-link">Signup Now</a>
+                            <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl" class="text signup-link">Signup Now</a>
                         </span>
                     </div>
                 </div>
@@ -95,3 +94,29 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<script>
+    const container = document.querySelector(".container"),
+        pwShowHide = document.querySelectorAll(".showHidePw"),
+        pwFields = document.querySelectorAll(".password"),
+        signUp = document.querySelector(".signup-link"),
+        login = document.querySelector(".login-link");
+
+    pwShowHide.forEach(eyeIcon => {
+        eyeIcon.addEventListener("click", () => {
+            pwFields.forEach(pwField => {
+                if (pwField.type === "password") {
+                    pwField.type = "text";
+                    pwShowHide.forEach(icon => {
+                        icon.classList.replace("uil-eye-slash", "uil-eye");
+                    })
+                } else {
+                    pwField.type = "password";
+                    pwShowHide.forEach(icon => {
+                        icon.classList.replace("uil-eye", "uil-eye-slash");
+                    })
+                }
+            })
+        })
+    });
+</script>

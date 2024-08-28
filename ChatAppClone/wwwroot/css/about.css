@@ -1,0 +1,130 @@
+﻿.about-intro {
+    min-height: 34em;
+    padding: 3em 4em;
+}
+
+    .about-intro h2 {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .about-intro h3 {
+        margin: 0 0 0.2em 0;
+        font-weight: bold;
+    }
+
+    .about-intro p {
+        color: #000;
+    }
+
+    .about-intro img {
+        max-width: 35%;
+        min-width: 15em;
+        height: auto;
+        flex: 0 1 auto;
+    }
+
+    .about-intro section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+        .about-intro section article {
+            max-width: 40em;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+.services-tech-stack {
+    padding: 3em 4em;
+    background-color: #04233B;
+    color: #ffffff;
+}
+
+    .services-tech-stack .top h2 {
+        text-align: center;
+        margin: 0 0 0.2em 0;
+    }
+
+    .services-tech-stack .top p {
+        margin: 0 0 2em 0;
+        text-align: center;
+    }
+
+.tech-stack-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 1em;
+}
+
+.tech-stack-content {
+    max-width: 45%;
+    min-width: 15em;
+    padding: 0 2em 0 0;
+    flex: 0 1 auto;
+}
+
+    .tech-stack-content ul {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+    }
+
+        .tech-stack-content ul li h3 i {
+            margin-right: 0.5em;
+        }
+
+    .tech-stack-content a {
+        margin: 3em auto 1em;
+        padding: 1em;
+        max-width: 15em;
+        background-color: #1360C4;
+        text-align: center;
+        border-radius: 0.5em;
+        transition: 0.4s;
+        color: white;
+    }
+
+        .tech-stack-content a:hover {
+            transform: scale(1.05);
+        }
+
+.tech-stack-tools {
+    max-width: 27%;
+    min-width: 11em;
+    flex: 0 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+    .tech-stack-tools article {
+        min-width: 10em;
+        flex: 1 1 auto;
+        padding: 1em;
+        background-color: #094b7e;
+        border-radius: 0.5em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+        transition: 0.4s;
+    }
+
+        .tech-stack-tools article:hover {
+            transform: scale(1.10);
+        }
+
+        .tech-stack-tools article i {
+            padding: 0.5em;
+            font-size: 2em;
+            border-radius: 50%;
+            aspect-ratio: 1;
+            background-image: linear-gradient(to right top, #04233b, #003865, #004d93, #0063c2, #1877f2);
+        }

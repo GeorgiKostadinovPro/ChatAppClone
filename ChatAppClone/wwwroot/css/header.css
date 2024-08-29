@@ -1,17 +1,27 @@
-﻿.site-header {
-    background-color: #ffffff;
+﻿:root {
+    --header-bg-color: #fff;
+    --header-font-color: #1d1d1d;
+}
+
+.dark-mode {
+    --header-bg-color: #27292d;
+    --header-font-color: #fff;
+}
+
+.site-header {
+    background-color: var(--header-bg-color);
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 999;
 }
 
-.site-header .icon-wrapper {
-    background-color: #ffffff;
-    border-radius: 50%;
-    padding: 1em;
-    position: relative;
-}
+    .site-header .icon-wrapper {
+        background-color: var(--header-bg-color);
+        border-radius: 50%;
+        padding: 1em;
+        position: relative;
+    }
 
 .site-header .main {
     padding: 1em;
@@ -33,6 +43,7 @@
 
         .site-header .main .site-title h1 {
             margin: 0;
+            color: var(--header-font-color);
         }
 
     .site-header .main .site-nav ul {
@@ -49,7 +60,7 @@
     }
 
     .site-header .main a {
-        color: #000;
+        color: var(--header-font-color);
         text-transform: uppercase;
         font-size: 1.2em;
     }

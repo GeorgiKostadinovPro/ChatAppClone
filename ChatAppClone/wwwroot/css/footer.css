@@ -1,5 +1,16 @@
-﻿.site-footer {
+﻿:root {
+    --footer-bg-color: #fff;
+    --footer-font-color: #1d1d1d;
+}
+
+.dark-mode {
+    --footer-bg-color: #27292d;
+    --footer-font-color: #fff;
+}
+
+.site-footer {
     margin-top: auto;
+    background-color: var(--footer-bg-color);
 }
 
 .site-footer .footer-all-rights-reserved {
@@ -7,7 +18,7 @@
 }
 
 .site-footer .footer-all-rights-reserved p {
-    color: #000;
+    color: var(--footer-font-color);
     text-align: center;
     font-size: 1.2em;
     padding: 0;

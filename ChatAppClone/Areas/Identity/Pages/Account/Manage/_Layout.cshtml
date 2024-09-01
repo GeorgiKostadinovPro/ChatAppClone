@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject UserManager<ApplicationUser> UserManager
+
+@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
@@ -7,6 +9,9 @@
     {
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
+
+    var user = await UserManager.GetUserAsync(User);
+    var profile = user?.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
 }
 
 <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
@@ -25,9 +30,8 @@
                 <div class="row" style="height:100%">
 
                     <div class="col-md-3">
-
                         <div href=# class="d-inline">
-                            <img src="https://image.flaticon.com/icons/svg/236/236831.svg" width=130px style="margin:0;"><br>
+                            <img src="@profile" width=130px style="margin:0;"><br>
                             <p class="pl-2 mt-2">
                                 <a href="#" class="btn" style="color:#8f9096;font-weight:600">
                                     Edit Picture
@@ -37,84 +41,21 @@
                     </div>
 
                     <div class="col-md-9">
-
                         <div class="container">
-
-                            <form>
-
-                                <div class="form-group">
-
-                                    <label for=fullName>Full Name</label>
-                                    <input type="text" class="form-control" id="fullName">
-
-                                </div>
-                                <div class="form-group">
-
-                                    <label for=email>Email</label>
-                                    <input type="email" class="form-control" id="email">
-
-                                </div>
-                                <div class="form-group">
-
-                                    <label for=pass>Password</label>
-                                    <input type="password" class="form-control" id="pass">
-
-                                </div>
-                                <div class="form-group ">
-
-                                    <label for=birthday>Birthday</label>
-                                    <input type="date" class="form-control" id="birthday">
-
-                                </div>
-
-                                <div class="row mt-5">
-
-                                    <div class="col">
-
-                                        <button type="button" class="btn btn-primary btn-block">Save Changes</button>
-
-                                    </div>
-
-                                    <div class="col">
-
-                                        <button type="button" class="btn btn-default btn-block">Cancel</button>
-
-                                    </div>
-
-                                </div>
-
-                            </form>
-
+                            @RenderBody()
                         </div>
-
                     </div>
 
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-
-@*<div>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
-    </div>
-</div>*@
 
 @section Scripts {
     @RenderSection("Scripts", required: false)

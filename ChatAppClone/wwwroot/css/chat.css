@@ -202,6 +202,10 @@ html {
     flex-shrink: 0;
 }
 
+.dark-light:hover {
+    color: var(--theme-color);
+}
+
     .dark-light svg {
         width: 100%;
         fill: transparent;
@@ -212,6 +216,12 @@ html {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    transition: 0.3s ease-in-out;
+}
+
+.user-profile:hover {
+    transform: scale(1.10);
+    box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.5);
 }
 
 .settings {
@@ -220,6 +230,31 @@ html {
     height: 22px;
     flex-shrink: 0;
 }
+
+.settings:hover {
+    color: var(--theme-color);
+}
+
+.home-page {
+    position: relative;
+    color: var(--settings-icon-color);
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+}
+
+.home-page i {
+    display: block;
+    position: absolute;
+    bottom: -1.5px;
+    color: var(--settings-icon-color);
+    font-size: 20px;
+}
+
+    .home-page:hover i {
+        color: var(--theme-color);
+        transform: scale(1.10);
+    }
 
 .conversation-area {
     border-right: 1px solid var(--border-color);

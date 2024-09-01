@@ -1,7 +1,13 @@
 ﻿@using ChatAppClone.Data.Models;
-@using Microsoft.AspNetCore.Identity
+@using ChatAppClone.Extensions;
+@using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var profile = user?.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
+}
 
 @if (!SignInManager.IsSignedIn(User))
 {
@@ -12,12 +18,16 @@
 else
 {
     <li>
-        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <img class="user-profile" src="@profile" alt="profile">
+        </a>
     </li>
     <li>
         <form id="logoutForm" class="form-inline d-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
         </form>
 
-        <a href="#" onclick="document.getElementById('logoutForm').submit();">Logout</a>
+        <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
     </li>
 }

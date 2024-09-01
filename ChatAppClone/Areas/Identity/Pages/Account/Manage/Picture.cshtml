@@ -1,0 +1,17 @@
+﻿@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var profile = user?.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
+}
+
+<div class="col-md-3">
+    <div href=# class="d-inline">
+        <img src="@profile" width=130px style="margin:0;"><br>
+        <p class="pl-2 mt-2">
+            <a href="#" class="btn" style="color:#8f9096;font-weight:600">
+                Edit Picture
+            </a>
+        </p>
+    </div>
+</div>

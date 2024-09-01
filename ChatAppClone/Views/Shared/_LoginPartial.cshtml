@@ -1,10 +1,12 @@
 ﻿@using ChatAppClone.Data.Models;
-@using Microsoft.AspNetCore.Identity
+@using ChatAppClone.Extensions;
+@using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
 @{
-    
+    var user = await UserManager.GetUserAsync(User);
+    var profile = user.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
 }
 
 @if (!SignInManager.IsSignedIn(User))
@@ -17,7 +19,7 @@ else
 {
     <li>
         <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-            <img class="user-profile" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png" alt="profile">
+            <img class="user-profile" src="@profile" alt="profile">
         </a>
     </li>
     <li>

@@ -1,7 +1,16 @@
-﻿@{
+﻿@using ChatAppClone.Data.Models;
+@using ChatAppClone.Extensions;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> UserManager
+
+@{
     TempData["Title"] = "Chat";
     Layout = "~/Views/Shared/_ChatLayout.cshtml";
+
+    var user = await UserManager.GetUserAsync(User);
+    var profile = user.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
 }
+
 
 <link rel="stylesheet" href="~/css/chat.css" asp-append-version="true" />
 
@@ -34,7 +43,7 @@
                 </svg>
             </div>
             <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                <img class="user-profile" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png" alt="profile">
+                <img class="user-profile" src="@profile" alt="profile">
             </a>
         </div>
     </div>

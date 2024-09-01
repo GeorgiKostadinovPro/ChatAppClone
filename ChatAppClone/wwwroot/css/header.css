@@ -49,6 +49,7 @@
     .site-header .main .site-nav ul {
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
         gap: 1.5em;
         margin: 0;
     }
@@ -76,3 +77,9 @@
             .site-header .main ul li:hover > * {
                 color: #1360C4;
             }
+
+.user-profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}

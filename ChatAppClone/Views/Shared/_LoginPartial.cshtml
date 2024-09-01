@@ -12,7 +12,9 @@
 else
 {
     <li>
-        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <img class="user-profile" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png" alt="profile">
+        </a>
     </li>
     <li>
         <form id="logoutForm" class="form-inline d-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

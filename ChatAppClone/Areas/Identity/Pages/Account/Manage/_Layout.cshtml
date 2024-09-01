@@ -1,6 +1,4 @@
-﻿@inject UserManager<ApplicationUser> UserManager
-
-@{
+﻿@{
     if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
     {
         Layout = parentLayout.ToString();
@@ -9,14 +7,11 @@
     {
         Layout = "/Areas/Identity/Pages/_Layout.cshtml";
     }
-
-    var user = await UserManager.GetUserAsync(User);
-    var profile = user?.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
 }
 
 <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
 
-<div class="container-fluid main" style="height:100vh;padding-left:0px;">
+<div class="container-fluid main" style="padding-left:0px;">
 
     <div class="row align-items-center" style="height:100%">
         <partial name="_ManageNav"/>
@@ -29,16 +24,10 @@
 
                 <div class="row" style="height:100%">
 
-                    <div class="col-md-3">
-                        <div href=# class="d-inline">
-                            <img src="@profile" width=130px style="margin:0;"><br>
-                            <p class="pl-2 mt-2">
-                                <a href="#" class="btn" style="color:#8f9096;font-weight:600">
-                                    Edit Picture
-                                </a>
-                            </p>
-                        </div>
-                    </div>
+                    @if (ViewContext!.ActionDescriptor!.DisplayName!.Contains("Index"))
+                    {
+                        <partial name="Picture"/>
+                    }
 
                     <div class="col-md-9">
                         <div class="container">

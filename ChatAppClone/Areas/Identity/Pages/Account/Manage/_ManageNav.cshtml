@@ -5,11 +5,27 @@
 }
 
 <div class="col-md-3 d-none d-md-block" style="height:100%">
-    <div class="container-fluid nav sidebar flex-column">
-        <a asp-area="Identity" asp-page="./Index" class="nav-link active mt-auto"><i class="far fa-user-circle"></i> Profile</a>
-        <a asp-area="Identity" asp-page="./Email" class="nav-link"><i class="far fa-bell"></i> Email</a>
-        <a asp-area="Identity" asp-page="./ChangePassword" class="nav-link"><i class="far fa-file-alt"></i> Password</a>
-        <a asp-area="Identity" asp-page="./TwoFactorAuthentication" class="nav-link mb-auto"><i class="fas fa-cogs"></i> Two-factor authentication</a>
-        <a asp-area="Identity" asp-page="./PersonalData" class="nav-link mb-auto"><i class="fas fa-cogs"></i> Personal data</a>
+    <div class="container-fluid nav sidebar flex-column profile-nav">
+        <a asp-area="Identity" asp-page="./Index" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Index") ? "active" : "") nav-link mt-auto"><i class="far fa-user-circle"></i> Profile</a>
+        <a asp-area="Identity" asp-page="./Email" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Email") ? "active" : "") nav-link"><i class="far fa-bell"></i> Email</a>
+        <a asp-area="Identity" asp-page="./ChangePassword" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("ChangePassword") ? "active" : "") nav-link"><i class="far fa-file-alt"></i> Password</a>
+        <a asp-area="Identity" asp-page="./TwoFactorAuthentication" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("TwoFactorAuthentication") ? "active" : "") nav-link mb-auto"><i class="fas fa-cogs"></i> Two-factor authentication</a>
+        <a asp-area="Identity" asp-page="./PersonalData" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("PersonalData") ? "active" : "") nav-link mb-auto"><i class="fas fa-cogs"></i> Personal data</a>
     </div>
 </div>
+
+@*<script>
+    const linkElements = document.querySelectorAll('.profile-nav a');
+
+    window.addEventListener('load', () => {
+        const currentPath = window.location.pathname;
+
+        linkElements.forEach(el => {
+            if (currentPath.includes(el.getAttribute('href'))) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
+        });
+    });
+</script>*@

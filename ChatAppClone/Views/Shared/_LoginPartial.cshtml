@@ -20,6 +20,8 @@ else
         <form id="logoutForm" class="form-inline d-none" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
         </form>
 
-        <a href="#" onclick="document.getElementById('logoutForm').submit();">Logout</a>
+        <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </a>
     </li>
 }

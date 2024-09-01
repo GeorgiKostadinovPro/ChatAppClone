@@ -202,6 +202,10 @@ html {
     flex-shrink: 0;
 }
 
+.dark-light:hover {
+    color: var(--theme-color);
+}
+
     .dark-light svg {
         width: 100%;
         fill: transparent;
@@ -219,6 +223,10 @@ html {
     width: 22px;
     height: 22px;
     flex-shrink: 0;
+}
+
+.settings:hover {
+    color: var(--theme-color);
 }
 
 .home-page {

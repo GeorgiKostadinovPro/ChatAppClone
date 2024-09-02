@@ -1,7 +1,7 @@
 using ChatAppClone.Data;
 using ChatAppClone.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+using ChatAppClone.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +16,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddEntityFrameworkStores<ChatAppCloneDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAppServices(builder.Configuration);
 
 var app = builder.Build();
 

@@ -173,3 +173,7 @@ form {
     .expand-menu.animate {
         width: 100%;
     }
+
+.profile-picture-error-span {
+    display: block;
+}

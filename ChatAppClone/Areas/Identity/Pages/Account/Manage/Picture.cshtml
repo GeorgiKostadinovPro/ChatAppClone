@@ -9,9 +9,43 @@
     <div href=# class="d-inline">
         <img src="@profile" width=130px style="margin:0;"><br>
         <p class="pl-2 mt-2">
-            <a href="#" class="btn" style="color:#8f9096;font-weight:600">
-                Edit Picture
-            </a>
+            <label style="margin-bottom: 0.5em;">Edit Picture</label>
+            <input type="file" accept=".png, .jpg, .jpeg" id="profile-picture-input">
+            <span class="text-danger profile-picture-error-span" id="validation-message"></span>
+
+            <button id="upload-button" class="upload-picture-btn" type="button">Upload</button>
         </p>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#upload-button').on('click', function (e) {
+            e.preventDefault();
+
+            var fileInput = $('#profile-picture-input')[0];
+            var file = fileInput.files[0];
+
+            var formData = new FormData();
+            formData.append('file', file);
+
+            $.ajax({
+                url: '@Url.Action("UploadProfilePicture", "User")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        $('#validation-message').text(response.error);
+                    }
+                },
+                error: function () {
+                    $('#validation-message').text('An error occurred while uploading the picture.');
+                }
+            });
+        });
+    });
+</script>

@@ -15,7 +15,7 @@
             this.cloudinary = _cloudinary;
         }
 
-        public async Task<ImageUploadResult> UploadPhotoAsync(IFormFile file, string folder, string? publicId)
+        public async Task<ImageUploadResult> UploadPictureAsync(IFormFile file, string folder, string? publicId = null)
         {
             ImageUploadResult result = new ImageUploadResult();
 
@@ -46,7 +46,7 @@
             return result;
         }
 
-        public async Task<DeletionResult> DeletePhotoAsync(string publicId)
+        public async Task<DeletionResult> DeletePictureAsync(string publicId)
         {
             DeletionParams delParams = new DeletionParams(publicId);
 

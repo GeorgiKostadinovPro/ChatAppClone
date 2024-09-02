@@ -4,9 +4,9 @@
 
     public interface ICloudinaryService
     {
-        Task<ImageUploadResult> UploadPhotoAsync(IFormFile file, string folder, string? publicId);
+        Task<ImageUploadResult> UploadPictureAsync(IFormFile file, string folder, string? publicId = null);
 
-        Task<DeletionResult> DeletePhotoAsync(string publicId);
+        Task<DeletionResult> DeletePictureAsync(string publicId);
 
         bool IsFileValid(IFormFile formFile);
     }

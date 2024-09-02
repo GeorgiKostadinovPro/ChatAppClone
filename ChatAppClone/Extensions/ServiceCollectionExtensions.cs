@@ -1,5 +1,7 @@
 ﻿namespace ChatAppClone.Extensions
 {
+    using ChatAppClone.Utilities.Contracts;
+    using ChatAppClone.Utilities;
     using CloudinaryDotNet;
 
     using Microsoft.Extensions.Configuration;
@@ -16,7 +18,8 @@
             Cloudinary cloud = new Cloudinary(account);
 
             services.AddSingleton(cloud);
-            
+            services.AddScoped<ICloudinaryService, CloudinaryService>();
+
             return services;
         }
     }

@@ -14,6 +14,7 @@
         {
             this.cloudinary = _cloudinary;
         }
+
         public async Task<ImageUploadResult> UploadPhotoAsync(IFormFile file, string folder, string? publicId)
         {
             ImageUploadResult result = new ImageUploadResult();
@@ -47,7 +48,16 @@
 
         public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
-            throw new NotImplementedException();
+            DeletionParams delParams = new DeletionParams(publicId);
+
+            DeletionResult result = await this.cloudinary.DestroyAsync(delParams);
+
+            if (result.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                throw new InvalidOperationException("Picture was NOT deleted successfully!");
+            }
+
+            return result;
         }
 
         public bool IsFileValid(IFormFile formFile)

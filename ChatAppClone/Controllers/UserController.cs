@@ -2,11 +2,13 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
+    using CloudinaryDotNet.Actions;
+
     using ChatAppClone.Utilities.Contracts;
     using ChatAppClone.Common.Constants;
-    using CloudinaryDotNet.Actions;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
+    using ChatAppClone.Common.Messages;
 
     public class UserController : BaseController
     {
@@ -26,12 +28,12 @@
         {
             if (file == null)
             {
-                return this.Json(new { success = false, error = "Please, choose a file." });
+                return this.Json(new { success = false, error = UserMessages.ChooseFile });
             }
 
             if (!this.cloudinaryService.IsFileValid(file))
             {
-                return this.Json(new { success = false, error = "The valid types are .jpg, .jpeg, .png" });
+                return this.Json(new { success = false, error = UserMessages.ValidTypes });
             }
 
             try

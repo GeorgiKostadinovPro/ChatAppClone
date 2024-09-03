@@ -1,9 +1,11 @@
 ﻿namespace ChatAppClone.Core
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+
+    using ChatAppClone.Common.Messages;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
-    using Microsoft.AspNetCore.Identity;
-    using System.Threading.Tasks;
 
     public class UserService : IUserService
     {
@@ -20,7 +22,7 @@
 
             if (user == null)
             {
-                throw new InvalidOperationException("User with such id does not exist.");
+                throw new InvalidOperationException(UserMessages.AlreadyExists);
             }
 
             return user;
@@ -39,6 +41,11 @@
         public async Task DeleteProfilePictureAsync(string userId)
         {
             ApplicationUser user = await this.GetByIdAsync(userId);
+
+            if (user.ProfilePicturePublicId == null)
+            {
+                throw new InvalidOperationException(UserMessages.NOTExistingPicture);
+            }
 
             user.ProfilePictureUrl = null;
             user.ProfilePicturePublicId= null;

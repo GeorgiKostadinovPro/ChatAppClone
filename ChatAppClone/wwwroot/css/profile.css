@@ -238,3 +238,9 @@ form {
         transform: rotate(360deg);
     }
 }
+
+#removePictureModal .close {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5em;
+}

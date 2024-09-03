@@ -7,7 +7,7 @@
 
 <div id="loading-overlay" style="display: none;">
     <div class="spinner"></div>
-    <p>Uploading your profile picture, please wait...</p>
+    <p>Please wait...</p>
 </div>
 
 <div class="col-md-3">
@@ -39,7 +39,7 @@
                 </div>
                 <div class="modal-footer">
                 <p>Click outside the modal to close it.</p>
-                    <input type="submit" class="btn btn-danger" value="Remove">
+                    <input type="submit" id="remove-profile-picture-btn" class="btn btn-danger" value="Remove">
                 </div>
         </div>
     </div>
@@ -86,8 +86,36 @@
             $('#removePictureModal').modal('show');
         });
 
-        $('#removePictureModal .close').on('click', function () {
+        $('#removePictureModal .close').on('click', function() {
             $('#removePictureModal').modal('hide');
         });
+
+        $('#remove-profile-picture-btn').on('click', function(e) {
+            e.preventDefault();
+
+            $('#removePictureModal').modal('hide');
+
+            $('#loading-overlay').show();
+
+            $.ajax({
+                url: '@Url.Action("DeleteProfilePicture", "User")',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
+                        location.reload();
+                    } else {
+                        $('#validation-message').text(response.error);
+                    }
+                },
+                error: function () {
+                    $('#validation-message').text('An error occurred while deleting the picture.');
+                },
+                complete: function () {
+                    $('#loading-overlay').hide();
+                }
+            });
+        })
     });
 </script>

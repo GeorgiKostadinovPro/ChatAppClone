@@ -184,14 +184,18 @@ form {
     margin-top: 1em;
     display: flex;
     flex-wrap: wrap;
+    gap: 2em;
 }
 
 #upload-button {
     padding: 0.2em 0.5em;
-    border-radius: 0.2em;
-    border: none;
-    box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
     background-color: #6c63ff;
+    color: white;
+}
+
+#remove-button {
+    padding: 0.2em 0.5em;
+    background-color: #d9534f;
     color: white;
 }
 

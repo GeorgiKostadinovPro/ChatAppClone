@@ -5,6 +5,11 @@
     var profile = user?.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
 }
 
+<div id="loading-overlay" style="display: none;">
+    <div class="spinner"></div>
+    <p>Uploading your profile picture, please wait...</p>
+</div>
+
 <div class="col-md-3">
     <div href=# class="d-inline">
         <img id="user-profile-picture" src="@profile"><br>
@@ -31,6 +36,8 @@
             var formData = new FormData();
             formData.append('file', file);
 
+            $('#loading-overlay').show();
+
             $.ajax({
                 url: '@Url.Action("UploadProfilePicture", "User")',
                 type: 'POST',
@@ -46,6 +53,9 @@
                 },
                 error: function () {
                     $('#validation-message').text('An error occurred while uploading the picture.');
+                },
+                complete: function () {
+                    $('#loading-overlay').hide();
                 }
             });
         });

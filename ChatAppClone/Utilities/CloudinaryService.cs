@@ -1,5 +1,6 @@
 ﻿namespace ChatAppClone.Utilities
 {
+    using ChatAppClone.Common.Messages;
     using ChatAppClone.Utilities.Contracts;
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
@@ -21,26 +22,39 @@
 
             if (file.Length > 0)
             {
+                string fullPublicId;
+
+                if (string.IsNullOrWhiteSpace(publicId))
+                {
+                    fullPublicId = folder + "/" + Path.GetFileNameWithoutExtension(file.FileName);
+                }
+                else
+                {
+                    if (!publicId.StartsWith(folder + "/"))
+                    {
+                        fullPublicId = folder + "/" + publicId;
+                    }
+                    else
+                    {
+                        fullPublicId = publicId;
+                    }
+                }
+                
                 using Stream stream = file.OpenReadStream();
 
                 ImageUploadParams imageUploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Folder = folder
-                };
-
-                if (publicId != null)
-                {
-                    imageUploadParams.PublicId = publicId;
-                    imageUploadParams.Overwrite = true;
-                }
+                    PublicId = fullPublicId,
+                    Overwrite = !string.IsNullOrWhiteSpace(publicId)
+                }; 
 
                 result = await this.cloudinary.UploadAsync(imageUploadParams);
             }
 
             if (result.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                throw new InvalidOperationException("Picture was NOT uploaded successfully!");
+                throw new InvalidOperationException(CloudinaryMessages.NOTUploadedSuccessfully);
             }
 
             return result;
@@ -54,7 +68,7 @@
 
             if (result.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                throw new InvalidOperationException("Picture was NOT deleted successfully!");
+                throw new InvalidOperationException(CloudinaryMessages.NOTDeletedSuccessfully);
             }
 
             return result;

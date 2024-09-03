@@ -5,6 +5,8 @@
     using CloudinaryDotNet;
 
     using Microsoft.Extensions.Configuration;
+    using ChatAppClone.Core.Contracts;
+    using ChatAppClone.Core;
 
     public static class ServiceCollectionExtensions
     {
@@ -19,6 +21,8 @@
 
             services.AddSingleton(cloud);
             services.AddScoped<ICloudinaryService, CloudinaryService>();
+
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

@@ -16,16 +16,11 @@ form {
         color: #8f9096;
     }
 
-    form .form-control, form .form-control:focus {
-        border-color: transparent;
-        border-bottom-color: #bebcc1;
-        box-shadow: none;
-    }
-
-    form .btn {
-        border-radius: 0px;
-        border-color: transparent;
-    }
+.btn {
+    border-radius: 0.2em;
+    border: none;
+    box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
+}
 
 .btn.btn-default {
     background: #ebebeb;
@@ -176,4 +171,26 @@ form {
 
 .profile-picture-error-span {
     display: block;
+}
+
+#user-profile-picture {
+    width: 130px;
+    height: auto;
+    margin: 0;
+    border-radius: 50%;
+}
+
+.profile-picture-action-section {
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#upload-button {
+    padding: 0.2em 0.5em;
+    border-radius: 0.2em;
+    border: none;
+    box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.2);
+    background-color: #6c63ff;
+    color: white;
 }

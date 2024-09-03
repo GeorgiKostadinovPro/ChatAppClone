@@ -7,13 +7,15 @@
 
 <div class="col-md-3">
     <div href=# class="d-inline">
-        <img src="@profile" width=130px style="margin:0;"><br>
+        <img id="user-profile-picture" src="@profile"><br>
         <p class="pl-2 mt-2">
             <label style="margin-bottom: 0.5em;">Edit Picture</label>
             <input type="file" accept=".png, .jpg, .jpeg" id="profile-picture-input">
             <span class="text-danger profile-picture-error-span" id="validation-message"></span>
 
-            <button id="upload-button" class="upload-picture-btn" type="button">Upload</button>
+            <div class="profile-picture-action-section">
+                <button id="upload-button" class="btn upload-picture-btn" type="button">Upload</button>
+            </div>
         </p>
     </div>
 </div>

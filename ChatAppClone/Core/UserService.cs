@@ -13,8 +13,8 @@
         {
             this.userManager = _userManager;
         }
-
-        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
+       
+        public async Task<ApplicationUser> GetByIdAsync(string userId)
         {
             ApplicationUser user = await userManager.FindByIdAsync(userId);
 
@@ -26,14 +26,24 @@
             return user;
         }
 
-        public async Task SetUserProfilePictureAsync(string userId, string url, string publicId)
+        public async Task SetProfilePictureAsync(string userId, string url, string publicId)
         {
-            ApplicationUser user = await this.GetUserByIdAsync(userId);
+            ApplicationUser user = await this.GetByIdAsync(userId);
 
             user.ProfilePictureUrl = url;
             user.ProfilePicturePublicId = publicId;
 
-            await userManager.UpdateAsync(user);
+            await this.userManager.UpdateAsync(user);
+        } 
+        
+        public async Task DeleteProfilePictureAsync(string userId)
+        {
+            ApplicationUser user = await this.GetByIdAsync(userId);
+
+            user.ProfilePictureUrl = null;
+            user.ProfilePicturePublicId= null;
+
+            await this.userManager.UpdateAsync(user);
         }
     }
 }

@@ -20,9 +20,28 @@
 
             <div class="profile-picture-action-section">
                 <button id="upload-button" class="btn upload-picture-btn" type="button">Upload</button>
-                <button id="remove-button" class="btn btn-danger delete-picture-btn" type="button">Remove</button>
+                <button id="remove-button" class="btn delete-picture-btn" type="button">Remove</button>
             </div>
         </p>
+    </div>
+</div>
+
+<div id="removePictureModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Remove Profile Picture</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete your picture?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                <p>Click outside the modal to close it.</p>
+                    <input type="submit" class="btn btn-danger" value="Remove">
+                </div>
+        </div>
     </div>
 </div>
 
@@ -59,6 +78,16 @@
                     $('#loading-overlay').hide();
                 }
             });
+        });
+
+        $('#remove-button').on('click', function(e) {
+            e.preventDefault();
+
+            $('#removePictureModal').modal('show');
+        });
+
+        $('#removePictureModal .close').on('click', function () {
+            $('#removePictureModal').modal('hide');
         });
     });
 </script>

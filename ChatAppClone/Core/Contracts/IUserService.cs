@@ -4,8 +4,10 @@
 
     public interface IUserService
     {
-        Task<ApplicationUser> GetUserByIdAsync(string userId);
+        Task<ApplicationUser> GetByIdAsync(string userId);
 
-        Task SetUserProfilePictureAsync(string userId, string url, string publicId);
+        Task SetProfilePictureAsync(string userId, string url, string publicId);
+
+        Task DeleteProfilePictureAsync(string userId);
     }
 }

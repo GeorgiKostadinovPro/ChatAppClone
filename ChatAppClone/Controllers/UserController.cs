@@ -36,11 +36,30 @@
 
             try
             {
-                ApplicationUser user = await this.userService.GetUserByIdAsync(this.GetAuthId());
+                ApplicationUser user = await this.userService.GetByIdAsync(this.GetAuthId());
 
                 ImageUploadResult result = await this.cloudinaryService.UploadPictureAsync(file, CloudinaryConstants.ProfilePicturesFolder, user.ProfilePicturePublicId);
 
-                await this.userService.SetUserProfilePictureAsync(this.GetAuthId(), result.SecureUrl.ToString(), result.PublicId);
+                await this.userService.SetProfilePictureAsync(this.GetAuthId(), result.SecureUrl.ToString(), result.PublicId);
+            }
+            catch (Exception ex)
+            {
+                return this.Json(new { success = false, error = ex.Message });
+            }
+
+            return this.Json(new { success = true });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteProfilePicture()
+        {
+            try
+            {
+                ApplicationUser user = await this.userService.GetByIdAsync(this.GetAuthId());
+
+                await this.cloudinaryService.DeletePictureAsync(user.ProfilePicturePublicId!);
+
+                await this.userService.DeleteProfilePictureAsync(this.GetAuthId());
             }
             catch (Exception ex)
             {

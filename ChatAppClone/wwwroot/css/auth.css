@@ -1,12 +1,18 @@
-﻿.register-form {
-    background-color: #4070f4;
-    padding: 3em 0;
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.register-form .wrapper {
+body {
+    height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background-color: #4070f4;
 }
 
 .container {
@@ -35,7 +41,23 @@
         transition: margin-left 0.18s ease;
     }
 
-    .container .forms {
+    .container.active .login {
+        margin-left: -50%;
+        opacity: 0;
+        transition: margin-left 0.18s ease, opacity 0.15s ease;
+    }
+
+    .container .signup {
+        opacity: 0;
+        transition: opacity 0.09s ease;
+    }
+
+    .container.active .signup {
+        opacity: 1;
+        transition: opacity 0.2s ease;
+    }
+
+    .container.active .forms {
         height: 600px;
     }
 
@@ -157,8 +179,4 @@
 .form .login-signup {
     margin-top: 30px;
     text-align: center;
-}
-
-.form .login-signup a {
-    display: inline;
 }

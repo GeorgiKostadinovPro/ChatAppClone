@@ -3,48 +3,51 @@
 
 @{
     ViewData["Title"] = "Log in";
-    Layout = "_AuthLayout";
 }
 
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-<link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
 
-<div class="container">
-    <div class="forms">
-        <div class="form login">
-            <span class="title">Login</span>
-            <form id="account" method="post">
-                <div class="input-field">
-                    <input asp-for="Input.Username" type="text" placeholder="Enter your name" required>
-                    <i class="uil uil-envelope icon"></i>
-                </div>
-                <span asp-validation-for="Input.Username" class="text-danger"></span>
-                <div class="input-field">
-                    <input asp-for="Input.Password" type="password" class="password" placeholder="Enter your password" required>
-                    <i class="uil uil-lock icon"></i>
-                    <i class="uil uil-eye-slash showHidePw"></i>
-                </div>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-                <div class="checkbox-text">
-                    <div class="checkbox-content">
-                        <input asp-for="Input.RememberMe" type="checkbox" id="logCheck">
-                        <label for="logCheck" class="text">Remember me</label>
+<section class="login-form">
+    <div class="wrapper">
+        <div class="container">
+            <div class="forms">
+                <div class="form login">
+                    <span class="title">Login</span>
+                    <form id="account" method="post">
+                        <div class="input-field">
+                            <input asp-for="Input.Username" type="text" placeholder="Enter your name" required>
+                            <i class="uil uil-envelope icon"></i>
+                        </div>
+                        <span asp-validation-for="Input.Username" class="text-danger"></span>
+                        <div class="input-field">
+                            <input asp-for="Input.Password" type="password" class="password" placeholder="Enter your password" required>
+                            <i class="uil uil-lock icon"></i>
+                            <i class="uil uil-eye-slash showHidePw"></i>
+                        </div>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        <div class="checkbox-text">
+                            <div class="checkbox-content">
+                                <input asp-for="Input.RememberMe" type="checkbox" id="logCheck">
+                                <label for="logCheck" class="text">Remember me</label>
+                            </div>
+                            <a asp-area="Identity" asp-page="/Account/ForgotPassword" class="text">Forgot password?</a>
+                        </div>
+                        <div class="input-field button">
+                            <input type="submit" value="Login">
+                        </div>
+                    </form>
+                    <div class="login-signup">
+                        <span class="text">
+                            Not a member?
+                            <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl" class="text signup-link">Signup Now</a>
+                        </span>
                     </div>
-                    <a asp-area="Identity" asp-page="/Account/ForgotPassword" class="text">Forgot password?</a>
                 </div>
-                <div class="input-field button">
-                    <input type="submit" value="Login">
-                </div>
-            </form>
-            <div class="login-signup">
-                <span class="text">
-                    Not a member?
-                    <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl" class="text signup-link">Signup Now</a>
-                </span>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -1,12 +1,19 @@
-﻿.register-form {
-    background-color: #4070f4;
-    padding: 3em 0;
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.register-form .wrapper {
+body {
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    background-color: #4070f4;
+    overflow: hidden;
 }
 
 .container {
@@ -23,7 +30,7 @@
     .container .forms {
         display: flex;
         align-items: center;
-        height: 440px;
+        min-height: 440px;
         width: 200%;
         transition: height 0.2s ease;
     }
@@ -36,7 +43,7 @@
     }
 
     .container .forms {
-        height: 600px;
+        min-height: 600px;
     }
 
     .container .form .title {

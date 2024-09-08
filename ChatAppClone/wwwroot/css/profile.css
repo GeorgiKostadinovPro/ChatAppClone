@@ -60,20 +60,6 @@ form {
     height: 100%;
 }
 
-@media screen and (max-width:768px) {
-    .content {
-        padding-left: 50px;
-        width: 100%;
-        padding-top: 200px;
-        padding-bottom: 50px;
-    }
-
-    form {
-        width: 100%;
-        margin: auto;
-    }
-}
-
 .menu {
     position: absolute;
     right: 10%;
@@ -170,13 +156,8 @@ form {
 
 .profile-picture-error-span {
     display: block;
-}
-
-#user-profile-picture {
-    width: 130px;
-    height: auto;
-    margin: 0;
-    border-radius: 50%;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .profile-picture-action-section {
@@ -187,15 +168,17 @@ form {
 }
 
 #upload-button {
-    padding: 0.2em 0.5em;
+    padding: 0.3em 1em;
     background-color: #6c63ff;
     color: white;
+    width: 6em;
 }
 
 #remove-button {
-    padding: 0.2em 0.5em;
+    padding: 0.3em 1em;
     background-color: #d9534f;
     color: white;
+    width: 6em;
 }
 
 #loading-overlay {
@@ -247,7 +230,7 @@ form {
 .avatar-upload {
     position: relative;
     max-width: 205px;
-    margin: 50px auto;
+    margin: 20px auto 30px;
 }
 
     .avatar-upload .avatar-edit {
@@ -293,8 +276,9 @@ form {
                 }
 
     .avatar-upload .avatar-preview {
-        width: 192px;
-        height: 192px;
+        max-width: 192px;
+        max-height: auto;
+        aspect-ratio: 1;
         position: relative;
         border-radius: 100%;
         border: 6px solid #F8F8F8;
@@ -309,3 +293,35 @@ form {
             background-repeat: no-repeat;
             background-position: center;
         }
+
+@media screen and (max-width:768px) {
+    h2 {
+        text-align: center;
+    }
+
+    .content {
+        padding-left: 50px;
+        width: 100%;
+        padding-top: 200px;
+        padding-bottom: 50px;
+    }
+
+    form {
+        width: 100%;
+        margin: auto;
+    }
+
+    .profile-settings-container {
+        margin: 0 auto;
+    }
+
+    .profile-picture-container {
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .profile-picture-action-section {
+        justify-content: center;
+    }
+}

@@ -10,9 +10,8 @@
     <p>Please wait...</p>
 </div>
 
-<div class="col-md-3">
-    <div href=# class="d-inline">
-
+<div class="col-md-3" style="display: flex; margin-bottom: 3em;">
+    <div class="d-inline profile-picture-container">
         <div class="avatar-upload">
             <div class="avatar-edit">
                 <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
@@ -22,15 +21,13 @@
                 <div id="imagePreview" style="background-image: url(@profile);">
                 </div>
             </div>
+            <span class="text-danger profile-picture-error-span" id="validation-message"></span>
         </div>
-        <span class="text-danger profile-picture-error-span" id="validation-message"></span>
 
-        <p class="pl-2 mt-2">
-            <div class="profile-picture-action-section">
-                <button id="upload-button" class="btn upload-picture-btn" type="button">Upload</button>
-                <button id="remove-button" class="btn delete-picture-btn" type="button">Remove</button>
-            </div>
-        </p>
+        <div class="profile-picture-action-section">
+             <button id="upload-button" class="btn upload-picture-btn" type="button">Upload</button>
+             <button id="remove-button" class="btn delete-picture-btn" type="button">Remove</button>
+        </div>
     </div>
 </div>
 

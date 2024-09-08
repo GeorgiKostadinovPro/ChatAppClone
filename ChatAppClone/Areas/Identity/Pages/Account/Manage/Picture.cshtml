@@ -10,112 +10,42 @@
     <p>Please wait...</p>
 </div>
 
-<div class="col-md-3">
-    <div href=# class="d-inline">
-        <img id="user-profile-picture" src="@profile"><br>
-        <p class="pl-2 mt-2">
-            <label style="margin-bottom: 0.5em;">Edit Picture</label>
-            <input type="file" accept=".png, .jpg, .jpeg" id="profile-picture-input">
-            <span class="text-danger profile-picture-error-span" id="validation-message"></span>
-
-            <div class="profile-picture-action-section">
-                <button id="upload-button" class="btn upload-picture-btn" type="button">Upload</button>
-                <button id="remove-button" class="btn delete-picture-btn" type="button">Remove</button>
+<div class="col-md-3" style="display: flex; margin-bottom: 3em;">
+    <div class="d-inline profile-picture-container">
+        <div class="avatar-upload">
+            <div class="avatar-edit">
+                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                <label for="imageUpload"></label>
             </div>
-        </p>
+            <div class="avatar-preview">
+                <div id="imagePreview" style="background-image: url(@profile);">
+                </div>
+            </div>
+            <span class="text-danger profile-picture-error-span" id="validation-message"></span>
+        </div>
+
+        <div class="profile-picture-action-section">
+             <button id="upload-button" class="btn upload-picture-btn" type="button">Upload</button>
+             <button id="remove-button" class="btn delete-picture-btn" type="button">Remove</button>
+        </div>
     </div>
 </div>
 
 <div id="removePictureModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Remove Profile Picture</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete your picture?</p>
-                    <p class="text-warning"><small>This action cannot be undone.</small></p>
-                </div>
-                <div class="modal-footer">
+            <div class="modal-header">
+                <h4 class="modal-title">Remove Profile Picture</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete your picture?</p>
+                <p class="text-warning"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
                 <p>Click outside the modal to close it.</p>
-                    <input type="submit" id="remove-profile-picture-btn" class="btn btn-danger" value="Remove">
-                </div>
+                <input type="submit" id="remove-profile-picture-btn" class="btn btn-danger" value="Remove">
+            </div>
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function () {
-        $('#upload-button').on('click', function (e) {
-            e.preventDefault();
-
-            var fileInput = $('#profile-picture-input')[0];
-            var file = fileInput.files[0];
-
-            var formData = new FormData();
-            formData.append('file', file);
-
-            $('#loading-overlay').show();
-
-            $.ajax({
-                url: '@Url.Action("UploadProfilePicture", "User")',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    if (response.success) {
-                        location.reload();
-                    } else {
-                        $('#validation-message').text(response.error);
-                    }
-                },
-                error: function () {
-                    $('#validation-message').text('An error occurred while uploading the picture.');
-                },
-                complete: function () {
-                    $('#loading-overlay').hide();
-                }
-            });
-        });
-
-        $('#remove-button').on('click', function(e) {
-            e.preventDefault();
-
-            $('#removePictureModal').modal('show');
-        });
-
-        $('#removePictureModal .close').on('click', function() {
-            $('#removePictureModal').modal('hide');
-        });
-
-        $('#remove-profile-picture-btn').on('click', function(e) {
-            e.preventDefault();
-
-            $('#removePictureModal').modal('hide');
-
-            $('#loading-overlay').show();
-
-            $.ajax({
-                url: '@Url.Action("DeleteProfilePicture", "User")',
-                type: 'POST',
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    if (response.success) {
-                        location.reload();
-                    } else {
-                        $('#validation-message').text(response.error);
-                    }
-                },
-                error: function () {
-                    $('#validation-message').text('An error occurred while deleting the picture.');
-                },
-                complete: function () {
-                    $('#loading-overlay').hide();
-                }
-            });
-        })
-    });
-</script>

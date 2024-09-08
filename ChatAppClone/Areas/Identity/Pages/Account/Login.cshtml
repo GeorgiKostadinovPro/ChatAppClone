@@ -14,9 +14,10 @@
         <div class="form login">
             <span class="title">Login</span>
             <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger invalid-login"></div>
                 <div class="input-field">
                     <input asp-for="Input.Username" type="text" placeholder="Enter your name" required>
-                    <i class="uil uil-envelope icon"></i>
+                    <i class="uil uil-user"></i>
                 </div>
                 <span asp-validation-for="Input.Username" class="text-danger"></span>
                 <div class="input-field">

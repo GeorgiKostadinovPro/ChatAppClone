@@ -6,7 +6,6 @@
         $('.expand-menu .nav-link').toggleClass('animate');
         setTimeout(function () {
             $('.expand-menu .nav-link').toggleClass('animate-show');
-        }, 500)
-    })
-
-})
+        }, 500);
+    });
+});

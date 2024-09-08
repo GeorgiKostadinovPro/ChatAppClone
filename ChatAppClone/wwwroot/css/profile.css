@@ -4,7 +4,7 @@
 }
 
 form {
-    width: 550px;
+    max-width: 550px;
 }
 
     form * {
@@ -46,7 +46,6 @@ form {
         padding-left: 0px;
     }
 }
-
 
 .sidebar .nav-link {
     margin-bottom: 20px;

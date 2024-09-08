@@ -9,10 +9,6 @@
     }
 }
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/profile.js"></script>
-
 <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
 
 <div class="container-fluid main" style="padding-left:0px;">
@@ -60,11 +56,96 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-
 @section Scripts {
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+    <script src="~/js/profile.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#upload-button').on('click', function (e) {
+                e.preventDefault();
+
+                var fileInput = $('#profile-picture-input')[0];
+                var file = fileInput.files[0];
+
+                var formData = new FormData();
+                formData.append('file', file);
+
+                $('#loading-overlay').show();
+
+                $.ajax({
+                    url: '@Url.Action("UploadProfilePicture", "User")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            $('#validation-message').text(response.error);
+                        }
+                    },
+                    error: function () {
+                        $('#validation-message').text('An error occurred while uploading the picture.');
+                    },
+                    complete: function () {
+                        $('#loading-overlay').hide();
+                    }
+                });
+            });
+
+            $('#remove-profile-picture-btn').on('click', function (e) {
+                e.preventDefault();
+
+                $('#removePictureModal').modal('hide');
+
+                $('#loading-overlay').show();
+
+                $.ajax({
+                    url: '@Url.Action("DeleteProfilePicture", "User")',
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            $('#validation-message').text(response.error);
+                        }
+                    },
+                    error: function () {
+                        $('#validation-message').text('An error occurred while deleting the picture.');
+                    },
+                    complete: function () {
+                        $('#loading-overlay').hide();
+                    }
+                });
+            });
+
+            $('#remove-button').on('click', function (e) {
+                e.preventDefault();
+
+                $('#removePictureModal').modal('show');
+            });
+
+            $('#removePictureModal .close').on('click', function () {
+                $('#removePictureModal').modal('hide');
+            });
+
+            document.getElementById('removePictureModal').addEventListener('show.bs.modal', function () {
+                document.body.classList.add('modal-open');
+            });
+
+            document.getElementById('removePictureModal').addEventListener('hidden.bs.modal', function () {
+                document.body.classList.remove('modal-open');
+            });
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
 }

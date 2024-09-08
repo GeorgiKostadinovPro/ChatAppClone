@@ -1,5 +1,5 @@
 # ChatAppClone
-ChatAppClone is a simple chat platform built via .NET Core, Azure and SignalR.
+ChatAppClone is a simple real-time chat platform built via .NET Core, Azure and SignalR.
 
 <hr />
 

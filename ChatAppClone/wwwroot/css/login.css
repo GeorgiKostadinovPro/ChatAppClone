@@ -174,3 +174,12 @@ body {
 .form .login-signup a {
     display: inline;
 }
+
+.form .invalid-login {
+    margin-top: 1em;
+}
+
+.form .invalid-login ul {
+    margin: 0;
+    padding-left: 20px;
+}

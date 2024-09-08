@@ -68,6 +68,11 @@ body {
     flex-direction: column;
 }
 
+body.modal-open {
+    overflow-y: auto !important;
+    padding-right: 0 !important;
+}
+
 .wrapper {
     max-width: 1920px;
     margin: 0 auto;

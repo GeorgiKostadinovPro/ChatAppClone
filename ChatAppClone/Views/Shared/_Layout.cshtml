@@ -14,34 +14,35 @@
 </head>
 <body>
     <header class="site-header">
-            <div class="wrapper">
-                <section class="site-title">
-                    <img src="~/assets/logo.png" alt="">
-                    <h1>ChatAppClone</h1>
-                </section>
-                <nav class="site-nav">
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
-                        <li><a asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-controller="Chat" asp-action="Chat">Chat</a></li>
+        <div class="wrapper">
+            <section class="site-title">
+                <img src="~/assets/logo.png" alt="">
+                <h1>ChatAppClone</h1>
+            </section>
+            <nav class="site-nav">
+                <ul>
+                    <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                    <li><a asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-controller="Chat" asp-action="Chat">Chat</a></li>
+                    <partial name="_LoginPartial" />
+                </ul>
+
+                <div class="mobile-menu">
+                    <a href="javascript:void(0);" class="bar-icon" onclick="toggleIcon(this)">
+                        <i class="fa fa-bars"></i>
+                    </a>
+
+                    <div class="mobile-nav">
+                        <a asp-controller="Home" asp-action="Index" class="@(ViewContext.ActionDescriptor.DisplayName!.Contains("Index") ? "active" : "") nav-link mt-auto"><i class="fa-solid fa-house-user"></i> Home</a>
+                        <a asp-controller="Home" asp-action="Privacy" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Privacy") ? "active" : "") nav-link"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
+                        <a asp-controller="Home" asp-action="About" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("About") ? "active" : "") nav-link"><i class="far fa-file-alt"></i> About</a>
+                        <a asp-controller="Chat" asp-action="Chat" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Chat") ? "active" : "") nav-link mb-auto"><i class="fa-regular fa-comment-dots"></i> Chat</a>
                         <partial name="_LoginPartial" />
-                    </ul>
-
-                    <div class="mobile-menu">
-                        <a href="javascript:void(0);" class="bar-icon" onclick="toggleIcon(this)">
-                            <i class="fa fa-bars"></i>
-                        </a>
-
-                        <div class="mobile-nav">
-                            <a asp-controller="Home" asp-action="Index" class="@(ViewContext.ActionDescriptor.DisplayName!.Contains("Index") ? "active" : "") nav-link mt-auto"><i class="far fa-user-circle"></i>Home</a>
-                            <a asp-controller="Home" asp-action="Privacy" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Privacy") ? "active" : "") nav-link"><i class="far fa-bell"></i> Privacy</a>
-                            <a asp-controller="Home" asp-action="About" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("About") ? "active" : "") nav-link"><i class="far fa-file-alt"></i> About</a>
-                            <a asp-controller="Chat" asp-action="Chat" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Chat") ? "active" : "") nav-link mb-auto"><i class="fas fa-cogs"></i> Chat</a>
-                        </div>
                     </div>
-                </nav>
-            </div>
+                </div>
+            </nav>
+        </div>
     </header>
 
     @RenderBody()

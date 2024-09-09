@@ -1,5 +1,4 @@
 ﻿function toggleIcon(element) {
-    console.log(element);
     element.classList.toggle('clicked');
     const icon = element.querySelector('.fa');
 
@@ -9,5 +8,12 @@
     } else {
         icon.classList.remove('fa-times');
         icon.classList.add('fa-bars');
+    }
+
+    const mobileNav = document.querySelector('.site-nav .mobile-nav');
+    if (mobileNav.classList.contains('show')) {
+        mobileNav.classList.remove('show');
+    } else {
+        mobileNav.classList.add('show');
     }
 }

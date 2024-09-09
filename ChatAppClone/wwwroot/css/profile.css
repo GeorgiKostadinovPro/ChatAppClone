@@ -16,6 +16,14 @@ form {
         color: #8f9096;
     }
 
+.form-input-container {
+    margin-top: 0.5em;
+}
+
+.form-btn-container {
+    margin-top: 1.9em;
+}
+
 .btn {
     border-radius: 0.2em;
     border: none;

@@ -1,10 +1,4 @@
-﻿@inject SignInManager<ApplicationUser> SignInManager
-
-@{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
-}
-
-<div class="col-md-3 d-none d-md-block" style="height:100%">
+﻿<div class="col-md-3 d-none d-md-block" style="height:100%">
     <div class="container-fluid nav sidebar flex-column profile-nav">
         <a asp-area="Identity" asp-page="./Index" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Index") ? "active" : "") nav-link mt-auto"><i class="far fa-user-circle"></i> Profile</a>
         <a asp-area="Identity" asp-page="./Email" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Email") ? "active" : "") nav-link"><i class="far fa-bell"></i> Email</a>
@@ -13,19 +7,3 @@
         <a asp-area="Identity" asp-page="./PersonalData" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("PersonalData") ? "active" : "") nav-link mb-auto"><i class="fas fa-cogs"></i> Personal data</a>
     </div>
 </div>
-
-@*<script>
-    const linkElements = document.querySelectorAll('.profile-nav a');
-
-    window.addEventListener('load', () => {
-        const currentPath = window.location.pathname;
-
-        linkElements.forEach(el => {
-            if (currentPath.includes(el.getAttribute('href'))) {
-                el.classList.add('active');
-            } else {
-                el.classList.remove('active');
-            }
-        });
-    });
-</script>*@

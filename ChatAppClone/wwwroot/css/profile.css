@@ -87,7 +87,7 @@ form {
 
 .bar, .bar:after, .bar:before {
     width: 30px;
-    height: 3px;
+    height: 5px;
     background: #6c63ff;
     transition: all 0.2s;
 }

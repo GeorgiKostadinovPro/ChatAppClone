@@ -4,5 +4,12 @@
     ViewData["Title"] = "Confirm email";
 }
 
-<h1>@ViewData["Title"]</h1>
-<partial name="_StatusMessage" model="Model.StatusMessage" />
+<link rel="stylesheet" href="~/css/registerConfirmation.css" asp-append-version="true" />
+
+<div class="register-confirmation-container">
+    <img src="https://img.icons8.com/?size=100&id=dl83t240PVMH&format=png&color=000000" alt="open email" />
+    <h1>@ViewData["Title"]</h1>
+    <p>You successfully confirmed your account. Please login to continue.</p>
+    <a asp-area="Identity" asp-page="/Account/Login">Sign in</a>
+</div>
+

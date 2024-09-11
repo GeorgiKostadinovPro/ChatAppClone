@@ -24,10 +24,11 @@
             email.Body = new TextPart(TextFormat.Html) { Text = html };
 
             using SmtpClient smtp = new SmtpClient();
-            smtp.Connect(this.configuration["MailKit:Host"], int.Parse(this.configuration["MailKit:Port"]), SecureSocketOptions.StartTls);
-            smtp.Authenticate(this.configuration["MailKit:Username"], this.configuration["MailKit:Password"]);
+            await smtp.ConnectAsync(this.configuration["MailKit:Host"], int.Parse(this.configuration["MailKit:Port"]), SecureSocketOptions.StartTls);
+            await smtp.AuthenticateAsync(this.configuration["MailKit:Username"], this.configuration["MailKit:Password"]);
             await smtp.SendAsync(email);
-            smtp.Disconnect(true);
+            await smtp.DisconnectAsync(true);
+            smtp.Dispose();  
         }
     }
 }

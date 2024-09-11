@@ -2,6 +2,7 @@ using ChatAppClone.Data;
 using ChatAppClone.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ChatAppClone.Extensions;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 

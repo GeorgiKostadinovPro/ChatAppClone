@@ -4,20 +4,10 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
+<link rel="stylesheet" href="~/css/registerConfirmation.css" asp-append-version="true" />
 
+<div class="register-confirmation-container">
+    <img src="https://img.icons8.com/?size=100&id=GWmDjdtMZUP1&format=png&color=000000" alt="open email" />
+    <h1>@ViewData["Title"]</h1>
+    <p>We have sent an email to <span>@Model.Email</span> to confirm the validity of your email address. After receiving the email follow the link provided to complete your registration.</p>
+</div>

@@ -22,6 +22,8 @@
             services.AddSingleton(cloud);
             services.AddScoped<ICloudinaryService, CloudinaryService>();
 
+            services.AddTransient<IEmailService, EmailService>();
+
             services.AddScoped<IUserService, UserService>();
 
             return services;

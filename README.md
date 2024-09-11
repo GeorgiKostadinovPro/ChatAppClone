@@ -22,7 +22,7 @@ ChatAppClone is a simple real-time chat platform built via .NET Core, Azure and 
   <img alt="Static Badge" src="https://img.shields.io/badge/SQL Server-%E2%9C%93-brightgreen">
   <img alt="Static Badge" src="https://img.shields.io/badge/SignalR-%E2%9C%93-%23F6546A">
   <img alt="Static Badge" src="https://img.shields.io/badge/Azure-%E2%9C%93-%23764ABC">
-  <img alt="Static Badge" src="https://img.shields.io/badge/EmailJS-%E2%9C%93-%23FFC0CB">
+  <img alt="Static Badge" src="https://img.shields.io/badge/MailKit-%E2%9C%93-%23FFC0CB">
   <img alt="Static Badge" src="https://img.shields.io/badge/Cloudinary-%E2%9C%93-%233442CD">
   <img alt="Static Badge" src="https://img.shields.io/badge/HTML5-%E2%9C%93-%23800080">
   <img alt="Static Badge" src="https://img.shields.io/badge/CSS3-%E2%9C%93-%23008080">

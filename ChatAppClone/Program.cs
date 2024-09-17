@@ -2,7 +2,7 @@ using ChatAppClone.Data;
 using ChatAppClone.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ChatAppClone.Extensions;
-using Microsoft.AspNetCore.Identity;
+using ChatAppClone.Data.Seeding;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +21,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAppServices(builder.Configuration);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ChatAppCloneDbContext>();
+    dbContext.Database.Migrate();
+
+    new ChatAppCloneDbContextSeeder().SeedAsync(dbContext, scope.ServiceProvider).GetAwaiter().GetResult();
+}
 
 if (app.Environment.IsDevelopment())
 {

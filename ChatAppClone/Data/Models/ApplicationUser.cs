@@ -1,8 +1,9 @@
 ﻿namespace ChatAppClone.Data.Models
 {
+    using ChatAppClone.Data.Common.Models;
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationUser : IdentityUser<string>
+    public class ApplicationUser : IdentityUser<string>, IBaseEntityModel
     {
         public ApplicationUser()
         {
@@ -15,6 +16,10 @@
         public string? ProfilePictureUrl { get; set; }
 
         public string? ProfilePicturePublicId { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }
 

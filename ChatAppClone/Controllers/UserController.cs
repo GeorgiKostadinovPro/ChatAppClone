@@ -23,6 +23,11 @@
             this.userService = _userService;
         }
 
+        public async Task<IActionResult> Explore()
+        {
+            return this.View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> UploadProfilePicture(IFormFile file)
         {

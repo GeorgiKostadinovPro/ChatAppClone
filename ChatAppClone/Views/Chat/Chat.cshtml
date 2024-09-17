@@ -164,7 +164,7 @@
                     </div>
                 </div>
             </div>
-            <button class="add"></button>
+            <a class="add" asp-controller="User" asp-action="Explore"></a>
             <div class="overlay"></div>
         </div>
         <div class="chat-area">
@@ -371,3 +371,15 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<script>
+    const btn = document.querySelector(".add");
+
+    btn.addEventListener('click', (e) => {
+        console.log('clicked');
+    });
+</script>

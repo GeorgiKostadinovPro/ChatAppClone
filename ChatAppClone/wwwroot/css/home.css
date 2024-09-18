@@ -8,7 +8,7 @@
 
     .hero .wrapper {
         min-height: 34em;
-        padding: 1em;
+        padding: 2em;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
@@ -16,11 +16,10 @@
     }
 
 .hero img {
-    max-width: 40em;
     flex: 0 1 auto;
+    max-width: 50%;
+    min-width: 30em;
     height: auto;
-    -webkit-animation: floatYAnimation 3s infinite ease-in-out;
-    animation: floatYAnimation 3s infinite ease-in-out;
 }
 
 .hero .content {
@@ -69,3 +68,22 @@
             background: transparent;
             color: #EEB439;
         }
+
+@media screen and (max-width: 1100px) {
+    .hero .content {
+        font-size: 0.9em;
+    }
+
+    .hero .wrapper {
+        justify-content: center;
+        gap: 3em;
+    }
+
+    .hero .content {
+        text-align: center;
+    }
+
+    .hero .content .hero-buttons {
+        justify-content: center;
+    }
+}

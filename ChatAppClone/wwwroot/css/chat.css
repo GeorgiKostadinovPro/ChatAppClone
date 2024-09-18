@@ -63,6 +63,7 @@
     --button-color: var(--body-color);
     --input-chat-color: #6f7073;
     --detail-font-color: var(--input-chat-color);
+    color: var(--body-color);
 }
 
 .blue {

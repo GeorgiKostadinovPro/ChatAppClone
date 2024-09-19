@@ -7,8 +7,8 @@
 <section class="explore-hero">
     <div class="wrapper">
         <section class="content">
-            <h2 @* style="color: #1360C4" *@>Explore</h2>
-            <p @* style="color: #1360C4" *@>Go through and find members with whom you can chat!</p>
+            <h2>Explore</h2>
+            <p>Go through and find members with whom you can chat!</p>
             <section class="hero-buttons">
                 <a asp-controller="Home" asp-action="About" class="about-btn">About</a>
                 <a asp-controller="Chat" asp-action="Chat" class="contact-btn">Chat</a>
@@ -18,11 +18,23 @@
     </div>
 </section>
 
-@* 
-<section class="explore-users-container">
+<section class="explore-users">
     <div class="wrapper">
-        <section class="content">
-            <h1>@TempData["Title"]</h1>
+        <section class="search-content">
+            <h1>Find Users</h1>
+            <div class="search-box">
+                <input type="text" placeholder="Type anything..." />
+                <div class="search-btn">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="cancel-btn">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
         </section>
     </div>
-</section> *@
+</section>
+
+@section Scripts {
+    <script src="~/js/explore.js"></script>
+}

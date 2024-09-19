@@ -15,7 +15,7 @@ html {
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Ubuntu&display=swap');
 
 html {
-    font: 16px/1.5 'Ubuntu', Helvetica, sans-serif;
+    font: 16px/1.5 'Roboto' !important, Helvetica, sans-serif;
 }
 
 *, *::before, *::after {

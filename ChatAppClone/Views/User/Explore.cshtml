@@ -1,13 +1,93 @@
 ﻿@{
-    TempData["Title"] = "Explore Users";
+    TempData["Title"] = "Explore";
 }
 
 <link rel="stylesheet" href="~/css/explore.css" asp-append-version="true" />
 
-<section class="explore-users-container">
+<section class="explore-hero">
     <div class="wrapper">
         <section class="content">
-            <h1>@TempData["Title"]</h1>
+            <h2>Explore</h2>
+            <p>Go through and find members with whom you can chat!</p>
+            <section class="hero-buttons">
+                <a asp-controller="Home" asp-action="About" class="about-btn">About</a>
+                <a asp-controller="Chat" asp-action="Chat" class="contact-btn">Chat</a>
+            </section>
+        </section>
+        <img src="~/assets/explore3.jpg" alt="home">
+    </div>
+</section>
+
+<section class="explore-users">
+    <div class="wrapper">
+        <section class="search-content">
+            <h1>Find Users</h1>
+            <div class="search-box">
+                <input type="text" placeholder="Type anything..." />
+                <div class="search-btn">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="cancel-btn">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+        </section>
+
+        <section class="user-content">
+            <div class="user-card">
+                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1726509898/ChatAppClone/assets/user-profile-pictures/profile-picture.jpg" />
+                <h3>John Doe</h3>
+                <p>Joined on: 24 Mar 2024</p>
+                <p>Followers: 234</p>
+                <a>Connect</a>
+            </div>
+
+            <div class="user-card">
+                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1725385674/ChatAppClone/assets/user-profile-pictures/profil1.jpg" />
+                <h3>John Doe</h3>
+                <p>Joined on: 24 Mar 2024</p>
+                <p>Followers: 234</p>
+                <a>Connect</a>
+            </div>
+
+            <div class="user-card">
+                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1726509898/ChatAppClone/assets/user-profile-pictures/profile-picture.jpg" />
+                <h3>John Doe</h3>
+                <p>Joined on: 24 Mar 2024</p>
+                <p>Followers: 234</p>
+                <a>Connect</a>
+            </div>
+
+            <div class="user-card">
+                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1725385674/ChatAppClone/assets/user-profile-pictures/profil1.jpg" />
+                <h3>John Doe</h3>
+                <p>Joined on: 24 Mar 2024</p>
+                <p>Followers: 234</p>
+                <a>Connect</a>
+            </div>
+        </section>
+
+        <section class="pagination-content">
+            <div class="pagination-wrapper">
+                <div class="pagination">
+                    <a class="prev page-numbers" href="javascript:;"><</a>
+                    <span aria-current="page" class="page-numbers current">1</span>
+                    <a class="page-numbers" href="javascript:;">2</a>
+                    <a class="page-numbers" href="javascript:;">3</a>
+                    <a class="page-numbers" href="javascript:;">4</a>
+                    <a class="page-numbers" href="javascript:;">5</a>
+                    <a class="page-numbers" href="javascript:;">6</a>
+                    <a class="page-numbers" href="javascript:;">7</a>
+                    <a class="page-numbers" href="javascript:;">8</a>
+                    <a class="page-numbers" href="javascript:;">9</a>
+                    <a class="page-numbers" href="javascript:;">10</a>
+                    <a class="next page-numbers" href="javascript:;">></a>
+                </div>
+            </div>
         </section>
     </div>
 </section>
+
+@section Scripts {
+    <script src="~/js/explore.js"></script>
+}

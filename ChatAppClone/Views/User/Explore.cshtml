@@ -1,13 +1,28 @@
 ﻿@{
-    TempData["Title"] = "Explore Users";
+    TempData["Title"] = "Explore";
 }
 
 <link rel="stylesheet" href="~/css/explore.css" asp-append-version="true" />
 
+<section class="explore-hero">
+    <div class="wrapper">
+        <section class="content">
+            <h2 @* style="color: #1360C4" *@>Explore</h2>
+            <p @* style="color: #1360C4" *@>Go through and find members with whom you can chat!</p>
+            <section class="hero-buttons">
+                <a asp-controller="Home" asp-action="About" class="about-btn">About</a>
+                <a asp-controller="Chat" asp-action="Chat" class="contact-btn">Chat</a>
+            </section>
+        </section>
+        <img src="~/assets/explore3.jpg" alt="home">
+    </div>
+</section>
+
+@* 
 <section class="explore-users-container">
     <div class="wrapper">
         <section class="content">
             <h1>@TempData["Title"]</h1>
         </section>
     </div>
-</section>
+</section> *@

@@ -4,12 +4,9 @@
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Models.ViewModels.Notifications;
-    using ChatAppClone.Models.ViewModels.Users;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.RazorPages;
-    using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
-    using System.ComponentModel.DataAnnotations;
 
     public class NotificationsModel : PageModel
     {
@@ -21,10 +18,12 @@
         {
             this.notificationService = _notificationService;
             this.userManager = _userManager;
+
+            this.Query = new QueryModel();
         }
 
         [BindProperty]
-        public QueryModel Model { get; set; }
+        public QueryModel Query { get; set; } = null!;
 
         public class QueryModel
         {
@@ -55,11 +54,10 @@
             }
 
             int count = await this.notificationService.GetNotificationsCountByUserId(user.Id);
+            var notifications = await this.notificationService.GetNotificationsAsync(user.Id, Query.CurrentPage);
 
-            Model = new QueryModel
-            {
-                TotalNotificationsCount = count,
-            };
+            Query.TotalNotificationsCount = count;
+            Query.Notifications = notifications;
 ;
             return Page();
         }

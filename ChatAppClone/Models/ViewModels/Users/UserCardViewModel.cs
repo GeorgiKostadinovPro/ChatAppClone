@@ -11,5 +11,7 @@
         public string CreatedOn { get; set; } = null!;
 
         public int FollowersCount { get; set; }
+
+        public bool IsFollowed { get; set; }
     }
 }

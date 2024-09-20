@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Configuration;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Core;
+    using ChatAppClone.Data.Repositories;
 
     public static class ServiceCollectionExtensions
     {
@@ -23,6 +24,8 @@
             services.AddScoped<ICloudinaryService, CloudinaryService>();
 
             services.AddTransient<IEmailService, EmailService>();
+
+            services.AddScoped<IRepository, Repository>();
 
             services.AddScoped<IUserService, UserService>();
 

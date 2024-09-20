@@ -9,7 +9,7 @@
 
         Task<IEnumerable<UserCardViewModel>> GetUsersAsync(string userId, ExploreUsersQueryModel model);
 
-        Task<int> GetUsersCountAsync();
+        Task<int> GetUsersCountAsync(string? searchTerm = null);
 
         Task SetProfilePictureAsync(string userId, string url, string publicId);
 

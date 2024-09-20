@@ -6,6 +6,8 @@
     using ChatAppClone.Common.Messages;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
+    using System.Collections.Generic;
+    using ChatAppClone.Models.ViewModels.Users;
 
     public class UserService : IUserService
     {
@@ -26,6 +28,16 @@
             }
 
             return user;
+        }
+
+        public async Task<IEnumerable<UserCardViewModel>> GetUsersAsync(string userId, ExploreUsersQueryModel model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<int> GetUsersCountAsync()
+        {
+            throw new NotImplementedException();
         }
 
         public async Task SetProfilePictureAsync(string userId, string url, string publicId)

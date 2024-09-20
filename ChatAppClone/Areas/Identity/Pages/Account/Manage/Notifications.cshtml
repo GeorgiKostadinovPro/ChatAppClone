@@ -1,0 +1,21 @@
+﻿@page
+@model NotificationsModel
+
+@{
+    ViewData["Title"] = "Notifications";
+}
+
+<link rel="stylesheet" href="~/css/notifications.css" asp-append-version="true" />
+
+<section class="user-notifications">
+    <h2>Total Notifications: @Model.Query.TotalNotificationsCount</h2>
+    <div class="notification-card">
+        <div class="notification-type">
+            <i class="fa-solid fa-circle-info"></i>
+        </div>
+        <div class="notification-content">
+            <h4>Info</h4>
+            <p>User A started following you.</p>
+        </div>
+    </div>
+</section>

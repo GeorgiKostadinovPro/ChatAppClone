@@ -1,6 +1,7 @@
 ﻿namespace ChatAppClone.Core.Contracts
 {
     using ChatAppClone.Data.Models;
+    using ChatAppClone.Models.ViewModels.Notifications;
 
     public interface INotificationService
     {
@@ -9,5 +10,7 @@
         Task DeleteNotificationAsync(string notificationId);
 
         Task<int> GetNotificationsCountByUserId(string userId);
+
+        Task<IEnumerable<NotificationViewModel>> GetNotificationsAsync(string userId, int currPage);
     }
 }

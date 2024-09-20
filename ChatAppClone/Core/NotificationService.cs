@@ -1,10 +1,13 @@
 ﻿namespace ChatAppClone.Core
 {
+    using ChatAppClone.Common.Constants;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
+    using ChatAppClone.Models.ViewModels.Notifications;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
 
     public class NotificationService : INotificationService
     {
@@ -44,6 +47,25 @@
                 await this.repository.DeleteAsync<Notification>(notification.Id);
                 await this.repository.SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<NotificationViewModel>> GetNotificationsAsync(string userId, int currPage)
+        {
+            IEnumerable<NotificationViewModel> notifications
+                = await this.repository.AllReadonly<Notification>()
+                             .Where(n => n.UserId == userId)
+                             .Skip((currPage - 1) * NotificationConstants.NotificationsPerPage)
+                             .Take(NotificationConstants.NotificationsPerPage)
+                             .Select(n => new NotificationViewModel
+                             {
+                                 Id = n.Id,
+                                 Content = n.Content,
+                                 CreatedOn = n.CreatedOn.ToString("dd MMM yyyy"),
+                                 Type = "Info"
+                             })
+                             .ToArrayAsync();
+
+            return notifications;
         }
 
         public async Task<int> GetNotificationsCountByUserId(string userId)

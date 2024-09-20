@@ -1,15 +1,20 @@
 ﻿namespace ChatAppClone.Controllers
 {
     using ChatAppClone.Core.Contracts;
+    using ChatAppClone.Hubs;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
 
     public class UserFollowsController : ApiController
     {
+        private readonly IHubContext<NotificationHub> hubContext;
+
         private readonly IUserFollowsService userFollowsService;
         private readonly INotificationService notificationService;
 
-        public UserFollowsController(IUserFollowsService _userFollowsService, INotificationService _notificationService)
+        public UserFollowsController(IHubContext<NotificationHub> _hubContext, IUserFollowsService _userFollowsService, INotificationService _notificationService)
         {
+            this.hubContext = _hubContext;
             this.userFollowsService = _userFollowsService;
             this.notificationService = _notificationService;
         }
@@ -36,6 +41,8 @@
 
             await this.notificationService.CreateNotificationAsync(
                 $"{followerUserName} has followed you.", "/User/Notifications/" + userIdToFollow, userIdToFollow);
+
+            await hubContext.Clients.User(userIdToFollow).SendAsync("ReceiveNotification", $"{followerUserName} has followed you.");
 
             return Ok(new { message = "Followed successfully." });
         }

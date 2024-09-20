@@ -75,6 +75,26 @@
                 color: #1360C4;
             }
 
+.profile-nav-item {
+    position: relative;
+}
+
+    .profile-nav-item .notifications-tab {
+        position: absolute;
+        top: -10%;
+        right: -10%;
+        width: 20px;
+        height: auto;
+        aspect-ratio: 1;
+        background-color: #e60000;
+        color: #fff;
+        font-size: 0.6em;
+        padding: 2px;
+        border-radius: 50%;
+        text-align: center;
+        font-weight: bold;
+    }
+
 .user-profile {
     width: 40px;
     height: 40px;
@@ -96,9 +116,9 @@
         color: #1360C4;
     }
 
-    .site-nav .mobile-menu .bar-icon.clicked {
-        color: #fff;
-    }
+        .site-nav .mobile-menu .bar-icon.clicked {
+            color: #fff;
+        }
 
     .site-nav .mobile-menu .bar-icon {
         position: relative;
@@ -122,6 +142,12 @@
         z-index: 1000;
     }
 
+        .site-nav .mobile-menu .mobile-nav .profile-nav-item .notifications-tab {
+            top: 5%;
+            font-size: 0.4em;
+            padding: 1px;
+        }
+
         .site-nav .mobile-menu .mobile-nav a {
             font-size: 2em;
             color: #fff;
@@ -142,10 +168,10 @@
     .site-header .mobile-menu {
         display: block;
     }
-    
-    .site-header .mobile-menu .mobile-nav {
-        display: none;
-    }
+
+        .site-header .mobile-menu .mobile-nav {
+            display: none;
+        }
 
     .site-nav .mobile-menu .mobile-nav.show {
         display: flex;

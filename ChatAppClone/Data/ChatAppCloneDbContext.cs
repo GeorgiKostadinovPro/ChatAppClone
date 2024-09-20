@@ -20,6 +20,10 @@
 
         public DbSet<UserChat> UsersChats { get; set; } = null!;
 
+        public DbSet<UserFollows> UserFollows {  get; set; } = null!; 
+
+        public DbSet<Notification> Notifications { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

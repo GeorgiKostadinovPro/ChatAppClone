@@ -42,7 +42,7 @@
                         <i class="fas fa-search"></i>
                     </a>
                 </form>
-                
+
                 <div class="cancel-btn">
                     <i class="fas fa-times"></i>
                 </div>
@@ -58,11 +58,11 @@
                     <h2 class="no-users-found">No Users were found by the given criteria!</h2>
                 </div>
             }
-           
-            @foreach(var user in Model.Users)
+
+            @foreach (var user in Model.Users)
             {
                 <div class="user-card">
-                    <input type="hidden" value="@user.Id"/>
+                    <input type="hidden" value="@user.Id" />
                     <img src=@user.ProfilePictureUrl />
                     <h3>@user.Username</h3>
                     <p>Joined on: @user.CreatedOn</p>
@@ -91,11 +91,10 @@
 
                     @for (int i = 1; i <= maxPage; i++)
                     {
-                        <a 
-                            asp-controller="User" 
-                            asp-action="Explore"
-                            asp-route-currentPage="@i"
-                            class="page-numbers" class="@(Model.CurrentPage == i ? "current" : string.Empty)">@i</a>
+                        <a asp-controller="User"
+                           asp-action="Explore"
+                           asp-route-currentPage="@i"
+                           class="page-numbers" class="@(Model.CurrentPage == i ? "current" : string.Empty)">@i</a>
                     }
 
                     <a class="next page-numbers @(shouldButtonBeDisabled ? "disabled" : string.Empty)"

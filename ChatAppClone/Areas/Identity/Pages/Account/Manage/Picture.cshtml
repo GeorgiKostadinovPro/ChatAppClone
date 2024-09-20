@@ -1,8 +1,9 @@
-﻿@inject UserManager<ApplicationUser> UserManager
+﻿@using ChatAppClone.Common.Constants
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     var user = await UserManager.GetUserAsync(User);
-    var profile = user?.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
+    var profile = user?.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl;
 }
 
 <div id="loading-overlay" style="display: none;">

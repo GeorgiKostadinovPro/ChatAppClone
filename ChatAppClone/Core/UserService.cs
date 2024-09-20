@@ -10,6 +10,7 @@
     using ChatAppClone.Models.ViewModels.Users;
     using ChatAppClone.Data.Repositories;
     using Microsoft.EntityFrameworkCore;
+    using ChatAppClone.Common.Constants;
 
     public class UserService : IUserService
     {
@@ -59,7 +60,7 @@
                              {
                                  Id = u.Id,
                                  Username = u.UserName!,
-                                 ProfilePictureUrl = u.ProfilePictureUrl,
+                                 ProfilePictureUrl = u.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl,
                                  CreatedOn = u.CreatedOn.ToString("dd MMM yyyy"),
                                  FollowersCount = u.Followers.Count(),
                                  IsFollowed = u.Followers.Any(f => f.FollowerId == userId),

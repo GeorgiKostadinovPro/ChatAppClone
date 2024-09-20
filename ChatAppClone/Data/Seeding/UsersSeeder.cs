@@ -41,10 +41,34 @@
                 ProfilePicturePublicId = "ChatAppClone/assets/user-profile-pictures/profil1"
             };
 
+            ApplicationUser user3 = new ApplicationUser
+            {
+                UserName = "Kri4o",
+                Email = "kris@mail.com",
+                EmailConfirmed = true
+            };
+
+            ApplicationUser user4 = new ApplicationUser
+            {
+                UserName = "Gogo",
+                Email = "gogo@mail.com",
+                EmailConfirmed = true
+            };
+
+            ApplicationUser user5 = new ApplicationUser
+            {
+                UserName = "Wang",
+                Email = "wang@mail.com",
+                EmailConfirmed = true
+            };
+
             string password = "Gk123.";
 
             await userManager.CreateAsync(user1, password);
             await userManager.CreateAsync(user2, password);
+            await userManager.CreateAsync(user3, password);
+            await userManager.CreateAsync(user4, password);
+            await userManager.CreateAsync(user5, password);
         }
     }
 }

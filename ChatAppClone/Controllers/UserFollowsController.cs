@@ -1,13 +1,17 @@
 ﻿namespace ChatAppClone.Controllers
 {
+    using ChatAppClone.Core.Contracts;
     using Microsoft.AspNetCore.Mvc;
 
     public class UserFollowsController : ApiController
     {
+        private readonly IUserFollowsService userFollowsService;
+        private readonly INotificationService notificationService;
 
-        public UserFollowsController()
+        public UserFollowsController(IUserFollowsService _userFollowsService, INotificationService _notificationService)
         {
-            
+            this.userFollowsService = _userFollowsService;
+            this.notificationService = _notificationService;
         }
 
         [HttpPost("Follow")]

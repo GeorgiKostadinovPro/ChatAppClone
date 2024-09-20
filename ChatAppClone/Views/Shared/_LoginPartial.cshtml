@@ -1,12 +1,16 @@
-﻿@using ChatAppClone.Data.Models;
+﻿@using ChatAppClone.Core.Contracts
+@using ChatAppClone.Data.Models;
 @using ChatAppClone.Extensions;
 @using Microsoft.AspNetCore.Identity;
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject INotificationService notificationService
 
 @{
     var user = await UserManager.GetUserAsync(User);
     var profile = user?.ProfilePictureUrl ?? "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg";
+
+    var count = user == null ? 0 : await this.notificationService.GetNotificationsCountByUserId(user!.Id);
 }
 
 @if (!SignInManager.IsSignedIn(User))
@@ -17,9 +21,12 @@
 }
 else
 {
-    <li>
+    <li class="profile-nav-item">
         <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
             <img class="user-profile" src="@profile" alt="profile">
+            <div class="notifications-tab">
+                @count
+            </div>
         </a>
     </li>
     <li>

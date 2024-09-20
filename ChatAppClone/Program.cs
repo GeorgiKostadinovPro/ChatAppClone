@@ -3,6 +3,7 @@ using ChatAppClone.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using ChatAppClone.Extensions;
 using ChatAppClone.Data.Seeding;
+using ChatAppClone.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAppServices(builder.Configuration);
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -51,8 +54,15 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
+    name: "api",
+    pattern: "api/{controller}/{action}/{id?}");
+
+app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

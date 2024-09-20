@@ -1,11 +1,11 @@
 ﻿namespace ChatAppClone.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
 
-    [Authorize]
-    public class BaseController : Controller 
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ApiController : ControllerBase 
     {
         protected string GetAuthId()
         {

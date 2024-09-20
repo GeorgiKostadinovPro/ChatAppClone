@@ -62,6 +62,7 @@
             @foreach(var user in Model.Users)
             {
                 <div class="user-card">
+                    <input type="hidden" value="@user.Id"/>
                     <img src=@user.ProfilePictureUrl />
                     <h3>@user.Username</h3>
                     <p>Joined on: @user.CreatedOn</p>

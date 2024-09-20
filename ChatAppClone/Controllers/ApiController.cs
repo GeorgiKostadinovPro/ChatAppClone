@@ -4,8 +4,10 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
 
+    [Route("api/[controller]")]
+    [ApiController]
     [Authorize]
-    public class BaseController : Controller 
+    public class ApiController : ControllerBase 
     {
         protected string GetAuthId()
         {

@@ -2,6 +2,6 @@
 {
     public static class CloudinaryConstants
     {
-        public static string ProfilePicturesFolder = "ChatAppClone/assets/user-profile-pictures";
+        public const string ProfilePicturesFolder = "ChatAppClone/assets/user-profile-pictures";
     }
 }

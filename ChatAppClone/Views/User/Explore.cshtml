@@ -1,5 +1,18 @@
-﻿@{
+﻿@model ExploreUsersQueryModel
+
+@{
     TempData["Title"] = "Explore";
+
+    int previousPage = Model.CurrentPage - 1;
+
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    int maxPage = (int)Math.Ceiling((double)Model.TotalUsersCount / Model.UsersPerPage);
+
+    bool shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Users.Any();
 }
 
 <link rel="stylesheet" href="~/css/explore.css" asp-append-version="true" />
@@ -23,10 +36,13 @@
         <section class="search-content">
             <h1>Find Users</h1>
             <div class="search-box">
-                <input type="text" placeholder="Type anything..." />
-                <div class="search-btn">
-                    <i class="fas fa-search"></i>
-                </div>
+                <form asp-controller="User" asp-action="Explore" method="get" id="searchForm">
+                    <input asp-for="@Model.SearchTerm" type="text" placeholder="Type anything..." />
+                    <a href="#" type="submit" onclick="document.getElementById('searchForm').submit(); return false;" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </a>
+                </form>
+                
                 <div class="cancel-btn">
                     <i class="fas fa-times"></i>
                 </div>
@@ -34,54 +50,58 @@
         </section>
 
         <section class="user-content">
-            <div class="user-card">
-                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1726509898/ChatAppClone/assets/user-profile-pictures/profile-picture.jpg" />
-                <h3>John Doe</h3>
-                <p>Joined on: 24 Mar 2024</p>
-                <p>Followers: 234</p>
-                <a>Connect</a>
-            </div>
 
-            <div class="user-card">
-                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1725385674/ChatAppClone/assets/user-profile-pictures/profil1.jpg" />
-                <h3>John Doe</h3>
-                <p>Joined on: 24 Mar 2024</p>
-                <p>Followers: 234</p>
-                <a>Connect</a>
-            </div>
+            @if (!Model.Users.Any())
+            {
+                <div class="no-users-found">
+                    <i class="fa-solid fa-ban"></i>
+                    <h2 class="no-users-found">No Users were found by the given criteria!</h2>
+                </div>
+            }
+           
+            @foreach(var user in Model.Users)
+            {
+                <div class="user-card">
+                    <img src=@user.ProfilePictureUrl />
+                    <h3>@user.Username</h3>
+                    <p>Joined on: @user.CreatedOn</p>
+                    <p>Followers: @user.FollowersCount</p>
 
-            <div class="user-card">
-                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1726509898/ChatAppClone/assets/user-profile-pictures/profile-picture.jpg" />
-                <h3>John Doe</h3>
-                <p>Joined on: 24 Mar 2024</p>
-                <p>Followers: 234</p>
-                <a>Connect</a>
-            </div>
-
-            <div class="user-card">
-                <img src="https://res.cloudinary.com/de1i8aava/image/upload/v1725385674/ChatAppClone/assets/user-profile-pictures/profil1.jpg" />
-                <h3>John Doe</h3>
-                <p>Joined on: 24 Mar 2024</p>
-                <p>Followers: 234</p>
-                <a>Connect</a>
-            </div>
+                    @if (user.IsFollowed)
+                    {
+                        <a>Unfollow</a>
+                    }
+                    else
+                    {
+                        <a>Follow</a>
+                    }
+                </div>
+            }
         </section>
 
         <section class="pagination-content">
             <div class="pagination-wrapper">
                 <div class="pagination">
-                    <a class="prev page-numbers" href="javascript:;"><</a>
-                    <span aria-current="page" class="page-numbers current">1</span>
-                    <a class="page-numbers" href="javascript:;">2</a>
-                    <a class="page-numbers" href="javascript:;">3</a>
-                    <a class="page-numbers" href="javascript:;">4</a>
-                    <a class="page-numbers" href="javascript:;">5</a>
-                    <a class="page-numbers" href="javascript:;">6</a>
-                    <a class="page-numbers" href="javascript:;">7</a>
-                    <a class="page-numbers" href="javascript:;">8</a>
-                    <a class="page-numbers" href="javascript:;">9</a>
-                    <a class="page-numbers" href="javascript:;">10</a>
-                    <a class="next page-numbers" href="javascript:;">></a>
+                    <a class="prev page-numbers @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+                       asp-controller="User"
+                       asp-action="Explore"
+                       asp-route-currentPage="@previousPage"
+                       asp-route-searchTerm="@Model.SearchTerm"><</a>
+
+                    @for (int i = 1; i <= maxPage; i++)
+                    {
+                        <a 
+                            asp-controller="User" 
+                            asp-action="Explore"
+                            asp-route-currentPage="@i"
+                            class="page-numbers" class="@(Model.CurrentPage == i ? "current" : string.Empty)">@i</a>
+                    }
+
+                    <a class="next page-numbers @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+                       asp-controller="User"
+                       asp-action="Explore"
+                       asp-route-currentPage="@(Model.CurrentPage + 1)"
+                       asp-route-searchTerm="@Model.SearchTerm">></a>
                 </div>
             </div>
         </section>
@@ -89,5 +109,7 @@
 </section>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
     <script src="~/js/explore.js"></script>
 }

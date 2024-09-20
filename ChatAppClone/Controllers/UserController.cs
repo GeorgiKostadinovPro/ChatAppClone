@@ -9,6 +9,7 @@
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Common.Messages;
+    using ChatAppClone.Models.ViewModels.Users;
 
     public class UserController : BaseController
     {
@@ -23,9 +24,20 @@
             this.userService = _userService;
         }
 
-        public async Task<IActionResult> Explore()
+        [HttpGet]
+        public async Task<IActionResult> Explore([FromQuery] ExploreUsersQueryModel model)
         {
-            return this.View();
+            try
+            {
+                model.Users = await this.userService.GetUsersAsync(this.GetAuthId(), model);
+                model.TotalUsersCount = await this.userService.GetUsersCountAsync(model.SearchTerm);
+
+                return this.View(model);
+            }
+            catch (Exception)
+            {
+                return this.RedirectToAction("Error", "Home", new { area = "", StatusCode = 404 });
+            }
         }
 
         [HttpPost]

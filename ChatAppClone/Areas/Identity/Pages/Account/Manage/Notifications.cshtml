@@ -40,13 +40,21 @@
     }
 </section>
 
-<section class="pagination-content">
+@if (Model.Query.TotalNotificationsCount == 0)
+{
+    <p class="no-notifications-p">You have not received any notifications.</p>
+}
+else
+{
+    <section class="pagination-content">
     <div class="pagination-wrapper">
         <div class="pagination">
             <a class="prev page-numbers @(Model.Query.CurrentPage == 1 ? "disabled" : string.Empty)"
                asp-controller="User"
                asp-action="Explore"
-               asp-route-currentPage="@previousPage"><</a>
+                   asp-route-currentPage="@previousPage">
+                   <i class="fa-solid fa-angles-left"></i>
+               </a>
 
             @for (int i = 1; i <= maxPage; i++)
             {
@@ -59,7 +67,10 @@
             <a class="next page-numbers @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
                asp-controller="User"
                asp-action="Explore"
-               asp-route-currentPage="@(Model.Query.CurrentPage + 1)">></a>
+               asp-route-currentPage="@(Model.Query.CurrentPage + 1)">
+                    <i class="fa-solid fa-angles-right"></i>
+                </a>
         </div>
     </div>
 </section>
+}

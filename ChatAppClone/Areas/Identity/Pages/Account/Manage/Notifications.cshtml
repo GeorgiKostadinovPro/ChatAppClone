@@ -3,6 +3,17 @@
 
 @{
     ViewData["Title"] = "Notifications";
+
+    int previousPage = Model.Query.CurrentPage - 1;
+
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    int maxPage = (int)Math.Ceiling((double)Model.Query.TotalNotificationsCount / Model.Query.NotificationsPerPage);
+
+    bool shouldButtonBeDisabled = Model.Query.CurrentPage == maxPage || !Model.Query.Notifications.Any();
 }
 
 <link rel="stylesheet" href="~/css/notifications.css" asp-append-version="true" />
@@ -27,4 +38,28 @@
             </div>
         </div>
     }
+</section>
+
+<section class="pagination-content">
+    <div class="pagination-wrapper">
+        <div class="pagination">
+            <a class="prev page-numbers @(Model.Query.CurrentPage == 1 ? "disabled" : string.Empty)"
+               asp-controller="User"
+               asp-action="Explore"
+               asp-route-currentPage="@previousPage"><</a>
+
+            @for (int i = 1; i <= maxPage; i++)
+            {
+                <a asp-controller="User"
+                   asp-action="Explore"
+                   asp-route-currentPage="@i"
+                   class="page-numbers" class="@(Model.Query.CurrentPage == i ? "current" : string.Empty)">@i</a>
+            }
+
+            <a class="next page-numbers @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+               asp-controller="User"
+               asp-action="Explore"
+               asp-route-currentPage="@(Model.Query.CurrentPage + 1)">></a>
+        </div>
+    </div>
 </section>

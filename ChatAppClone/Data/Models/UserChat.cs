@@ -9,7 +9,7 @@
             this.Id = Guid.NewGuid();
         }
 
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         public virtual ApplicationUser User { get; set; } = null!;
 

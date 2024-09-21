@@ -30,6 +30,7 @@
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserFollowsService, UserFollowsService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IChatService, ChatService>();
 
             return services;
         }

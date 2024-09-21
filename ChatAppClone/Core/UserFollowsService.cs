@@ -28,7 +28,6 @@
             {
                 UserId = userIdToFollow,
                 FollowerId = currentUserId,
-                IsConfirmed = true,
                 CreatedOn = DateTime.UtcNow,
                 ModifiedOn = DateTime.UtcNow
             };

@@ -12,7 +12,7 @@
         {
         }
 
-        public Image Images { get; set; } = null!;
+        public DbSet<Image> Images { get; set; } = null!;
 
         public DbSet<Message> Messages { get; set; } = null!;
 

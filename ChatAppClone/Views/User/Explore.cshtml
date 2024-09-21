@@ -68,14 +68,18 @@
                     <p>Joined on: @user.CreatedOn</p>
                     <p>Followers: @user.FollowersCount</p>
 
-                    @if (user.IsFollowed)
-                    {
-                        <a>Unfollow</a>
-                    }
-                    else
-                    {
-                        <a>Follow</a>
-                    }
+                    <div class="user-actions">
+                        @if (user.IsFollowed)
+                        {
+                            <a>Unfollow</a>
+                        }
+                        else
+                        {
+                            <a>Follow</a>
+                        }
+                        
+                        <a asp-controller="Chat" asp-action="StartChat" asp-route-userToChatId="@user.Id">Chat</a>
+                    </div>
                 </div>
             }
         </section>

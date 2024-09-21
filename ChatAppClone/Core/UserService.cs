@@ -106,7 +106,7 @@
             }
 
             user.ProfilePictureUrl = null;
-            user.ProfilePicturePublicId= null;
+            user.ProfilePicturePublicId = null;
 
             await this.userManager.UpdateAsync(user);
         }

@@ -15,7 +15,7 @@
 
         public bool IsSeen { get; set; }
 
-        public string CreatorId { get; set; }
+        public string CreatorId { get; set; } = null!;
 
         public virtual ApplicationUser Creator { get; set; } = null!;
 

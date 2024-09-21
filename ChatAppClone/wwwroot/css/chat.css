@@ -107,8 +107,8 @@ html {
     background-color: var(--theme-bg-color);
     max-width: 1600px;
     height: 100vh;
-    margin: 0 auto;
     overflow: hidden;
+    position: relative;
 }
 
 .app .header {
@@ -140,6 +140,33 @@ html {
     display: flex;
     flex-direction: column;
     overflow: auto;
+}
+
+.no-current-chat {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.no-current-chat i {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+}
+
+@media screen and (max-width: 520px)
+{
+    .no-current-chat {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .no-current-chat {
+        font-size: 0.8em;
+    }
 }
 
 .chat-area {

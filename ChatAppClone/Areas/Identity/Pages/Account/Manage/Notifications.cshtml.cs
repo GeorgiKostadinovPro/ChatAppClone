@@ -60,8 +60,22 @@
 
             Query.TotalNotificationsCount = count;
             Query.Notifications = notifications;
-;
+
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostDeleteNotificationAsync(Guid notificationId)
+        {
+            var user = await this.userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
+            }
+
+            await this.notificationService.DeleteNotificationAsync(notificationId);
+
+            return RedirectToPage();
         }
     }
 }

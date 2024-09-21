@@ -32,10 +32,18 @@
                 <p>@notification.Content</p>
             </div>
             <div class="remove-notification-btn">
+                <form method="post" asp-page-handler="DeleteNotification">
+                    <input type="hidden" name="notificationId" value="@notification.Id" />
+                    <button type="submit" class="btn-delete">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </form>
+            </div>
+            @* <div class="remove-notification-btn">
                 <a>
                     <i class="fa-solid fa-times"></i>
                 </a>
-            </div>
+            </div> *@
         </div>
     }
 </section>

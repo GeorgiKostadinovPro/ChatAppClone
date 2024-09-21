@@ -7,7 +7,7 @@
     {
         Task CreateNotificationAsync(string content, string url, string userId);
 
-        Task DeleteNotificationAsync(string notificationId);
+        Task DeleteNotificationAsync(Guid notificationId);
 
         Task<int> GetNotificationsCountByUserId(string userId);
 

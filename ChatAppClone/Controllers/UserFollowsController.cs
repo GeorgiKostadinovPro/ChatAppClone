@@ -64,6 +64,13 @@
                 return BadRequest("You are not following this user.");
             }
 
+            var followerUserName = User.Identity!.Name;
+
+            await this.notificationService.CreateNotificationAsync(
+                $"{followerUserName} has unfollowed you.", "/User/Notifications/" + userIdToUnfollow, userIdToUnfollow);
+
+            await hubContext.Clients.User(userIdToUnfollow).SendAsync("ReceiveNotification", $"{followerUserName} has unfollowed you.");
+
             return Ok(new { message = "Followed successfully." });
         }
     }

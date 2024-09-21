@@ -24,7 +24,7 @@
             return chat;
         }
 
-        public async Task<IEnumerable<Chat>> GetChatsByUserAsync(string userId)
+        public async Task<ICollection<Chat>> GetChatsByUserAsync(string userId)
         {
             return await this.repository.AllReadonly<UserChat>()
                         .Where(uc => uc.UserId == userId)

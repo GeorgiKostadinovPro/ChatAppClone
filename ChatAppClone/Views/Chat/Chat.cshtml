@@ -49,31 +49,35 @@
     </div>
     <div class="wrapper">
         <div class="conversation-area">
-            @foreach(var chat in Model.Chats)
+            @if(Model.Chats.Count == 0)
             {
-                <div class="msg online">
-                    <img class="msg-profile" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png" alt="" />
+                <div class="msg">
                     <div class="msg-detail">
-                        <div class="msg-username">Madison Jones</div>
+                        <div class="msg-username">No chats available</div>
                         <div class="msg-content">
-                            <span class="msg-message">What time was our meet</span>
-                            <span class="msg-date">20m</span>
+                            <span class="msg-message">Add users to chat via the button at the bottom.</span>
                         </div>
                     </div>
                 </div>
             }
-            
-            <div class="msg">
-                <img class="msg-profile" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%2812%29.png" alt="" />
-                <div class="msg-detail">
-                    <div class="msg-username">Miguel Cohen</div>
-                    <div class="msg-content">
-                        <span class="msg-message">Adaptogen taiyaki austin jean shorts brunch</span>
-                        <span class="msg-date">20m</span>
+            else
+            {
+                @foreach (var chat in Model.Chats)
+                {
+                    <div class="msg online">
+                        <img class="msg-profile" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%281%29.png" alt="" />
+                        <div class="msg-detail">
+                            <div class="msg-username">Madison Jones</div>
+                            <div class="msg-content">
+                                <span class="msg-message">What time was our meet</span>
+                                <span class="msg-date">20m</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="msg active">
+                }
+            }
+
+            @* <div class="msg active">
                 <div class="msg-profile group">
                     <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                         <path d="M12 2l10 6.5v7L12 22 2 15.5v-7L12 2zM12 22v-6.5" />
@@ -88,17 +92,7 @@
                         <span class="msg-date">28m</span>
                     </div>
                 </div>
-            </div>
-            <div class="msg online">
-                <img class="msg-profile" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3364143/download+%282%29.png" alt="" />
-                <div class="msg-detail">
-                    <div class="msg-username">Lea Debere</div>
-                    <div class="msg-content">
-                        <span class="msg-message">Shoreditch iPhone jianbing</span>
-                        <span class="msg-date">45m</span>
-                    </div>
-                </div>
-            </div>
+            </div> *@
             
             <a class="add" asp-controller="User" asp-action="Explore"></a>
             <div class="overlay"></div>

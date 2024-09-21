@@ -11,6 +11,6 @@
 
         public Chat? Chat { get; set; }
 
-        public IEnumerable<Chat> Chats { get; set; }
+        public ICollection<Chat> Chats { get; set; }
     }
 }

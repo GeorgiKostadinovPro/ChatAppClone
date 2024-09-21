@@ -196,16 +196,23 @@
         .explore-users .user-content .user-card p {
             font-size: 1.2em;
         }
+        
+        .explore-users .user-content .user-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+        }
 
-        .explore-users .user-content .user-card a {
+        .explore-users .user-content .user-card .user-actions a {
             margin-top: 1em;
-            padding: 0.5em 2em;
+            padding: 0.5em 1em;
             background-color: #315087;
             color: #fff;
             border-radius: 0.5em;
             font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
+            text-align: center;
         }
 
 .pagination-wrapper {

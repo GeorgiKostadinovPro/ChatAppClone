@@ -6,7 +6,7 @@
     {
         Task<Chat?> GetChatByIdAsync(Guid chatId);
 
-        Task<IEnumerable<Chat>> GetChatsByUserAsync(string userId);
+        Task<ICollection<Chat>> GetChatsByUserAsync(string userId);
 
         Task<Chat> CreateChatAsync(string userAId, string userBId);
     }

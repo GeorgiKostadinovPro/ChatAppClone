@@ -1,6 +1,72 @@
-﻿namespace ChatAppClone.wwwroot.css
-{
-    public class notifications
-    {
+﻿.profile-settings-container .container {
+    padding: 0;
+}
+
+h2 {
+    display: none;
+}
+
+.user-notifications {
+    font-size: 1.2em;
+}
+
+    .user-notifications h2 {
+        display: block
+    }
+
+    .user-notifications .notification-card {
+        max-width: 400px;
+        min-width: 245px;
+        margin: 0 0 1em 0;
+        padding: 1em;
+        border-left: 3px solid #1360C4;
+        border-radius: 0.5em;
+        box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.5em;
+    }
+
+        .user-notifications .notification-card .notification-type {
+            color: #1360C4;
+            font-size: 2em;
+        }
+
+        .user-notifications .notification-card .notification-content p {
+            margin: 0;
+        }
+
+            .user-notifications .notification-card .notification-content p:first-of-type {
+                font-size: 0.8em;
+            }
+
+            .user-notifications .notification-card .remove-notification-btn {
+                margin: 0 0 0 auto;
+                font-size: 0.9em;
+                cursor: pointer;
+            }
+
+@media screen and (max-width: 900px) {
+    .user-notifications {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .user-notifications {
+        font-size: 0.9em;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .user-notifications {
+        font-size: 0.8em;
+    }
+}
+
+@media screen and (max-width: 390) {
+    .user-notifications {
+        font-size: 0.7em;
     }
 }

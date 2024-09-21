@@ -9,13 +9,22 @@
 
 <section class="user-notifications">
     <h2>Total Notifications: @Model.Query.TotalNotificationsCount</h2>
-    <div class="notification-card">
-        <div class="notification-type">
-            <i class="fa-solid fa-circle-info"></i>
+
+    @foreach (var notification in Model.Query.Notifications)
+    {
+        <div class="notification-card">
+            <div class="notification-type">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div class="notification-content">
+                <p>@notification.CreatedOn</p>
+                <p>@notification.Content</p>
+            </div>
+            <div class="remove-notification-btn">
+                <a>
+                    <i class="fa-solid fa-times"></i>
+                </a>
+            </div>
         </div>
-        <div class="notification-content">
-            <h4>Info</h4>
-            <p>User A started following you.</p>
-        </div>
-    </div>
+    }
 </section>

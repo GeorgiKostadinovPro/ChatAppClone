@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatAppClone.Data.Migrations
 {
     [DbContext(typeof(ChatAppCloneDbContext))]
-    [Migration("20240918181435_AddTableUserFollows")]
-    partial class AddTableUserFollows
+    [Migration("20240921133849_CreateInitialDatabase")]
+    partial class CreateInitialDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,7 +198,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("Image");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Message", b =>
@@ -235,6 +235,39 @@ namespace ChatAppClone.Data.Migrations
                     b.HasIndex("CreatorId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("ChatAppClone.Data.Models.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.UserChat", b =>
@@ -445,6 +478,16 @@ namespace ChatAppClone.Data.Migrations
                     b.Navigation("Creator");
                 });
 
+            modelBuilder.Entity("ChatAppClone.Data.Models.Notification", b =>
+                {
+                    b.HasOne("ChatAppClone.Data.Models.ApplicationUser", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ChatAppClone.Data.Models.UserChat", b =>
                 {
                     b.HasOne("ChatAppClone.Data.Models.Chat", "Chat")
@@ -541,6 +584,8 @@ namespace ChatAppClone.Data.Migrations
                     b.Navigation("Following");
 
                     b.Navigation("Messages");
+
+                    b.Navigation("Notifications");
 
                     b.Navigation("UsersChats");
                 });

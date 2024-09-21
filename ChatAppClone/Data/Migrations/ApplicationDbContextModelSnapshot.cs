@@ -195,7 +195,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("Image");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Message", b =>

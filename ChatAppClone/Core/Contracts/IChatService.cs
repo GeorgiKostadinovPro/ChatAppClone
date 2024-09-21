@@ -1,12 +1,13 @@
 ﻿namespace ChatAppClone.Core.Contracts
 {
     using ChatAppClone.Data.Models;
+    using ChatAppClone.Models.ViewModels.Chats;
 
     public interface IChatService
     {
-        Task<Chat?> GetChatByIdAsync(Guid chatId);
+        Task<ChatViewModel> GetChatByIdAsync(Guid chatId);
 
-        Task<ICollection<Chat>> GetChatsByUserAsync(string userId);
+        Task<ICollection<ChatViewModel>> GetChatsByUserAsync(string userId);
 
         Task<Chat> CreateChatAsync(string userAId, string userBId);
     }

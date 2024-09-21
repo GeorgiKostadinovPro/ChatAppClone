@@ -9,6 +9,8 @@
             this.MessageImages = new HashSet<ImageViewModel>();
         }
 
+        public Guid Id { get; set; }
+
         public string Content { get; set; } = null!;
 
         public bool IsSeen { get; set; }

@@ -6,11 +6,11 @@
     {
         public GeneralChatViewModel()
         {
-            this.Chats = new HashSet<Chat>();
+            this.Chats = new HashSet<ChatViewModel>();
         }
 
-        public Chat? Chat { get; set; }
+        public ChatViewModel? Chat { get; set; }
 
-        public ICollection<Chat> Chats { get; set; }
+        public ICollection<ChatViewModel> Chats { get; set; }
     }
 }

@@ -2,8 +2,8 @@
 {
     public class ImageViewModel
     {
-        public string Url { get; set; } = null!;
+        public Guid Id { get; set; }
 
-        public string PublicId { get; set; } = null!;
+        public string Url { get; set; } = null!;
     }
 }

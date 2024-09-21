@@ -11,19 +11,17 @@
             this.Messages = new HashSet<MessageViewModel>();
         }
 
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string? Name { get; set; }
-
-        public bool IsGroupChat { get; set; }
 
         public string? ImageUrl { get; set; }
 
         public string? LastMessage { get; set; }
 
-        public DateTime LastActive { get; set; }
+        public string? LastActive { get; set; }
 
-        public IEnumerable<ImageViewModel> Images { get; set; }
+        public ICollection<ImageViewModel> Images { get; set; }
 
         public ICollection<MessageViewModel> Messages { get; set; }
     }

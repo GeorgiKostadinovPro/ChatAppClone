@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatAppClone.Data.Migrations
 {
     [DbContext(typeof(ChatAppCloneDbContext))]
-    [Migration("20240921133849_CreateInitialDatabase")]
+    [Migration("20240921140212_CreateInitialDatabase")]
     partial class CreateInitialDatabase
     {
         /// <inheritdoc />
@@ -310,9 +310,6 @@ namespace ChatAppClone.Data.Migrations
                     b.Property<string>("FollowerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");

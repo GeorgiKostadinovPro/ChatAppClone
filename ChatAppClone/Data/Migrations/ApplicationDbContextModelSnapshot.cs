@@ -158,7 +158,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chats");
+                    b.ToTable("Chats", (string)null);
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Image", b =>
@@ -195,7 +195,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("Images");
+                    b.ToTable("Images", (string)null);
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Message", b =>
@@ -231,7 +231,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Notification", b =>
@@ -264,7 +264,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.UserChat", b =>
@@ -292,7 +292,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersChats");
+                    b.ToTable("UsersChats", (string)null);
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.UserFollows", b =>
@@ -308,9 +308,6 @@ namespace ChatAppClone.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -324,7 +321,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserFollows");
+                    b.ToTable("UserFollows", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

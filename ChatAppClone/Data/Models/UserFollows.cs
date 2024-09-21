@@ -16,7 +16,5 @@
         public string FollowerId { get; set; } = null!;
 
         public virtual ApplicationUser Follower { get; set; } = null!;
-
-        public bool IsConfirmed { get; set; }
     }
 }

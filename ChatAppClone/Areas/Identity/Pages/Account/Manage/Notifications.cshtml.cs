@@ -44,7 +44,7 @@
             public IEnumerable<NotificationViewModel> Notifications { get; set; }
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int? currentPage)
         {
             var user = await this.userManager.GetUserAsync(User);
 
@@ -52,6 +52,8 @@
             {
                 return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
             }
+
+            Query.CurrentPage = currentPage ?? 1;
 
             int count = await this.notificationService.GetNotificationsCountByUserId(user.Id);
             var notifications = await this.notificationService.GetNotificationsAsync(user.Id, Query.CurrentPage);

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{currentPage:int?}"
 @model NotificationsModel
 
 @{
@@ -49,25 +49,22 @@ else
     <section class="pagination-content">
     <div class="pagination-wrapper">
         <div class="pagination">
-            <a class="prev page-numbers @(Model.Query.CurrentPage == 1 ? "disabled" : string.Empty)"
-               asp-controller="User"
-               asp-action="Explore"
+                <a class="prev page-numbers @(Model.Query.CurrentPage == 1 ? "disabled" : string.Empty)"
+                   asp-page="./Notifications"
                    asp-route-currentPage="@previousPage">
-                   <i class="fa-solid fa-angles-left"></i>
-               </a>
+                    <i class="fa-solid fa-angles-left"></i>
+                </a>
 
-            @for (int i = 1; i <= maxPage; i++)
-            {
-                <a asp-controller="User"
-                   asp-action="Explore"
-                   asp-route-currentPage="@i"
-                   class="page-numbers" class="@(Model.Query.CurrentPage == i ? "current" : string.Empty)">@i</a>
-            }
+                @for (int i = 1; i <= maxPage; i++)
+                {
+                    <a asp-page="./Notifications"
+                       asp-route-currentPage="@i"
+                       class="page-numbers @(Model.Query.CurrentPage == i ? "current" : string.Empty)">@i</a>
+                }
 
-            <a class="next page-numbers @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
-               asp-controller="User"
-               asp-action="Explore"
-               asp-route-currentPage="@(Model.Query.CurrentPage + 1)">
+                <a class="next page-numbers @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+                   asp-page="./Notifications"
+                   asp-route-currentPage="@(Model.Query.CurrentPage + 1)">
                     <i class="fa-solid fa-angles-right"></i>
                 </a>
         </div>

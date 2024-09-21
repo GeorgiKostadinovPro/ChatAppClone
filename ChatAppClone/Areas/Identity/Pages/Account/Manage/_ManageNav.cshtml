@@ -1,7 +1,7 @@
 ﻿<div class="col-md-3 d-none d-md-block" style="height:100%">
     <div class="container-fluid nav sidebar flex-column profile-nav">
         <a asp-area="Identity" asp-page="./Index" class="@(ViewContext.ActionDescriptor.DisplayName!.Contains("Index") ? "active" : "") nav-link mt-auto"><i class="far fa-user-circle"></i> Profile</a>
-        <a asp-area="Identity" asp-page="./Email" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Email") ? "active" : "") nav-link"><i class="far fa-bell"></i> Email</a>
+        <a asp-area="Identity" asp-page="./Email" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Email") ? "active" : "") nav-link"><i class="far fa-envelope"></i> Email</a>
         <a asp-area="Identity" asp-page="./ChangePassword" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("ChangePassword") ? "active" : "") nav-link"><i class="fa-solid fa-unlock-keyhole"></i> Password</a>
         <a asp-area="Identity" asp-page="./Notifications" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Notifications") ? "active" : "") nav-link mb-auto"><i class="fa-regular fa-bell"></i> Notifications</a>
         <a asp-area="Identity" asp-page="./PersonalData" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("PersonalData") ? "active" : "") nav-link mb-auto"><i class="fa-solid fa-user-gear"></i> Personal data</a>

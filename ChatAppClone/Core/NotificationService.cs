@@ -36,11 +36,11 @@
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task DeleteNotificationAsync(string notificationId)
+        public async Task DeleteNotificationAsync(Guid notificationId)
         {
             Notification? notification = await this.repository
                 .AllReadonly<Notification>()
-                .FirstOrDefaultAsync(n => n.Id.ToString() == notificationId);
+                .FirstOrDefaultAsync(n => n.Id == notificationId);
 
             if (notification != null)
             {

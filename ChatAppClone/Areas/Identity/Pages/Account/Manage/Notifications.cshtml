@@ -1,21 +1,81 @@
-﻿@page
+﻿@page "{currentPage:int?}"
 @model NotificationsModel
 
 @{
     ViewData["Title"] = "Notifications";
+
+    int previousPage = Model.Query.CurrentPage - 1;
+
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    int maxPage = (int)Math.Ceiling((double)Model.Query.TotalNotificationsCount / Model.Query.NotificationsPerPage);
+
+    bool shouldButtonBeDisabled = Model.Query.CurrentPage == maxPage || !Model.Query.Notifications.Any();
 }
 
 <link rel="stylesheet" href="~/css/notifications.css" asp-append-version="true" />
 
 <section class="user-notifications">
     <h2>Total Notifications: @Model.Query.TotalNotificationsCount</h2>
-    <div class="notification-card">
-        <div class="notification-type">
-            <i class="fa-solid fa-circle-info"></i>
+
+    @foreach (var notification in Model.Query.Notifications)
+    {
+        <div class="notification-card">
+            <div class="notification-type">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div class="notification-content">
+                <p>@notification.CreatedOn</p>
+                <p>@notification.Content</p>
+            </div>
+            <div class="remove-notification-btn">
+                <form method="post" asp-page-handler="DeleteNotification">
+                    <input type="hidden" name="notificationId" value="@notification.Id" />
+                    <button type="submit" class="btn-delete">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </form>
+            </div>
+            @* <div class="remove-notification-btn">
+                <a>
+                    <i class="fa-solid fa-times"></i>
+                </a>
+            </div> *@
         </div>
-        <div class="notification-content">
-            <h4>Info</h4>
-            <p>User A started following you.</p>
+    }
+</section>
+
+@if (Model.Query.TotalNotificationsCount == 0)
+{
+    <p class="no-notifications-p">You have not received any notifications.</p>
+}
+else
+{
+    <section class="pagination-content">
+    <div class="pagination-wrapper">
+        <div class="pagination">
+                <a class="prev page-numbers @(Model.Query.CurrentPage == 1 ? "disabled" : string.Empty)"
+                   asp-page="./Notifications"
+                   asp-route-currentPage="@previousPage">
+                    <i class="fa-solid fa-angles-left"></i>
+                </a>
+
+                @for (int i = 1; i <= maxPage; i++)
+                {
+                    <a asp-page="./Notifications"
+                       asp-route-currentPage="@i"
+                       class="page-numbers @(Model.Query.CurrentPage == i ? "current" : string.Empty)">@i</a>
+                }
+
+                <a class="next page-numbers @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+                   asp-page="./Notifications"
+                   asp-route-currentPage="@(Model.Query.CurrentPage + 1)">
+                    <i class="fa-solid fa-angles-right"></i>
+                </a>
         </div>
     </div>
 </section>
+}

@@ -1,22 +1,5 @@
-﻿const toggleButton = document.querySelector('.dark-light');
-const appDivElement = document.querySelector('.app');
+﻿
 
-function setupColorListeners() {
-    const colors = document.querySelectorAll('.color');
-
-    colors.forEach(color => {
-        color.addEventListener('click', e => {
-            colors.forEach(c => c.classList.remove('selected'));
-            const theme = color.getAttribute('data-color');
-            document.body.setAttribute('data-theme', theme);
-            color.classList.add('selected');
-        });
-    });
-}
-
-toggleButton.addEventListener('click', () => {
-    appDivElement.classList.toggle('dark-mode');
-});
 
 document.querySelectorAll('.chat-card').forEach(chatElement => {
     chatElement.addEventListener('click', function () {
@@ -50,3 +33,24 @@ document.querySelectorAll('.chat-card').forEach(chatElement => {
             });
     });
 });
+
+const toggleButton = document.querySelector('.dark-light');
+const appDivElement = document.querySelector('.app');
+
+function setupColorListeners() {
+    const colors = document.querySelectorAll('.color');
+
+    colors.forEach(color => {
+        color.addEventListener('click', e => {
+            colors.forEach(c => c.classList.remove('selected'));
+            const theme = color.getAttribute('data-color');
+            document.body.setAttribute('data-theme', theme);
+            color.classList.add('selected');
+        });
+    });
+}
+
+toggleButton.addEventListener('click', () => {
+    appDivElement.classList.toggle('dark-mode');
+});
+

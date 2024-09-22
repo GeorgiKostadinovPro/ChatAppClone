@@ -42,8 +42,8 @@
         {
             IQueryable<ApplicationUser> usersQuery = this.repository
                 .AllReadonly<ApplicationUser>()
-                .Where(u => u.Id != userId)
-                .Include(u => u.Followers);
+                .Include(u => u.UsersChats)
+                .Where(u => u.Id != userId);
 
             if (!string.IsNullOrWhiteSpace(model.SearchTerm))
             {
@@ -64,8 +64,7 @@
                                  Username = u.UserName!,
                                  ProfilePictureUrl = u.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl,
                                  CreatedOn = DateHelper.GetDate(u.CreatedOn),
-                                 FollowersCount = u.Followers.Count(),
-                                 IsFollowed = u.Followers.Any(f => f.FollowerId == userId),
+                                 ChatsCount = u.UsersChats.Count
                              })
                              .ToArrayAsync();
 

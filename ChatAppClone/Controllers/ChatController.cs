@@ -14,36 +14,19 @@
         private readonly IChatService chatService;
         private readonly INotificationService notificationService;
 
-        public ChatController(IHubContext<NotificationHub> hubContext, IUserService _userService, IChatService _chatService, INotificationService _notificationService) 
+        public ChatController(
+            IHubContext<NotificationHub> hubContext, 
+            IUserService _userService, 
+            IChatService _chatService, 
+            INotificationService _notificationService
+        ) 
         {
             this.hubContext = hubContext;
             this.userService = _userService;
             this.chatService = _chatService;
             this.notificationService = _notificationService;
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Chat(Guid? chatId)
-        {
-            var chats = await this.chatService.GetChatsByUserAsync(this.GetAuthId());
-            
-            GeneralChatViewModel model = new GeneralChatViewModel
-            {
-                Chats = chats
-            };
-
-            if (!chatId.HasValue)
-            {
-                return this.View(model);
-            }
-
-            var chat = await this.chatService.GetChatByIdAsync(chatId.Value);
-            
-            model.Chat = chat;
-
-            return this.View(model);
-        }
-
+        
         [HttpGet]
         public async Task<IActionResult> StartChat(string userToChatId)
         {
@@ -61,7 +44,33 @@
 
             await hubContext.Clients.User(userToChatId).SendAsync("ReceiveNotification", $"{followerUserName} added you to chat.");
 
-            return RedirectToAction("Chat", new { chatId = chat.Id });
+            return RedirectToAction("Chats");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Chats()
+        {
+            var chats = await this.chatService.GetChatsByUserAsync(this.GetAuthId());
+            
+            GeneralChatViewModel model = new GeneralChatViewModel
+            {
+                Chats = chats
+            };
+
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LoadChat(Guid? chatId)
+        {
+            if (!chatId.HasValue)
+            {
+                return this.RedirectToAction("Chats");
+            }
+
+            var chatModel = await this.chatService.GetChatByIdAsync(chatId.Value);
+
+            return this.PartialView("_ChatDetailsPartial", chatModel);
         }
     }
 }

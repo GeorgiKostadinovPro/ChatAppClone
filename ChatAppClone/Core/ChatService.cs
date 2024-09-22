@@ -22,7 +22,7 @@
             this.userService = _userService;
         }
 
-        public async Task<ChatViewModel> GetChatByIdAsync(Guid chatId)
+        public async Task<ChatViewModel> GetByIdAsync(Guid chatId)
         {
             Chat? chat = await this.repository.AllReadonly<Chat>()
                 .Include(c => c.Messages)
@@ -77,7 +77,7 @@
             return model;
         }
 
-        public async Task<ICollection<ChatViewModel>> GetChatsByUserAsync(string userId)
+        public async Task<ICollection<ChatViewModel>> GetByUserAsync(string userId)
         {
             return await this.repository.AllReadonly<UserChat>()
                         .Where(uc => uc.UserId == userId)
@@ -95,7 +95,7 @@
                         .ToArrayAsync();    
         }
 
-        public async Task<Chat> CreateChatAsync(string userAId, string userBId)
+        public async Task<Chat> CreateAsync(string userAId, string userBId)
         {
             var existingChat = await this.repository.AllReadonly<Chat>()
                 .Include(c => c.UsersChats)
@@ -131,6 +131,19 @@
             await this.repository.SaveChangesAsync();
 
             return chat;
+        }
+
+        public async Task<bool> IsValidAsync(Guid chatId)
+        {
+            var chat = await this.repository.AllReadonly<Chat>()
+                .FirstOrDefaultAsync(c => c.Id == chatId);
+
+            if (chat == null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

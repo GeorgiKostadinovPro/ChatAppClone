@@ -55,8 +55,8 @@
 
             Query.CurrentPage = currentPage ?? 1;
 
-            int count = await this.notificationService.GetNotificationsCountByUserId(user.Id);
-            var notifications = await this.notificationService.GetNotificationsAsync(user.Id, Query.CurrentPage);
+            int count = await this.notificationService.GetCountByUserId(user.Id);
+            var notifications = await this.notificationService.GetAsync(user.Id, Query.CurrentPage);
 
             Query.TotalNotificationsCount = count;
             Query.Notifications = notifications;
@@ -73,7 +73,7 @@
                 return NotFound($"Unable to load user with ID '{this.userManager.GetUserId(User)}'.");
             }
 
-            await this.notificationService.DeleteNotificationAsync(notificationId);
+            await this.notificationService.DeleteAsync(notificationId);
 
             return RedirectToPage();
         }

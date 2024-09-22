@@ -19,7 +19,7 @@
             IUserService _userService, 
             IChatService _chatService, 
             INotificationService _notificationService
-        ) 
+            ) 
         {
             this.hubContext = hubContext;
             this.userService = _userService;
@@ -30,7 +30,7 @@
         [HttpGet]
         public async Task<IActionResult> StartChat(string userToChatId)
         {
-            var chat = await this.chatService.CreateChatAsync(this.GetAuthId(), userToChatId);
+            var chat = await this.chatService.CreateAsync(this.GetAuthId(), userToChatId);
 
             if (chat == null)
             {
@@ -39,7 +39,7 @@
 
             var followerUserName = User.Identity!.Name;
 
-            await this.notificationService.CreateNotificationAsync(
+            await this.notificationService.CreateAsync(
                 $"{followerUserName} added you to chat.", string.Empty, userToChatId);
 
             await hubContext.Clients.User(userToChatId).SendAsync("ReceiveNotification", $"{followerUserName} added you to chat.");
@@ -50,7 +50,7 @@
         [HttpGet]
         public async Task<IActionResult> Chats()
         {
-            var chats = await this.chatService.GetChatsByUserAsync(this.GetAuthId());
+            var chats = await this.chatService.GetByUserAsync(this.GetAuthId());
             
             GeneralChatViewModel model = new GeneralChatViewModel
             {
@@ -68,7 +68,7 @@
                 return this.RedirectToAction("Chats");
             }
 
-            var chatModel = await this.chatService.GetChatByIdAsync(chatId.Value);
+            var chatModel = await this.chatService.GetByIdAsync(chatId.Value);
 
             ViewBag.CurrentUserId = this.GetAuthId();
 

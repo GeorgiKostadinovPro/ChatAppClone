@@ -1,5 +1,19 @@
-﻿
+﻿const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/chatHub")
+    .build();
+connection.on("ReceiveMessage", function (message) {
+    let notificationCountElement = document.querySelector('.notifications-tab');
+    let currentCount = parseInt(notificationCountElement.textContent);
+    notificationCountElement.textContent = currentCount + 1;
 
+    showNotificationModal(message);
+});
+
+connection.start().then(function () {
+    console.log("SignalR connection established");
+}).catch(function (err) {
+    console.error("SignalR connection error:", err.toString());
+});
 
 document.querySelectorAll('.chat-card').forEach(chatElement => {
     chatElement.addEventListener('click', function () {

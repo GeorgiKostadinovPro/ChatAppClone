@@ -22,7 +22,7 @@
             this.userManager = _userManager;
         }
 
-        public async Task CreateNotificationAsync(string content, string url, string userId)
+        public async Task CreateAsync(string content, string url, string userId)
         {
             var notification = new Notification
             {
@@ -38,7 +38,7 @@
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task DeleteNotificationAsync(Guid notificationId)
+        public async Task DeleteAsync(Guid notificationId)
         {
             Notification? notification = await this.repository
                 .AllReadonly<Notification>()
@@ -51,7 +51,7 @@
             }
         }
 
-        public async Task<IEnumerable<NotificationViewModel>> GetNotificationsAsync(string userId, int currPage)
+        public async Task<IEnumerable<NotificationViewModel>> GetAsync(string userId, int currPage)
         {
             IEnumerable<NotificationViewModel> notifications
                 = await this.repository.AllReadonly<Notification>()
@@ -70,7 +70,7 @@
             return notifications;
         }
 
-        public async Task<int> GetNotificationsCountByUserId(string userId)
+        public async Task<int> GetCountByUserId(string userId)
         {
             return await this.repository.AllReadonly<Notification>()
                 .CountAsync(n => n.UserId == userId);

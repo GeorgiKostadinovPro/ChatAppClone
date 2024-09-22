@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatAppClone.Data.Migrations
 {
     [DbContext(typeof(ChatAppCloneDbContext))]
-    [Migration("20240921140212_CreateInitialDatabase")]
+    [Migration("20240922163833_CreateInitialDatabase")]
     partial class CreateInitialDatabase
     {
         /// <inheritdoc />
@@ -298,35 +298,6 @@ namespace ChatAppClone.Data.Migrations
                     b.ToTable("UsersChats");
                 });
 
-            modelBuilder.Entity("ChatAppClone.Data.Models.UserFollows", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FollowerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FollowerId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserFollows");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -504,25 +475,6 @@ namespace ChatAppClone.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ChatAppClone.Data.Models.UserFollows", b =>
-                {
-                    b.HasOne("ChatAppClone.Data.Models.ApplicationUser", "Follower")
-                        .WithMany("Following")
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ChatAppClone.Data.Models.ApplicationUser", "User")
-                        .WithMany("Followers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Follower");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("ChatAppClone.Data.Models.ApplicationRole", null)
@@ -576,10 +528,6 @@ namespace ChatAppClone.Data.Migrations
 
             modelBuilder.Entity("ChatAppClone.Data.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Followers");
-
-                    b.Navigation("Following");
-
                     b.Navigation("Messages");
 
                     b.Navigation("Notifications");

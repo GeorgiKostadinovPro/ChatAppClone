@@ -78,33 +78,6 @@ namespace ChatAppClone.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserFollows",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FollowerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserFollows", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserFollows_AspNetUsers_FollowerId",
-                        column: x => x.FollowerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_UserFollows_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Messages",
                 columns: table => new
                 {
@@ -214,16 +187,6 @@ namespace ChatAppClone.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserFollows_FollowerId",
-                table: "UserFollows",
-                column: "FollowerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserFollows_UserId",
-                table: "UserFollows",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_UsersChats_ChatId",
                 table: "UsersChats",
                 column: "ChatId");
@@ -242,9 +205,6 @@ namespace ChatAppClone.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notifications");
-
-            migrationBuilder.DropTable(
-                name: "UserFollows");
 
             migrationBuilder.DropTable(
                 name: "UsersChats");

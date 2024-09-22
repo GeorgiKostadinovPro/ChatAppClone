@@ -158,7 +158,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chats", (string)null);
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Image", b =>
@@ -195,7 +195,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("MessageId");
 
-                    b.ToTable("Images", (string)null);
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Message", b =>
@@ -231,7 +231,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.ToTable("Messages", (string)null);
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Notification", b =>
@@ -264,7 +264,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("ChatAppClone.Data.Models.UserChat", b =>
@@ -292,36 +292,7 @@ namespace ChatAppClone.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UsersChats", (string)null);
-                });
-
-            modelBuilder.Entity("ChatAppClone.Data.Models.UserFollows", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FollowerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FollowerId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserFollows", (string)null);
+                    b.ToTable("UsersChats");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -501,25 +472,6 @@ namespace ChatAppClone.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ChatAppClone.Data.Models.UserFollows", b =>
-                {
-                    b.HasOne("ChatAppClone.Data.Models.ApplicationUser", "Follower")
-                        .WithMany("Following")
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("ChatAppClone.Data.Models.ApplicationUser", "User")
-                        .WithMany("Followers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Follower");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("ChatAppClone.Data.Models.ApplicationRole", null)
@@ -573,10 +525,6 @@ namespace ChatAppClone.Data.Migrations
 
             modelBuilder.Entity("ChatAppClone.Data.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Followers");
-
-                    b.Navigation("Following");
-
                     b.Navigation("Messages");
 
                     b.Navigation("Notifications");

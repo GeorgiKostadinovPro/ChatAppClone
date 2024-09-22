@@ -28,9 +28,9 @@
             services.AddScoped<IRepository, Repository>();
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserFollowsService, UserFollowsService>();
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IMessageService, MessageService>();
 
             return services;
         }

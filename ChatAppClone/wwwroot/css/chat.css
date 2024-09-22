@@ -111,27 +111,27 @@ html {
     position: relative;
 }
 
-.app .header {
-    height: 80px;
-    width: 100%;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-}
-
-.app .wrapper {
-    width: 100%;
-    display: flex;
-    flex-grow: 1;
-    overflow: hidden;
-}
-
-    .conversation-area,
-    .detail-area {
-        width: 340px;
-        flex-shrink: 0;
+    .app .header {
+        height: 80px;
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
     }
+
+    .app .wrapper {
+        width: 100%;
+        display: flex;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+.conversation-area,
+.detail-area {
+    width: 340px;
+    flex-shrink: 0;
+}
 
 .detail-area {
     border-left: 1px solid var(--border-color);
@@ -148,13 +148,12 @@ html {
     font-size: 1.2em;
 }
 
-.no-current-chat i {
-    font-size: 3em;
-    margin-bottom: 0.5em;
-}
+    .no-current-chat i {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+    }
 
-@media screen and (max-width: 520px)
-{
+@media screen and (max-width: 520px) {
     .no-current-chat {
         font-size: 1em;
     }
@@ -227,9 +226,9 @@ html {
     flex-shrink: 0;
 }
 
-.dark-light:hover {
-    color: var(--theme-color);
-}
+    .dark-light:hover {
+        color: var(--theme-color);
+    }
 
     .dark-light svg {
         width: 100%;
@@ -244,10 +243,10 @@ html {
     transition: 0.3s ease-in-out;
 }
 
-.user-profile:hover {
-    transform: scale(1.10);
-    box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.5);
-}
+    .user-profile:hover {
+        transform: scale(1.10);
+        box-shadow: 0 0 0.5em 0 rgba(0, 0, 0, 0.5);
+    }
 
 .settings {
     color: var(--settings-icon-color);
@@ -256,9 +255,9 @@ html {
     flex-shrink: 0;
 }
 
-.settings:hover {
-    color: var(--theme-color);
-}
+    .settings:hover {
+        color: var(--theme-color);
+    }
 
 .home-page {
     position: relative;
@@ -268,13 +267,13 @@ html {
     height: 22px;
 }
 
-.home-page i {
-    display: block;
-    position: absolute;
-    bottom: -1.5px;
-    color: var(--settings-icon-color);
-    font-size: 20px;
-}
+    .home-page i {
+        display: block;
+        position: absolute;
+        bottom: -1.5px;
+        color: var(--settings-icon-color);
+        font-size: 20px;
+    }
 
     .home-page:hover i {
         color: var(--theme-color);
@@ -849,3 +848,13 @@ html {
             padding-right: 10px;
         }
 }
+
+#send-message-button {
+    background: none;
+    border: none;
+    margin-right: 10px;
+}
+
+    #send-message-button:hover {
+        color: #1877F2;
+    }

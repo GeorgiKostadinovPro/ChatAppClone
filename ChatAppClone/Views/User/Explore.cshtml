@@ -66,18 +66,9 @@
                     <img src=@user.ProfilePictureUrl />
                     <h3>@user.Username</h3>
                     <p>Joined on: @user.CreatedOn</p>
-                    <p>Followers: @user.FollowersCount</p>
+                    <p>Chats: @user.ChatsCount</p>
 
                     <div class="user-actions">
-                        @if (user.IsFollowed)
-                        {
-                            <a>Unfollow</a>
-                        }
-                        else
-                        {
-                            <a>Follow</a>
-                        }
-                        
                         <a asp-controller="Chat" asp-action="StartChat" asp-route-userToChatId="@user.Id">Chat</a>
                     </div>
                 </div>

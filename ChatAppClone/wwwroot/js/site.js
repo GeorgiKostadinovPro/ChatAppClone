@@ -1,32 +1,6 @@
-﻿function toggleIcon(element) {
-    element.classList.toggle('clicked');
-    const icon = element.querySelector('.fa');
-
-    if (icon.classList.contains('fa-bars')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-times');
-    } else {
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-    }
-
-    const mobileNav = document.querySelector('.site-nav .mobile-nav');
-    if (mobileNav.classList.contains('show')) {
-        mobileNav.classList.remove('show');
-    } else {
-        mobileNav.classList.add('show');
-    }
-}
-
-const connection = new signalR.HubConnectionBuilder()
+﻿const connection = new signalR.HubConnectionBuilder()
     .withUrl("/notificationHub")
     .build();
-
-connection.start().then(function () {
-    console.log("SignalR connection established");
-}).catch(function (err) {
-    console.error("SignalR connection error:", err.toString());
-});
 
 connection.on("ReceiveNotification", function (message) {
     let notificationCountElement = document.querySelector('.notifications-tab');
@@ -34,6 +8,12 @@ connection.on("ReceiveNotification", function (message) {
     notificationCountElement.textContent = currentCount + 1;
 
     showNotificationModal(message);
+});
+
+connection.start().then(function () {
+    console.log("SignalR connection established");
+}).catch(function (err) {
+    console.error("SignalR connection error:", err.toString());
 });
 
 function showNotificationModal(message) {
@@ -62,4 +42,24 @@ function showNotificationModal(message) {
     setTimeout(() => {
         modal.remove();
     }, 3000);
+}
+
+function toggleIcon(element) {
+    element.classList.toggle('clicked');
+    const icon = element.querySelector('.fa');
+
+    if (icon.classList.contains('fa-bars')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+
+    const mobileNav = document.querySelector('.site-nav .mobile-nav');
+    if (mobileNav.classList.contains('show')) {
+        mobileNav.classList.remove('show');
+    } else {
+        mobileNav.classList.add('show');
+    }
 }

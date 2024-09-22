@@ -39,7 +39,24 @@ connection.on("ReceiveNotification", function (message) {
 function showNotificationModal(message) {
     const modal = document.createElement('div');
     modal.classList.add('notification-modal');
-    modal.innerHTML = `<p>${message}</p>`;
+
+    const infoIcon = document.createElement('i');
+    infoIcon.classList.add('fa-solid', 'fa-circle-info');
+
+    const messageParagraph = document.createElement('p');
+    messageParagraph.textContent = message;
+
+    const closeIcon = document.createElement('i');
+    closeIcon.classList.add('fa-solid', 'fa-times');
+
+    closeIcon.addEventListener('click', () => {
+        modal.remove();
+    });
+
+    modal.appendChild(infoIcon);
+    modal.appendChild(messageParagraph);
+    modal.appendChild(closeIcon);
+
     document.body.appendChild(modal);
 
     setTimeout(() => {

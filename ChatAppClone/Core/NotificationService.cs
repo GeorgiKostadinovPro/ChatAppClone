@@ -1,12 +1,14 @@
 ﻿namespace ChatAppClone.Core
 {
     using ChatAppClone.Common.Constants;
+    using ChatAppClone.Common.Helpers;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
     using ChatAppClone.Models.ViewModels.Notifications;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
 
     public class NotificationService : INotificationService
@@ -60,7 +62,7 @@
                              {
                                  Id = n.Id,
                                  Content = n.Content,
-                                 CreatedOn = n.CreatedOn.ToString("dd MMM yyyy"),
+                                 CreatedOn = DateHelper.GetDate(n.CreatedOn),
                                  Type = "Info"
                              })
                              .ToArrayAsync();

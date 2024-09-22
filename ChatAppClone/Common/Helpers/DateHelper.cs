@@ -21,5 +21,10 @@
 
             return $"{(int)(timeSpan.TotalDays / 365)} y ago";
         }
+
+        public static string GetDate(DateTime dateTime)
+        {
+            return dateTime.ToString("dd MMM yyyy");
+        }
     }
 }

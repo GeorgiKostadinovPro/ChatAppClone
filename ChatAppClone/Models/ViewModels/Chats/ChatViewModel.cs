@@ -7,6 +7,7 @@
     {
         public ChatViewModel()
         {
+            this.Participants = new HashSet<ParticipantViewModel>();
             this.Images = new HashSet<ImageViewModel>();
             this.Messages = new HashSet<MessageViewModel>();
         }
@@ -20,6 +21,10 @@
         public string? LastMessage { get; set; }
 
         public string? LastActive { get; set; }
+
+        public string? CreatedOn { get; set; }
+
+        public ICollection<ParticipantViewModel> Participants { get; set; }
 
         public ICollection<ImageViewModel> Images { get; set; }
 

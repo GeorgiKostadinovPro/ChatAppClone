@@ -39,7 +39,17 @@
             model.Id = chatId;
             model.Name = chat.Name;
             model.ImageUrl = chat.ImageUrl;
+            model.CreatedOn = DateHelper.GetDate(chat.CreatedOn);
             model.LastActive = DateHelper.TimeAgo(chat.LastActive);
+
+            model.Participants = await this.repository.AllReadonly<UserChat>()
+                .Include(uc => uc.User)
+                .Where(uc => uc.ChatId == chatId)
+                .Select(uc => new ParticipantViewModel
+                {
+                    Id = uc.UserId,
+                    ProfilePictureUrl = uc.User.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl
+                }).ToArrayAsync();
 
             model.LastMessage = chat.LastMessage == null ? "No messages yet" : chat.LastMessage.Substring(0, 30) + "...";
             model.Messages = chat.Messages
@@ -50,6 +60,7 @@
                     CreatorId = m.CreatorId,
                     Content = m.Content,
                     IsSeen = m.IsSeen,
+                    CreatedOn = DateHelper.TimeAgo(m.CreatedOn),
                     MessageImages = m.Images.Select(mi => new ImageViewModel
                     {
                         Id = mi.Id,

@@ -25,7 +25,7 @@
                     <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
                     <li><a asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-controller="User" asp-action="Explore">Explore</a></li>
-                    <li><a asp-controller="Chat" asp-action="Chat">Chat</a></li>
+                    <li><a asp-controller="Chat" asp-action="Chats">Chat</a></li>
                     <partial name="_LoginPartial" />
                 </ul>
 
@@ -39,7 +39,7 @@
                         <a asp-controller="Home" asp-action="Privacy" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Privacy") ? "active" : "") nav-link"><i class="fa-solid fa-shield-halved"></i> Privacy</a>
                         <a asp-controller="Home" asp-action="About" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("About") ? "active" : "") nav-link"><i class="far fa-file-alt"></i> About</a>
                         <a asp-controller="User" asp-action="Explore" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("About") ? "active" : "") nav-link"><i class="fa-regular fa-compass"></i> Explore</a>
-                        <a asp-controller="Chat" asp-action="Chat" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Chat") ? "active" : "") nav-link mb-auto"><i class="fa-regular fa-comment-dots"></i> Chat</a>
+                        <a asp-controller="Chat" asp-action="Chats" class="@(ViewContext.ActionDescriptor.DisplayName.Contains("Chats") ? "active" : "") nav-link mb-auto"><i class="fa-regular fa-comment-dots"></i> Chat</a>
                         <partial name="_LoginPartial" />
                     </div>
                 </div>

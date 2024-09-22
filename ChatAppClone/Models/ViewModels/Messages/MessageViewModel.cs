@@ -15,6 +15,8 @@
 
         public bool IsSeen { get; set; }
 
+        public string CreatedOn { get; set; } = null!;
+
         public string CreatorId { get; set; } = null!;
 
         public IEnumerable<ImageViewModel> MessageImages { get; set; } 

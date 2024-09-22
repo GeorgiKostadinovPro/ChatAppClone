@@ -9,8 +9,6 @@
             this.Chats = new HashSet<ChatViewModel>();
         }
 
-        public ChatViewModel? Chat { get; set; }
-
         public ICollection<ChatViewModel> Chats { get; set; }
     }
 }

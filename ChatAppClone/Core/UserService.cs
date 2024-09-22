@@ -35,6 +35,8 @@
                 throw new InvalidOperationException(UserMessages.AlreadyExists);
             }
 
+            user.ProfilePictureUrl = user.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl;
+
             return user;
         }
 

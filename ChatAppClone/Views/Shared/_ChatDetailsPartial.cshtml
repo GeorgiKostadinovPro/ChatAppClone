@@ -11,7 +11,7 @@
 else
 {
     <div class="chat-area">
-        <input id="chat-id" type="hidden" value="@Model.Id"/>
+        <input id="chatId" type="hidden" value="@Model.Id"/>
         <div class="chat-area-header">
             <div class="chat-area-title">@Model.Name</div>
             <div class="chat-area-group">
@@ -22,6 +22,7 @@ else
             </div>
         </div>
         <div class="chat-area-main">
+            <input id="currUserId" type="hidden" value="@ViewBag.CurrentUserId" />
             @foreach (var message in Model.Messages)
             {
                 var isOwner = message.CreatorId == ViewBag.CurrentUserId;

@@ -28,19 +28,19 @@
             this.messageService = _messageService;
         }
 
-        [HttpPost]
+        [HttpPost("CreateMessage")]
         public async Task<IActionResult> CreateMessage([FromBody] MessageRequest request)
         {
             if (!(await this.chatService.IsValidAsync(request.ChatId)))
             {
-                return this.BadRequest();
+                return this.BadRequest("invalid chat id");
             }
 
             string currUserId = this.GetAuthId();
 
-            if (!string.IsNullOrWhiteSpace(currUserId))
+            if (string.IsNullOrWhiteSpace(currUserId))
             {
-                return this.BadRequest();
+                return this.BadRequest("invalid user Id");
             }
 
             MessageViewModel model = await this.messageService.CreateAsync(request.ChatId, currUserId, request.Message);
@@ -48,7 +48,6 @@
             await this.hubContext.Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", new
             {
                 creatorId = model.CreatorId,
-                isOwner = model.CreatorId == currUserId,
                 creatorProfilePictureUrl = (await userService.GetByIdAsync(currUserId)).ProfilePictureUrl,
                 content = model.Content,
                 createdOn = model.CreatedOn,

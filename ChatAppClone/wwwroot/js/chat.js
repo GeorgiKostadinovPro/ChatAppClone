@@ -63,8 +63,7 @@ document.querySelectorAll('.chat-card').forEach(chatElement => {
 function sendMessage(messageInput) {
     const messageContent = messageInput.value.trim();
     if (messageContent) {
-        const chatId = document.getElementById("chat-id").value;
-
+        const chatId = document.getElementById("chatId").value;
         fetch(`/api/Message/CreateMessage`, {
             method: 'POST',
             headers: {
@@ -86,58 +85,24 @@ function sendMessage(messageInput) {
 }
 
 function appendMessageToChat(message) {
-    const chatArea = document.querySelector('.chat-area');
-
-    const isOwner = message.isOwner;
+    const chatArea = document.querySelector('.chat-area-main');
+    const currUserId = document.getElementById("currUserId").value;
+    const isOwner = message.creatorId == currUserId;
     const messageClass = isOwner ? "chat-msg owner" : "chat-msg";
 
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('chat-msg', messageClass);  // Add both chat-msg and owner if applicable
+    const messageDiv = `
+        <div class="${messageClass}">
+            <div class="chat-msg-profile">
+                <img class="chat-msg-img" src="${message.creatorProfilePictureUrl}" alt="Profile Image">
+                <div class="chat-msg-date">Message sent ${message.createdOn} ago</div>
+            </div>
+            <div class="chat-msg-content">
+                <div class="chat-msg-text">${message.content}</div>
+            </div>
+        </div>
+    `;
 
-    const profileDiv = document.createElement('div');
-    profileDiv.classList.add('chat-msg-profile');
-
-    const profileImage = document.createElement('img');
-    profileImage.classList.add('chat-msg-img');
-    profileImage.src = message.creatorProfilePictureUrl;
-    profileImage.alt = "Profile Image";
-
-    const dateDiv = document.createElement('div');
-    dateDiv.classList.add('chat-msg-date');
-    dateDiv.textContent = `Message sent ${message.createdOn} ago`;  // Date information from backend
-
-    profileDiv.appendChild(profileImage);
-    profileDiv.appendChild(dateDiv);
-
-    const contentDiv = document.createElement('div');
-    contentDiv.classList.add('chat-msg-content');
-
-    const messageTextDiv = document.createElement('div');
-    messageTextDiv.classList.add('chat-msg-text');
-    messageTextDiv.textContent = message.content;
-
-    contentDiv.appendChild(messageTextDiv);
-
-    if (message.messageImages && message.messageImages.length > 0) {
-        message.messageImages.forEach(image => {
-            const imageDiv = document.createElement('div');
-            imageDiv.classList.add('chat-msg-text');
-
-            const img = document.createElement('img');
-            img.src = image.url;
-            img.alt = "Message Image";
-
-            imageDiv.appendChild(img);
-            contentDiv.appendChild(imageDiv);
-        });
-    }
-r
-    messageDiv.appendChild(profileDiv);
-    messageDiv.appendChild(contentDiv);
-
-    chatArea.appendChild(messageDiv);
-
-    chatArea.scrollTop = chatArea.scrollHeight;
+    chatArea.innerHTML += messageDiv;
 }
 
 const toggleButton = document.querySelector('.dark-light');

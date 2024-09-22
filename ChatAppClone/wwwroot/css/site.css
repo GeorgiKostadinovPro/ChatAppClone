@@ -101,3 +101,61 @@ body.modal-open {
     ::-webkit-scrollbar-thumb:hover {
         background-color: #a8bbbf;
     }
+
+.notification-modal {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background-color: #315087;
+    color: #fff;
+    padding: 20px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    animation: fadeInOut 5s ease-in-out;
+}
+
+    .notification-modal .fa-circle-info {
+        font-size: 1.5em;
+    }
+
+    .notification-modal .fa-times {
+        cursor: pointer;
+    }
+
+.notification-modal p {
+    font-weight: bold;
+    margin: 0;
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@media screen and (max-width: 400px)
+{
+    .notification-modal .fa-circle-info {
+        font-size: 1.2em;
+    }
+
+    .notification-modal p {
+        font-size: 0.9em;
+    }
+}

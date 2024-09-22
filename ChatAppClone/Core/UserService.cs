@@ -11,6 +11,8 @@
     using ChatAppClone.Data.Repositories;
     using Microsoft.EntityFrameworkCore;
     using ChatAppClone.Common.Constants;
+    using ChatAppClone.Common.Helpers;
+    using System;
 
     public class UserService : IUserService
     {
@@ -61,7 +63,7 @@
                                  Id = u.Id,
                                  Username = u.UserName!,
                                  ProfilePictureUrl = u.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl,
-                                 CreatedOn = u.CreatedOn.ToString("dd MMM yyyy"),
+                                 CreatedOn = DateHelper.GetDate(u.CreatedOn),
                                  FollowersCount = u.Followers.Count(),
                                  IsFollowed = u.Followers.Any(f => f.FollowerId == userId),
                              })

@@ -70,6 +70,8 @@
 
             var chatModel = await this.chatService.GetChatByIdAsync(chatId.Value);
 
+            ViewBag.CurrentUserId = this.GetAuthId();
+
             return this.PartialView("_ChatDetailsPartial", chatModel);
         }
     }

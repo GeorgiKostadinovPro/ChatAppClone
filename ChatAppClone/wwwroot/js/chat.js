@@ -1,15 +1,18 @@
 ﻿const toggleButton = document.querySelector('.dark-light');
-const colors = document.querySelectorAll('.color');
 const appDivElement = document.querySelector('.app');
 
-colors.forEach(color => {
-    color.addEventListener('click', e => {
-        colors.forEach(c => c.classList.remove('selected'));
-        const theme = color.getAttribute('data-color');
-        document.body.setAttribute('data-theme', theme);
-        color.classList.add('selected');
+function setupColorListeners() {
+    const colors = document.querySelectorAll('.color');
+
+    colors.forEach(color => {
+        color.addEventListener('click', e => {
+            colors.forEach(c => c.classList.remove('selected'));
+            const theme = color.getAttribute('data-color');
+            document.body.setAttribute('data-theme', theme);
+            color.classList.add('selected');
+        });
     });
-});
+}
 
 toggleButton.addEventListener('click', () => {
     appDivElement.classList.toggle('dark-mode');
@@ -18,6 +21,9 @@ toggleButton.addEventListener('click', () => {
 document.querySelectorAll('.chat-card').forEach(chatElement => {
     chatElement.addEventListener('click', function () {
         const chatId = chatElement.querySelector('input').value;
+
+        const noChatMessage = document.querySelector('.no-current-chat');
+        noChatMessage.style.display = 'none';
 
         fetch(`/Chat/LoadChat?chatId=${chatId}`)
             .then(response => {
@@ -36,6 +42,8 @@ document.querySelectorAll('.chat-card').forEach(chatElement => {
                 }
 
                 document.querySelector('.conversation-area').insertAdjacentHTML('afterend', html);
+
+                setupColorListeners();
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);

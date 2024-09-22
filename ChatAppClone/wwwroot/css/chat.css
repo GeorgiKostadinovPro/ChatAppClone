@@ -143,10 +143,7 @@ html {
 }
 
 .no-current-chat {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(0, -50%);
+    margin: auto;
     text-align: center;
     font-size: 1.2em;
 }
@@ -154,12 +151,6 @@ html {
 .no-current-chat i {
     font-size: 3em;
     margin-bottom: 0.5em;
-}
-
-@media screen and (max-width: 780px) {
-    .no-current-chat {
-        transform: translate(-50%, -50%);
-    }
 }
 
 @media screen and (max-width: 520px)
@@ -432,6 +423,8 @@ html {
 
 .chat-area-profile {
     width: 32px;
+    height: auto;
+    aspect-ratio: 1;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -640,6 +633,10 @@ html {
     .detail-area input::placeholder {
         color: var(--detail-font-color);
     }
+
+.no-photos-shared-p {
+    grid-column: span 4;
+}
 
 .detail-changes {
     margin-top: 40px;

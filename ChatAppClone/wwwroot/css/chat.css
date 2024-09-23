@@ -855,6 +855,12 @@ html {
     margin-right: 10px;
 }
 
-    #send-message-button:hover {
-        color: #1877F2;
+    #send-message-button i {
+        color: var(--settings-icon-color);
     }
+
+    #send-message-button:hover i {
+        color: var(--settings-icon-hover);
+    }
+
+    

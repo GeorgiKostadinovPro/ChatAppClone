@@ -1,6 +1,7 @@
 ﻿const connection = new signalR.HubConnectionBuilder()
     .withUrl("/chatHub")
     .build();
+
 connection.on("ReceiveMessage", function (message) {
     appendMessageToChat(message);
 });
@@ -44,6 +45,13 @@ document.querySelectorAll('.chat-card').forEach(chatElement => {
                     const newSendButton = document.getElementById('send-message-button');
 
                     newSendButton.addEventListener('click', () => sendMessage(messageInput));
+
+                    messageInput.addEventListener('keydown', function (event) {
+                        if (event.key === 'Enter') {
+                            event.preventDefault();
+                            sendMessage(messageInput);
+                        }
+                    });
                 }
 
                 setupColorListeners();

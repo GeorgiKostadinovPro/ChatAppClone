@@ -852,7 +852,7 @@ html {
 #send-message-button {
     background: none;
     border: none;
-    margin-right: 10px;
+    margin: 0 10px;
 }
 
     #send-message-button i {
@@ -863,4 +863,10 @@ html {
         color: var(--settings-icon-hover);
     }
 
-    
+#write-message-input {
+    max-width: 300px;
+}
+
+.emojionearea {
+    width: 95%;
+}

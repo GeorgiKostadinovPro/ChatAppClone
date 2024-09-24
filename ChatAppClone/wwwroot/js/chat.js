@@ -54,9 +54,9 @@
                     emojiAreaInstance.on('keydown', function (editor, event) {
                         if (event.key === 'Enter') {
                             event.preventDefault();
-                            const messageContent = emojiAreaInstance.getText(); // Get the text from emojioneArea
-                            sendMessage(messageContent); // Send the message
-                            emojiAreaInstance.setText(''); // Clear the input after sending
+                            const messageContent = emojiAreaInstance.getText();
+                            sendMessage(messageContent);
+                            emojiAreaInstance.setText('');
                         }
                     });
 
@@ -88,6 +88,9 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
+
+                    document.querySelector('.msg-last-message').textContent
+                        = messageContent.length < 30 ? messageContent : messageContent.slice(0, 30) + "...";
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);

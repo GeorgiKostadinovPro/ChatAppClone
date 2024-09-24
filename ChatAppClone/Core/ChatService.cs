@@ -51,7 +51,10 @@
                     ProfilePictureUrl = uc.User.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl
                 }).ToArrayAsync();
 
-            model.LastMessage = chat.LastMessage == null ? "No messages yet" : chat.LastMessage.Substring(0, 30) + "...";
+            model.LastMessage = chat.LastMessage == null 
+                ? "No messages yet" 
+                : chat.LastMessage.Length < 30 ? chat.LastMessage : chat.LastMessage.Substring(0, 30) + "...";
+
             model.Messages = chat.Messages
                 .OrderByDescending(m => m.CreatedOn)
                 .Select(m => new MessageViewModel

@@ -1,14 +1,14 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
-    const connection = new signalR.HubConnectionBuilder()
+    const chatConnection = new signalR.HubConnectionBuilder()
         .withUrl("/chatHub")
         .build();
 
-    connection.on("ReceiveMessage", function (message) {
+    chatConnection.on("ReceiveMessage", function (message) {
         appendMessageToChat(message);
     });
 
-    connection.start().then(function () {
+    chatConnection.start().then(function () {
         console.log("SignalR connection established");
     }).catch(function (err) {
         console.error("SignalR connection error:", err.toString());
@@ -62,7 +62,7 @@
 
                     setupColorListeners();
 
-                    connection.invoke("JoinChatGroup", chatId).then(function () {
+                    chatConnection.invoke("JoinChatGroup", chatId).then(function () {
                         console.log("Joined chat group: " + chatId);
                     }).catch(function (err) {
                         console.error("Error joining chat group:", err.toString());

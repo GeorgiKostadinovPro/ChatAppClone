@@ -1,8 +1,8 @@
-﻿const connection = new signalR.HubConnectionBuilder()
+﻿const notificationConnection = new signalR.HubConnectionBuilder()
     .withUrl("/notificationHub")
     .build();
 
-connection.on("ReceiveNotification", function (message) {
+notificationConnection.on("ReceiveNotification", function (message) {
     let notificationCountElement = document.querySelector('.notifications-tab');
     let currentCount = parseInt(notificationCountElement.textContent);
     notificationCountElement.textContent = currentCount + 1;
@@ -10,7 +10,7 @@ connection.on("ReceiveNotification", function (message) {
     showNotificationModal(message);
 });
 
-connection.start().then(function () {
+notificationConnection.start().then(function () {
     console.log("SignalR connection established");
 }).catch(function (err) {
     console.error("SignalR connection error:", err.toString());

@@ -8,91 +8,23 @@
     using ChatAppClone.Data.Repositories;
     using ChatAppClone.Models.ViewModels.Chats;
     using ChatAppClone.Models.ViewModels.Images;
-    using ChatAppClone.Models.ViewModels.Messages;
     using Microsoft.EntityFrameworkCore;
 
     public class ChatService : IChatService
     {
         private readonly IRepository repository;
         private readonly IUserService userService;
+        private readonly IMessageService messageService;
 
-        public ChatService(IRepository _repository, IUserService _userService)
+        public ChatService(
+            IRepository _repository,
+            IUserService _userService,
+            IMessageService _messageService
+            )
         {
             this.repository = _repository;
             this.userService = _userService;
-        }
-
-        public async Task<ChatViewModel> GetByIdAsync(Guid chatId)
-        {
-            Chat? chat = await this.repository.AllReadonly<Chat>()
-                .Include(c => c.Messages)
-                .Include(c => c.Images)
-                .FirstOrDefaultAsync(c => c.Id == chatId);
-
-            ChatViewModel model = new ChatViewModel();
-
-            if (chat == null)
-            {
-                return model;
-            }
-
-            model.Id = chatId;
-            model.Name = chat.Name;
-            model.ImageUrl = chat.ImageUrl;
-            model.CreatedOn = DateHelper.GetDate(chat.CreatedOn);
-            model.LastActive = DateHelper.TimeAgo(chat.LastActive);
-
-            model.Participants = await this.repository.AllReadonly<UserChat>()
-                .Include(uc => uc.User)
-                .Where(uc => uc.ChatId == chatId)
-                .Select(uc => new ParticipantViewModel
-                {
-                    Id = uc.UserId,
-                    ProfilePictureUrl = uc.User.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl
-                }).ToArrayAsync();
-
-            model.LastMessage = chat.LastMessage == null ? "No messages yet" : chat.LastMessage.Substring(0, 30) + "...";
-            model.Messages = chat.Messages
-                .OrderByDescending(m => m.CreatedOn)
-                .Select(m => new MessageViewModel
-                {
-                    Id = m.Id,
-                    CreatorId = m.CreatorId,
-                    Content = m.Content,
-                    IsSeen = m.IsSeen,
-                    CreatedOn = DateHelper.TimeAgo(m.CreatedOn),
-                    MessageImages = m.Images.Select(mi => new ImageViewModel
-                    {
-                        Id = mi.Id,
-                        Url = mi.Url
-                    })
-                }).ToArray();
-
-            model.Images = chat.Images.Select(i => new ImageViewModel
-            {
-                Id = i.Id,
-                Url = i.Url
-            }).ToArray();
-            
-            return model;
-        }
-
-        public async Task<ICollection<ChatViewModel>> GetByUserAsync(string userId)
-        {
-            return await this.repository.AllReadonly<UserChat>()
-                        .Where(uc => uc.UserId == userId)
-                        .Include(uc => uc.Chat)
-                        .Select(uc => uc.Chat)
-                        .OrderBy(c => c.ModifiedOn ?? c.CreatedOn)
-                        .Select(c => new ChatViewModel
-                        {
-                            Id = c.Id,
-                            Name = c.Name,
-                            ImageUrl = c.ImageUrl,
-                            LastMessage = c.LastMessage == null ? "No messages yet" : c.LastMessage.Substring(0, 30) + "...",
-                            LastActive = DateHelper.TimeAgo(c.LastActive)
-                        })
-                        .ToArrayAsync();    
+            this.messageService = _messageService;
         }
 
         public async Task<Chat> CreateAsync(string userAId, string userBId)
@@ -115,9 +47,9 @@
                 Name = $"{userA.UserName} & {userB.UserName}",
                 ImageUrl = userB.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl,
                 IsGroupChat = false,
-                LastActive = DateTime.UtcNow,
-                CreatedOn = DateTime.UtcNow,
-                ModifiedOn = DateTime.UtcNow
+                LastActive = DateTime.UtcNow.ToLocalTime(),
+                CreatedOn = DateTime.UtcNow.ToLocalTime(),
+                ModifiedOn = DateTime.UtcNow.ToLocalTime()
             };
 
             await this.repository.AddAsync(chat);
@@ -131,6 +63,61 @@
             await this.repository.SaveChangesAsync();
 
             return chat;
+        }
+
+        public async Task<ChatViewModel> GetByIdAsync(Guid chatId)
+        {
+            Chat? chat = await this.repository.AllReadonly<Chat>()
+                .Include(c => c.Images)
+                .FirstOrDefaultAsync(c => c.Id == chatId);
+
+            ChatViewModel model = new ChatViewModel();
+
+            if (chat == null)
+            {
+                return model;
+            }
+
+            model.Id = chat.Id;
+            model.Name = chat.Name;
+            model.ImageUrl = chat.ImageUrl;
+            model.CreatedOn = DateHelper.GetDate(chat.CreatedOn);
+            model.LastActive = DateHelper.TimeAgo(chat.LastActive);
+            model.LastMessage = chat.LastMessage == null
+                ? "No messages yet"
+                : chat.LastMessage.Length < 30 ? chat.LastMessage : chat.LastMessage.Substring(0, 30) + "...";
+
+            model.Participants = await this.userService.GetByChatAsync(chat.Id);
+
+            model.Messages = await this.messageService.GetByChatId(chatId);
+
+            model.Images = chat.Images.Select(i => new ImageViewModel
+            {
+                Id = i.Id,
+                Url = i.Url
+            }).ToArray();
+
+            return model;
+        }
+
+        public async Task<ICollection<ChatViewModel>> GetByUserAsync(string userId)
+        {
+            return await this.repository.AllReadonly<UserChat>()
+                        .Where(uc => uc.UserId == userId)
+                        .Include(uc => uc.Chat)
+                        .Select(uc => uc.Chat)
+                        .OrderBy(c => c.ModifiedOn ?? c.CreatedOn)
+                        .Select(c => new ChatViewModel
+                        {
+                            Id = c.Id,
+                            Name = c.Name,
+                            ImageUrl = c.ImageUrl,
+                            LastMessage = c.LastMessage == null
+                                ? "No messages yet"
+                                : c.LastMessage.Length < 30 ? c.LastMessage : c.LastMessage.Substring(0, 30) + "...",
+                            LastActive = DateHelper.TimeAgo(c.LastActive)
+                        })
+                        .ToArrayAsync();
         }
 
         public async Task<bool> IsValidAsync(Guid chatId)

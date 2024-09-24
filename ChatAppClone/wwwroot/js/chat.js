@@ -1,20 +1,20 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
-    const connection = new signalR.HubConnectionBuilder()
+    const chatConnection = new signalR.HubConnectionBuilder()
         .withUrl("/chatHub")
         .build();
 
-    connection.on("ReceiveMessage", function (message) {
+    chatConnection.on("ReceiveMessage", function (message) {
         appendMessageToChat(message);
     });
 
-    connection.start().then(function () {
+    chatConnection.start().then(function () {
         console.log("SignalR connection established");
     }).catch(function (err) {
         console.error("SignalR connection error:", err.toString());
     });
 
-    document.querySelectorAll('.chat-card').forEach(chatElement => {
+    document.querySelectorAll('.chat-card').forEach((chatElement) => {
         chatElement.addEventListener('click', function () {
             const chatId = chatElement.querySelector('input').value;
 
@@ -22,13 +22,13 @@
             noChatMessage.style.display = 'none';
 
             fetch(`/Chat/LoadChat?chatId=${chatId}`)
-                .then(response => {
-                    if (!response.ok) {
+                .then((res) => {
+                    if (!res.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.text();
+                    return res.text();
                 })
-                .then(html => {
+                .then((html) => {
                     const existingChatArea = document.querySelector('.chat-area');
                     const existingChatDetails = document.querySelector('.detail-area');
 
@@ -38,7 +38,7 @@
                     }
 
                     document.querySelector('.conversation-area').insertAdjacentHTML('afterend', html);
-                    
+
                     const messageInput = document.getElementById('write-message-input');
                     const emojiArea = $(messageInput).emojioneArea();
                     const emojiAreaInstance = emojiArea.data("emojioneArea");
@@ -54,15 +54,15 @@
                     emojiAreaInstance.on('keydown', function (editor, event) {
                         if (event.key === 'Enter') {
                             event.preventDefault();
-                            const messageContent = emojiAreaInstance.getText(); // Get the text from emojioneArea
-                            sendMessage(messageContent); // Send the message
-                            emojiAreaInstance.setText(''); // Clear the input after sending
+                            const messageContent = emojiAreaInstance.getText();
+                            sendMessage(messageContent);
+                            emojiAreaInstance.setText('');
                         }
                     });
 
                     setupColorListeners();
 
-                    connection.invoke("JoinChatGroup", chatId).then(function () {
+                    chatConnection.invoke("JoinChatGroup", chatId).then(function () {
                         console.log("Joined chat group: " + chatId);
                     }).catch(function (err) {
                         console.error("Error joining chat group:", err.toString());
@@ -84,8 +84,8 @@
                 },
                 body: JSON.stringify({ chatId: chatId, message: messageContent })
             })
-                .then(response => {
-                    if (!response.ok) {
+                .then((res) => {
+                    if (!res.ok) {
                         throw new Error('Network response was not ok');
                     }
                 })
@@ -102,22 +102,24 @@
         const messageClass = isOwner ? "chat-msg owner" : "chat-msg";
 
         const messageDiv = `
-        <div class="${messageClass}">
-            <div class="chat-msg-profile">
-                <img class="chat-msg-img" src="${message.creatorProfilePictureUrl}" alt="Profile Image">
-                <div class="chat-msg-date">Message sent ${message.createdOn} ago</div>
+            <div class="${messageClass}">
+                <div class="chat-msg-profile">
+                    <img class="chat-msg-img" src="${message.creatorProfilePictureUrl}" alt="Profile Image">
+                    <div class="chat-msg-date">sent ${message.createdOn}</div>
+                </div>
+                <div class="chat-msg-content">
+                    <div class="chat-msg-text">${message.content}</div>
+                </div>
             </div>
-            <div class="chat-msg-content">
-                <div class="chat-msg-text">${message.content}</div>
-            </div>
-        </div>
-    `;
+        `;
 
         chatArea.innerHTML += messageDiv;
-    }
 
-    const toggleButton = document.querySelector('.dark-light');
-    const appDivElement = document.querySelector('.app');
+        document.querySelector('.msg-last-message').textContent
+            = message.content.length < 30 ? message.content : message.content.slice(0, 30) + "...";
+
+        document.querySelector('.msg-last-active').textContent = message.createdOn;
+    }
 
     function setupColorListeners() {
         const colors = document.querySelectorAll('.color');
@@ -131,6 +133,9 @@
             });
         });
     }
+
+    const toggleButton = document.querySelector('.dark-light');
+    const appDivElement = document.querySelector('.app');
 
     toggleButton.addEventListener('click', () => {
         appDivElement.classList.toggle('dark-mode');

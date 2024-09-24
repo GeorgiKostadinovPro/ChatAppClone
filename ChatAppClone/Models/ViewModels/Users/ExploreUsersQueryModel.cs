@@ -22,6 +22,6 @@
 
         public int TotalUsersCount { get; set; }
 
-        public IEnumerable<UserCardViewModel> Users { get; set; }
+        public ICollection<UserCardViewModel> Users { get; set; }
     }
 }

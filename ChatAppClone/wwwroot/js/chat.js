@@ -14,7 +14,7 @@
         console.error("SignalR connection error:", err.toString());
     });
 
-    document.querySelectorAll('.chat-card').forEach(chatElement => {
+    document.querySelectorAll('.chat-card').forEach((chatElement) => {
         chatElement.addEventListener('click', function () {
             const chatId = chatElement.querySelector('input').value;
 
@@ -22,13 +22,13 @@
             noChatMessage.style.display = 'none';
 
             fetch(`/Chat/LoadChat?chatId=${chatId}`)
-                .then(response => {
-                    if (!response.ok) {
+                .then((res) => {
+                    if (!res.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.text();
+                    return res.text();
                 })
-                .then(html => {
+                .then((html) => {
                     const existingChatArea = document.querySelector('.chat-area');
                     const existingChatDetails = document.querySelector('.detail-area');
 
@@ -84,13 +84,18 @@
                 },
                 body: JSON.stringify({ chatId: chatId, message: messageContent })
             })
-                .then(response => {
-                    if (!response.ok) {
+                .then((res) => {
+                    if (!res.ok) {
                         throw new Error('Network response was not ok');
                     }
 
+                    return res.json();
+                })
+                .then((data) => {
                     document.querySelector('.msg-last-message').textContent
-                        = messageContent.length < 30 ? messageContent : messageContent.slice(0, 30) + "...";
+                        = data.content.length < 30 ? data.content : data.content.slice(0, 30) + "...";
+
+                    document.querySelector('.msg-last-active').textContent = data.createdOn;
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -105,16 +110,16 @@
         const messageClass = isOwner ? "chat-msg owner" : "chat-msg";
 
         const messageDiv = `
-        <div class="${messageClass}">
-            <div class="chat-msg-profile">
-                <img class="chat-msg-img" src="${message.creatorProfilePictureUrl}" alt="Profile Image">
-                <div class="chat-msg-date">Message sent ${message.createdOn} ago</div>
+            <div class="${messageClass}">
+                <div class="chat-msg-profile">
+                    <img class="chat-msg-img" src="${message.creatorProfilePictureUrl}" alt="Profile Image">
+                    <div class="chat-msg-date">Message sent ${message.createdOn} ago</div>
+                </div>
+                <div class="chat-msg-content">
+                    <div class="chat-msg-text">${message.content}</div>
+                </div>
             </div>
-            <div class="chat-msg-content">
-                <div class="chat-msg-text">${message.content}</div>
-            </div>
-        </div>
-    `;
+        `;
 
         chatArea.innerHTML += messageDiv;
     }

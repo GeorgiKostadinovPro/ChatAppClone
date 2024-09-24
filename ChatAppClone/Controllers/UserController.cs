@@ -29,8 +29,8 @@
         {
             try
             {
-                model.Users = await this.userService.GetUsersAsync(this.GetAuthId(), model);
-                model.TotalUsersCount = await this.userService.GetUsersCountAsync(model.SearchTerm);
+                model.Users = await this.userService.GetAsync(this.GetAuthId(), model);
+                model.TotalUsersCount = await this.userService.GetCountAsync(model.SearchTerm);
 
                 return this.View(model);
             }

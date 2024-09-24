@@ -12,7 +12,7 @@
 
     int maxPage = (int)Math.Ceiling((double)Model.TotalUsersCount / Model.UsersPerPage);
 
-    bool shouldButtonBeDisabled = Model.CurrentPage == maxPage || !Model.Users.Any();
+    bool shouldButtonBeDisabled = Model.CurrentPage == maxPage || Model.Users.Count == 0;
 }
 
 <link rel="stylesheet" href="~/css/explore.css" asp-append-version="true" />
@@ -51,7 +51,7 @@
 
         <section class="user-content">
 
-            @if (!Model.Users.Any())
+            @if (Model.Users.Count == 0)
             {
                 <div class="no-users-found">
                     <i class="fa-solid fa-ban"></i>

@@ -13,6 +13,7 @@
     using ChatAppClone.Common.Constants;
     using ChatAppClone.Common.Helpers;
     using System;
+    using ChatAppClone.Models.ViewModels.Chats;
 
     public class UserService : IUserService
     {
@@ -40,7 +41,7 @@
             return user;
         }
 
-        public async Task<IEnumerable<UserCardViewModel>> GetUsersAsync(string userId, ExploreUsersQueryModel model)
+        public async Task<ICollection<UserCardViewModel>> GetAsync(string userId, ExploreUsersQueryModel model)
         {
             IQueryable<ApplicationUser> usersQuery = this.repository
                 .AllReadonly<ApplicationUser>()
@@ -56,7 +57,7 @@
                     || EF.Functions.Like(u.Email, wildCard));
             }
 
-            IEnumerable<UserCardViewModel> users
+            ICollection<UserCardViewModel> users
                 = await usersQuery
                              .Skip((model.CurrentPage - 1) * model.UsersPerPage)
                              .Take(model.UsersPerPage)
@@ -73,7 +74,7 @@
             return users;
         }
 
-        public async Task<int> GetUsersCountAsync(string? searchTerm = null)
+        public async Task<int> GetCountAsync(string? searchTerm = null)
         {
             IQueryable<ApplicationUser> usersQuery = this.repository.AllReadonly<ApplicationUser>();
 
@@ -87,6 +88,18 @@
             }
 
             return await usersQuery.CountAsync();
+        }
+
+        public async Task<ICollection<ParticipantViewModel>> GetByChatAsync(Guid chatId)
+        {
+            return await this.repository.AllReadonly<UserChat>()
+                .Include(uc => uc.User)
+                .Where(uc => uc.ChatId == chatId)
+                .Select(uc => new ParticipantViewModel
+                {
+                    Id = uc.UserId,
+                    ProfilePictureUrl = uc.User.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl
+                }).ToArrayAsync();
         }
 
         public async Task SetProfilePictureAsync(string userId, string url, string publicId)

@@ -38,7 +38,7 @@
                     }
 
                     document.querySelector('.conversation-area').insertAdjacentHTML('afterend', html);
-                    
+
                     const messageInput = document.getElementById('write-message-input');
                     const emojiArea = $(messageInput).emojioneArea();
                     const emojiAreaInstance = emojiArea.data("emojioneArea");
@@ -88,14 +88,6 @@
                     if (!res.ok) {
                         throw new Error('Network response was not ok');
                     }
-
-                    return res.json();
-                })
-                .then((data) => {
-                    document.querySelector('.msg-last-message').textContent
-                        = data.content.length < 30 ? data.content : data.content.slice(0, 30) + "...";
-
-                    document.querySelector('.msg-last-active').textContent = data.createdOn;
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
@@ -113,7 +105,7 @@
             <div class="${messageClass}">
                 <div class="chat-msg-profile">
                     <img class="chat-msg-img" src="${message.creatorProfilePictureUrl}" alt="Profile Image">
-                    <div class="chat-msg-date">Message sent ${message.createdOn} ago</div>
+                    <div class="chat-msg-date">sent ${message.createdOn}</div>
                 </div>
                 <div class="chat-msg-content">
                     <div class="chat-msg-text">${message.content}</div>
@@ -122,10 +114,12 @@
         `;
 
         chatArea.innerHTML += messageDiv;
-    }
 
-    const toggleButton = document.querySelector('.dark-light');
-    const appDivElement = document.querySelector('.app');
+        document.querySelector('.msg-last-message').textContent
+            = message.content.length < 30 ? message.content : message.content.slice(0, 30) + "...";
+
+        document.querySelector('.msg-last-active').textContent = message.createdOn;
+    }
 
     function setupColorListeners() {
         const colors = document.querySelectorAll('.color');
@@ -139,6 +133,9 @@
             });
         });
     }
+
+    const toggleButton = document.querySelector('.dark-light');
+    const appDivElement = document.querySelector('.app');
 
     toggleButton.addEventListener('click', () => {
         appDivElement.classList.toggle('dark-mode');

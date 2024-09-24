@@ -47,7 +47,7 @@
             return await this.repository.AllReadonly<Message>()
                 .Include(m => m.Images)
                 .Where(m => m.ChatId == chatId)
-                .OrderByDescending(m => m.CreatedOn)
+                .OrderBy(m => m.CreatedOn)
                 .Select(m => new MessageViewModel
                 {
                     Id = m.Id,

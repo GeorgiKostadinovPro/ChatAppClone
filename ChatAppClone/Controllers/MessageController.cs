@@ -50,8 +50,7 @@
                 creatorId = model.CreatorId,
                 creatorProfilePictureUrl = (await userService.GetByIdAsync(currUserId)).ProfilePictureUrl,
                 content = model.Content,
-                createdOn = model.CreatedOn,
-                messageImages = model.MessageImages.Select(img => new { url = img.Url }).ToList(),
+                createdOn = model.CreatedOn
             });
 
             return Ok(model);

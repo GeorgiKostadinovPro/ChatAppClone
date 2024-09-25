@@ -7,7 +7,6 @@
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
     using ChatAppClone.Models.ViewModels.Chats;
-    using ChatAppClone.Models.ViewModels.Images;
     using Microsoft.EntityFrameworkCore;
 
     public class ChatService : IChatService
@@ -68,7 +67,6 @@
         public async Task<ChatViewModel> GetByIdAsync(Guid chatId)
         {
             Chat? chat = await this.repository.AllReadonly<Chat>()
-                .Include(c => c.Images)
                 .FirstOrDefaultAsync(c => c.Id == chatId);
 
             ChatViewModel model = new ChatViewModel();
@@ -90,12 +88,6 @@
             model.Participants = await this.userService.GetByChatAsync(chat.Id);
 
             model.Messages = await this.messageService.GetByChatId(chatId);
-
-            model.Images = chat.Images.Select(i => new ImageViewModel
-            {
-                Id = i.Id,
-                Url = i.Url
-            }).ToArray();
 
             return model;
         }

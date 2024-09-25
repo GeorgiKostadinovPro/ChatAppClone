@@ -161,43 +161,6 @@ namespace ChatAppClone.Data.Migrations
                     b.ToTable("Chats");
                 });
 
-            modelBuilder.Entity("ChatAppClone.Data.Models.Image", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ChatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("MessageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PublicId")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChatId");
-
-                    b.HasIndex("MessageId");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("ChatAppClone.Data.Models.Message", b =>
                 {
                     b.Property<Guid>("Id")
@@ -405,25 +368,6 @@ namespace ChatAppClone.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ChatAppClone.Data.Models.Image", b =>
-                {
-                    b.HasOne("ChatAppClone.Data.Models.Chat", "Chat")
-                        .WithMany("Images")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ChatAppClone.Data.Models.Message", "Message")
-                        .WithMany("Images")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Chat");
-
-                    b.Navigation("Message");
-                });
-
             modelBuilder.Entity("ChatAppClone.Data.Models.Message", b =>
                 {
                     b.HasOne("ChatAppClone.Data.Models.Chat", "Chat")
@@ -534,16 +478,9 @@ namespace ChatAppClone.Data.Migrations
 
             modelBuilder.Entity("ChatAppClone.Data.Models.Chat", b =>
                 {
-                    b.Navigation("Images");
-
                     b.Navigation("Messages");
 
                     b.Navigation("UsersChats");
-                });
-
-            modelBuilder.Entity("ChatAppClone.Data.Models.Message", b =>
-                {
-                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

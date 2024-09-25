@@ -338,6 +338,18 @@ html {
         bottom: 19px;
     }
 
+    .msg.offline:before {
+        content: "";
+        position: absolute;
+        background-color: gray;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        border: 2px solid var(--theme-bg-color);
+        left: 50px;
+        bottom: 19px;
+    }
+
 .msg-username {
     margin-bottom: 4px;
     font-weight: 600;
@@ -868,7 +880,7 @@ html {
 }
 
 .emojionearea {
-    width: 95%;
+    width: 100%;
 }
 
 .user-settings {

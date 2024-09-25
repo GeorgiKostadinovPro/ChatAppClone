@@ -107,7 +107,7 @@
         const noChatCard = document.querySelector('.no-chats-card');
 
         const chatCard = document.createElement('div');
-        chatCard.classList.add('msg', 'online', 'chat-card');
+        chatCard.classList.add('msg', 'chat-card');
         chatCard.addEventListener('click', () => loadChat(chatCard));
 
         chatCard.innerHTML = `

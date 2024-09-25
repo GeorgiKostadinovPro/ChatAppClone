@@ -28,8 +28,8 @@
             this.messageService = _messageService;
         }
 
-        [HttpPost("CreateMessage")]
-        public async Task<IActionResult> CreateMessage([FromBody] MessageRequest request)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] MessageRequest request)
         {
             if (!(await this.chatService.IsValidAsync(request.ChatId)))
             {

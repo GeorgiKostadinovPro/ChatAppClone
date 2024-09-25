@@ -135,5 +135,26 @@
 
             return true;
         }
+
+        public async Task<ChatViewModel> DeleteAsync(Guid chatId)
+        {
+            var chat = await this.repository.AllReadonly<Chat>()
+                .FirstOrDefaultAsync(uc => uc.Id == chatId);
+
+            if (chat == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            await this.repository.DeleteAsync<Chat>(chatId);
+
+            await this.repository.SaveChangesAsync();
+
+            return new ChatViewModel
+            {
+                Id = chatId,
+                Name = chat.Name
+            };
+        }
     }
 }

@@ -25,8 +25,8 @@
 
             ApplicationUser user1 = new ApplicationUser
             {
-                UserName = "Go4ko",
-                Email = "georgi.kostadinov14@abv.bg",
+                UserName = "Georgi",
+                Email = "georgi@mail.com",
                 EmailConfirmed = true,
                 ProfilePictureUrl = "https://res.cloudinary.com/de1i8aava/image/upload/v1726509898/ChatAppClone/assets/user-profile-pictures/profile-picture.jpg",
                 ProfilePicturePublicId = "ChatAppClone/assets/user-profile-pictures/profile-picture",
@@ -35,8 +35,8 @@
 
             ApplicationUser user2 = new ApplicationUser
             {
-                UserName = "Lyub4o",
-                Email = "user@mail.com",
+                UserName = "Lyuboslav",
+                Email = "lyubo@mail.com",
                 EmailConfirmed = true,
                 ProfilePictureUrl = "https://res.cloudinary.com/de1i8aava/image/upload/v1725385674/ChatAppClone/assets/user-profile-pictures/profil1.jpg",
                 ProfilePicturePublicId = "ChatAppClone/assets/user-profile-pictures/profil1",
@@ -53,8 +53,8 @@
 
             ApplicationUser user4 = new ApplicationUser
             {
-                UserName = "Gogo",
-                Email = "gogo@mail.com",
+                UserName = "Peter",
+                Email = "peter@mail.com",
                 EmailConfirmed = true,
                 CreatedOn = DateTime.UtcNow.ToLocalTime()
             };

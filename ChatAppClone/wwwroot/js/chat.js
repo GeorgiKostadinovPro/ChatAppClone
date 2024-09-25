@@ -8,6 +8,17 @@
         appendToConversationArea(chat);
     });
 
+    chatConnection.on("DeleteChat", function (chatId) {
+        chatConnection.invoke("LeaveChat", chatId).then(function () {
+            console.log("Leave chat group: " + chatId);
+
+            removeChatCard(chatId);
+            showNoChatCard();
+        }).catch(function (err) {
+            console.error("Error leaving chat group:", err.toString());
+        });
+    });
+
     chatConnection.on("ReceiveMessage", function (message) {
         appendMessageToChat(message);
     });
@@ -29,7 +40,7 @@
         const noChatMessage = document.querySelector('.no-current-chat');
         noChatMessage.style.display = 'none';
 
-        fetch(`/Chat/LoadChat?chatId=${chatId}`)
+        fetch(`/Chat/Load?chatId=${chatId}`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error('Network response was not ok');
@@ -70,7 +81,7 @@
 
                 setupColorListeners();
 
-                chatConnection.invoke("JoinChatGroup", chatId).then(function () {
+                chatConnection.invoke("JoinChat", chatId).then(function () {
                     console.log("Joined chat group: " + chatId);
                 }).catch(function (err) {
                     console.error("Error joining chat group:", err.toString());
@@ -84,7 +95,7 @@
     function sendMessage(messageContent) {
         if (messageContent) {
             const chatId = document.getElementById("chatId").value;
-            fetch(`/api/Message/CreateMessage`, {
+            fetch(`/api/Message/Create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -104,7 +115,6 @@
 
     function appendToConversationArea(chat) {
         const conversationArea = document.querySelector('.conversation-area');
-        const noChatCard = document.querySelector('.no-chats-card');
 
         const chatCard = document.createElement('div');
         chatCard.classList.add('msg', 'chat-card');
@@ -122,10 +132,8 @@
                 </div>
         `;
 
-        if (noChatCard) {
-            noChatCard.style.display = 'none';
-        }
-        
+        hideNoChatCard();
+
         conversationArea.insertBefore(chatCard, conversationArea.firstChild);
     }
 
@@ -155,6 +163,32 @@
         document.querySelector('.msg-last-active').textContent = message.createdOn;
     }
 
+    function removeChatCard(chatId) {
+        const chat = document.querySelector(`.chat-card input[value="${chatId}"]`);
+        chat.closest('.chat-card').style.display = 'none';
+    }
+
+    function hideNoChatCard(){
+        const noChatCard = document.querySelector('.no-chats-card');
+
+        if (noChatCard) {
+            noChatCard.style.display = 'none';
+        }
+    }
+
+    function showNoChatCard() {
+        const noChatCard = document.querySelector('.no-chats-card');
+
+        if (noChatCard) {
+            const chatCards = document.querySelectorAll('.conversation-area div.chat-card');
+
+            if (chatCards.length <= 1) {
+                noChatCard.style.display = 'block';
+            }
+        }
+    }
+
+
     function setupColorListeners() {
         const colors = document.querySelectorAll('.color');
 
@@ -174,6 +208,4 @@
     toggleButton.addEventListener('click', () => {
         appDivElement.classList.toggle('dark-mode');
     });
-
 });
-

@@ -43,7 +43,7 @@
 
             ApplicationUser user3 = new ApplicationUser
             {
-                UserName = "Kri4o",
+                UserName = "Kris4o",
                 Email = "kris@mail.com",
                 EmailConfirmed = true
             };

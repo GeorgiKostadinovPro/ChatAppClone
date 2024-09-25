@@ -594,7 +594,6 @@ html {
     align-items: center;
     justify-content: center;
     font-size: 14px;
-    flex-grow: 1;
     font-weight: 500;
 }
 
@@ -610,6 +609,7 @@ html {
 .detail-buttons {
     margin-top: 20px;
     display: flex;
+    justify-content: center;
     width: 100%;
 }
 

@@ -12,13 +12,11 @@
         {
         }
 
-        public DbSet<Image> Images { get; set; } = null!;
-
-        public DbSet<Message> Messages { get; set; } = null!;
-
         public DbSet<Chat> Chats { get; set; } = null!;
 
         public DbSet<UserChat> UsersChats { get; set; } = null!;
+        
+        public DbSet<Message> Messages { get; set; } = null!;
 
         public DbSet<Notification> Notifications { get; set; } = null!;
 

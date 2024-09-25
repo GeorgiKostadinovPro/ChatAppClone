@@ -4,12 +4,12 @@
 
     public class ChatHub : Hub 
     {
-        public async Task JoinChatGroup(string chatId)
+        public async Task JoinChat(string chatId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
         }
 
-        public async Task LeaveChatGroup(string chatId)
+        public async Task LeaveChat(string chatId)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId);
         }

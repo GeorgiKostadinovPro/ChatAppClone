@@ -4,7 +4,6 @@
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
-    using ChatAppClone.Models.ViewModels.Images;
     using ChatAppClone.Models.ViewModels.Messages;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
@@ -45,7 +44,6 @@
         public async Task<ICollection<MessageViewModel>> GetByChatId(Guid chatId)
         {
             return await this.repository.AllReadonly<Message>()
-                .Include(m => m.Images)
                 .Where(m => m.ChatId == chatId)
                 .OrderBy(m => m.CreatedOn)
                 .Select(m => new MessageViewModel
@@ -54,12 +52,7 @@
                     CreatorId = m.CreatorId,
                     Content = m.Content,
                     IsSeen = m.IsSeen,
-                    CreatedOn = DateHelper.TimeAgo(m.CreatedOn),
-                    MessageImages = m.Images.Select(mi => new ImageViewModel
-                    {
-                        Id = mi.Id,
-                        Url = mi.Url
-                    })
+                    CreatedOn = DateHelper.TimeAgo(m.CreatedOn)
                 })
                 .ToArrayAsync();
         }

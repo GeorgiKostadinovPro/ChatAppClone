@@ -8,7 +8,6 @@
         {
             this.Id = Guid.NewGuid();
 
-            this.Images = new HashSet<Image>();
             this.Messages = new HashSet<Message>();
             this.UsersChats = new HashSet<UserChat>();
         }
@@ -22,8 +21,6 @@
         public string? LastMessage { get; set; }
 
         public DateTime LastActive { get; set; }
-
-        public virtual ICollection<Image> Images { get; set; }
 
         public virtual ICollection<Message> Messages { get; set; }
 

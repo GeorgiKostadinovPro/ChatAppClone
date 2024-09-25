@@ -9,7 +9,7 @@
 
     public class MessageController : ApiController
     {
-        private readonly IHubContext<ChatHub> hubContext;
+        private readonly IHubContext<ChatHub> chatHub;
 
         private readonly IChatService chatService;
         private readonly IUserService userService;
@@ -22,14 +22,14 @@
             IMessageService _messageService
             )
         {
-            this.hubContext = hubContext;
+            this.chatHub = hubContext;
             this.chatService = _chatService;
             this.userService = _userService;
             this.messageService = _messageService;
         }
 
-        [HttpPost("CreateMessage")]
-        public async Task<IActionResult> CreateMessage([FromBody] MessageRequest request)
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create([FromBody] MessageRequest request)
         {
             if (!(await this.chatService.IsValidAsync(request.ChatId)))
             {
@@ -45,13 +45,12 @@
 
             MessageViewModel model = await this.messageService.CreateAsync(request.ChatId, currUserId, request.Message);
 
-            await this.hubContext.Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", new
+            await this.chatHub.Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", new
             {
                 creatorId = model.CreatorId,
                 creatorProfilePictureUrl = (await userService.GetByIdAsync(currUserId)).ProfilePictureUrl,
                 content = model.Content,
-                createdOn = model.CreatedOn,
-                messageImages = model.MessageImages.Select(img => new { url = img.Url }).ToList(),
+                createdOn = model.CreatedOn
             });
 
             return Ok(model);

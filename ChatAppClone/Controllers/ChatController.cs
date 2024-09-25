@@ -8,50 +8,71 @@
 
     public class ChatController : BaseController
     {
-        private readonly IHubContext<NotificationHub> hubContext;
+        private readonly IHubContext<ChatHub> chatHub;
+        private readonly IHubContext<NotificationHub> notificationHub;
 
         private readonly IUserService userService;
         private readonly IChatService chatService;
         private readonly INotificationService notificationService;
 
         public ChatController(
-            IHubContext<NotificationHub> hubContext, 
-            IUserService _userService, 
-            IChatService _chatService, 
+            IHubContext<ChatHub> _chatHub,
+            IHubContext<NotificationHub> _hubContext,
+            IUserService _userService,
+            IChatService _chatService,
             INotificationService _notificationService
-            ) 
+            )
         {
-            this.hubContext = hubContext;
+            this.chatHub = _chatHub;
+            this.notificationHub = _hubContext;
             this.userService = _userService;
             this.chatService = _chatService;
             this.notificationService = _notificationService;
         }
-        
-        [HttpGet]
-        public async Task<IActionResult> StartChat(string userToChatId)
-        {
-            var chat = await this.chatService.CreateAsync(this.GetAuthId(), userToChatId);
 
-            if (chat == null)
+        [HttpGet]
+        public async Task<IActionResult> Start(string userToChatId)
+        {
+            var isExisting = await this.chatService.CheckIfChatExists(this.GetAuthId(), userToChatId);
+
+            if (isExisting)
             {
-                return BadRequest("Chat could not be created.");
+                return this.RedirectToAction("Chats");
             }
 
-            var followerUserName = User.Identity!.Name;
+            try
+            {
+                var chat = await this.chatService.CreateAsync(this.GetAuthId(), userToChatId);
 
-            await this.notificationService.CreateAsync(
-                $"{followerUserName} added you to chat.", string.Empty, userToChatId);
+                var followerUserName = User.Identity!.Name;
 
-            await hubContext.Clients.User(userToChatId).SendAsync("ReceiveNotification", $"{followerUserName} added you to chat.");
+                await this.notificationService.CreateAsync(
+                    $"{followerUserName} added you to chat.", string.Empty, userToChatId);
 
-            return RedirectToAction("Chats");
+                await notificationHub.Clients.User(userToChatId).SendAsync("ReceiveNotification", $"{followerUserName} added you to chat.");
+
+                await chatHub.Clients.User(userToChatId).SendAsync("StartChat", new
+                {
+                    id = chat.Id,
+                    name = chat.Name,
+                    imageUrl = chat.ImageUrl,
+                    lastActive = chat.LastActive,
+                    lastMessage = chat.LastMessage
+                });
+            }
+            catch (Exception)
+            {
+                this.RedirectToAction("Error", "Home", new { statusCode = 404 });
+            }
+
+            return this.RedirectToAction("Chats");
         }
 
         [HttpGet]
         public async Task<IActionResult> Chats()
         {
             var chats = await this.chatService.GetByUserAsync(this.GetAuthId());
-            
+
             GeneralChatViewModel model = new GeneralChatViewModel
             {
                 Chats = chats
@@ -61,7 +82,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> LoadChat(Guid? chatId)
+        public async Task<IActionResult> Load(Guid? chatId)
         {
             if (!chatId.HasValue)
             {
@@ -73,6 +94,34 @@
             ViewBag.CurrentUserId = this.GetAuthId();
 
             return this.PartialView("_ChatDetailsPartial", chatModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid? chatId)
+        {
+            if (!chatId.HasValue)
+            {
+                return this.RedirectToAction("Chats");
+            }
+           
+            try
+            {
+                var participants = await this.userService.GetByChatAsync(chatId.Value);
+
+                var deleted = await this.chatService.DeleteAsync(chatId.Value);
+
+                foreach (var participant in participants)
+                {
+                    await this.chatHub.Clients.User(participant.Id).SendAsync("DeleteChat", chatId.Value);
+                    await this.notificationHub.Clients.User(participant.Id).SendAsync("ReceiveNotification", $"Chat {deleted.Name} was deleted.");
+                }
+            }
+            catch (Exception)
+            {
+                this.RedirectToAction("Error", "Home", new { statusCode = 404 });
+            }
+
+            return this.RedirectToAction("Chats");
         }
     }
 }

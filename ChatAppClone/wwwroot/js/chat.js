@@ -4,6 +4,21 @@
         .withUrl("/chatHub")
         .build();
 
+    chatConnection.on("StartChat", function (chat) {
+        appendToConversationArea(chat);
+    });
+
+    chatConnection.on("DeleteChat", function (chatId) {
+        chatConnection.invoke("LeaveChat", chatId).then(function () {
+            console.log("Leave chat group: " + chatId);
+
+            removeChatCard(chatId);
+            showNoChatCard();
+        }).catch(function (err) {
+            console.error("Error leaving chat group:", err.toString());
+        });
+    });
+
     chatConnection.on("ReceiveMessage", function (message) {
         appendMessageToChat(message);
     });
@@ -14,70 +29,73 @@
         console.error("SignalR connection error:", err.toString());
     });
 
+
     document.querySelectorAll('.chat-card').forEach((chatElement) => {
-        chatElement.addEventListener('click', function () {
-            const chatId = chatElement.querySelector('input').value;
+        chatElement.addEventListener('click', () => loadChat(chatElement));
+    });
 
-            const noChatMessage = document.querySelector('.no-current-chat');
-            noChatMessage.style.display = 'none';
+    function loadChat(chatElement) {
+        const chatId = chatElement.querySelector('input').value;
 
-            fetch(`/Chat/LoadChat?chatId=${chatId}`)
-                .then((res) => {
-                    if (!res.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return res.text();
-                })
-                .then((html) => {
-                    const existingChatArea = document.querySelector('.chat-area');
-                    const existingChatDetails = document.querySelector('.detail-area');
+        const noChatMessage = document.querySelector('.no-current-chat');
+        noChatMessage.style.display = 'none';
 
-                    if (existingChatDetails) {
-                        existingChatArea.remove();
-                        existingChatDetails.remove();
-                    }
+        fetch(`/Chat/Load?chatId=${chatId}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.text();
+            })
+            .then((html) => {
+                const existingChatArea = document.querySelector('.chat-area');
+                const existingChatDetails = document.querySelector('.detail-area');
 
-                    document.querySelector('.conversation-area').insertAdjacentHTML('afterend', html);
+                if (existingChatDetails) {
+                    existingChatArea.remove();
+                    existingChatDetails.remove();
+                }
 
-                    const messageInput = document.getElementById('write-message-input');
-                    const emojiArea = $(messageInput).emojioneArea();
-                    const emojiAreaInstance = emojiArea.data("emojioneArea");
+                document.querySelector('.conversation-area').insertAdjacentHTML('afterend', html);
 
-                    const sendMessageButton = document.getElementById('send-message-button');
+                const messageInput = document.getElementById('write-message-input');
+                const emojiArea = $(messageInput).emojioneArea();
+                const emojiAreaInstance = emojiArea.data("emojioneArea");
 
-                    sendMessageButton.addEventListener('click', () => {
+                const sendMessageButton = document.getElementById('send-message-button');
+
+                sendMessageButton.addEventListener('click', () => {
+                    const messageContent = emojiAreaInstance.getText();
+                    sendMessage(messageContent);
+                    emojiAreaInstance.setText('');
+                });
+
+                emojiAreaInstance.on('keydown', function (editor, event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
                         const messageContent = emojiAreaInstance.getText();
                         sendMessage(messageContent);
                         emojiAreaInstance.setText('');
-                    });
-
-                    emojiAreaInstance.on('keydown', function (editor, event) {
-                        if (event.key === 'Enter') {
-                            event.preventDefault();
-                            const messageContent = emojiAreaInstance.getText();
-                            sendMessage(messageContent);
-                            emojiAreaInstance.setText('');
-                        }
-                    });
-
-                    setupColorListeners();
-
-                    chatConnection.invoke("JoinChatGroup", chatId).then(function () {
-                        console.log("Joined chat group: " + chatId);
-                    }).catch(function (err) {
-                        console.error("Error joining chat group:", err.toString());
-                    });
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
+                    }
                 });
-        });
-    });
+
+                setupColorListeners();
+
+                chatConnection.invoke("JoinChat", chatId).then(function () {
+                    console.log("Joined chat group: " + chatId);
+                }).catch(function (err) {
+                    console.error("Error joining chat group:", err.toString());
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
 
     function sendMessage(messageContent) {
         if (messageContent) {
             const chatId = document.getElementById("chatId").value;
-            fetch(`/api/Message/CreateMessage`, {
+            fetch(`/api/Message/Create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -93,6 +111,30 @@
                     console.error('There was a problem with the fetch operation:', error);
                 });
         }
+    }
+
+    function appendToConversationArea(chat) {
+        const conversationArea = document.querySelector('.conversation-area');
+
+        const chatCard = document.createElement('div');
+        chatCard.classList.add('msg', 'chat-card');
+        chatCard.addEventListener('click', () => loadChat(chatCard));
+
+        chatCard.innerHTML = `
+            <input type="hidden" value="${chat.id}" />
+                <img class="msg-profile" src=${chat.imageUrl} alt="" />
+                <div class="msg-detail">
+                    <div class="msg-username">${chat.name}</div>
+                    <div class="msg-content">
+                        <span class="msg-message msg-last-message">${chat.lastMessage}</span>
+                        <span class="msg-date msg-last-active">${chat.lastActive}</span>
+                    </div>
+                </div>
+        `;
+
+        hideNoChatCard();
+
+        conversationArea.insertBefore(chatCard, conversationArea.firstChild);
     }
 
     function appendMessageToChat(message) {
@@ -121,6 +163,32 @@
         document.querySelector('.msg-last-active').textContent = message.createdOn;
     }
 
+    function removeChatCard(chatId) {
+        const chat = document.querySelector(`.chat-card input[value="${chatId}"]`);
+        chat.closest('.chat-card').style.display = 'none';
+    }
+
+    function hideNoChatCard(){
+        const noChatCard = document.querySelector('.no-chats-card');
+
+        if (noChatCard) {
+            noChatCard.style.display = 'none';
+        }
+    }
+
+    function showNoChatCard() {
+        const noChatCard = document.querySelector('.no-chats-card');
+
+        if (noChatCard) {
+            const chatCards = document.querySelectorAll('.conversation-area div.chat-card');
+
+            if (chatCards.length <= 1) {
+                noChatCard.style.display = 'block';
+            }
+        }
+    }
+
+
     function setupColorListeners() {
         const colors = document.querySelectorAll('.color');
 
@@ -140,6 +208,4 @@
     toggleButton.addEventListener('click', () => {
         appDivElement.classList.toggle('dark-mode');
     });
-
 });
-

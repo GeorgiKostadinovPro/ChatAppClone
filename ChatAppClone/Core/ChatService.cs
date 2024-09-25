@@ -26,26 +26,17 @@
             this.messageService = _messageService;
         }
 
-        public async Task<Chat> CreateAsync(string userAId, string userBId)
+        public async Task<ChatViewModel> CreateAsync(string userAId, string userBId)
         {
-            var existingChat = await this.repository.AllReadonly<Chat>()
-                .Include(c => c.UsersChats)
-                .FirstOrDefaultAsync(c => c.UsersChats.Any(uc => uc.UserId == userAId) &&
-                                           c.UsersChats.Any(uc => uc.UserId == userBId));
-
-            if (existingChat != null)
-            {
-                return existingChat;
-            }
-
             var userA = await this.userService.GetByIdAsync(userAId);
             var userB = await this.userService.GetByIdAsync(userBId);
 
             var chat = new Chat
             {
                 Name = $"{userA.UserName} & {userB.UserName}",
-                ImageUrl = userB.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl,
+                ImageUrl = ChatConstants.DefaultChatImage,
                 IsGroupChat = false,
+                LastMessage = "No messages yet",
                 LastActive = DateTime.UtcNow.ToLocalTime(),
                 CreatedOn = DateTime.UtcNow.ToLocalTime(),
                 ModifiedOn = DateTime.UtcNow.ToLocalTime()
@@ -61,7 +52,16 @@
 
             await this.repository.SaveChangesAsync();
 
-            return chat;
+            ChatViewModel model = new ChatViewModel
+            {
+                Id = chat.Id,
+                Name = chat.Name,
+                ImageUrl = chat.ImageUrl,
+                LastActive = DateHelper.TimeAgo(chat.LastActive),
+                LastMessage = chat.LastMessage
+            };
+
+            return model;
         }
 
         public async Task<ChatViewModel> GetByIdAsync(Guid chatId)
@@ -80,10 +80,6 @@
             model.Name = chat.Name;
             model.ImageUrl = chat.ImageUrl;
             model.CreatedOn = DateHelper.GetDate(chat.CreatedOn);
-            model.LastActive = DateHelper.TimeAgo(chat.LastActive);
-            model.LastMessage = chat.LastMessage == null
-                ? "No messages yet"
-                : chat.LastMessage.Length < 30 ? chat.LastMessage : chat.LastMessage.Substring(0, 30) + "...";
 
             model.Participants = await this.userService.GetByChatAsync(chat.Id);
 
@@ -118,6 +114,21 @@
                 .FirstOrDefaultAsync(c => c.Id == chatId);
 
             if (chat == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> CheckIfChatExists(string userAId, string userBId)
+        {
+            var existingChat = await this.repository.AllReadonly<Chat>()
+                .Include(c => c.UsersChats)
+                .FirstOrDefaultAsync(c => c.UsersChats.Any(uc => uc.UserId == userAId) &&
+                                           c.UsersChats.Any(uc => uc.UserId == userBId));
+
+            if (existingChat == null)
             {
                 return false;
             }

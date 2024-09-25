@@ -5,12 +5,14 @@
 
     public interface IChatService
     {
-        Task<Chat> CreateAsync(string userAId, string userBId);
+        Task<ChatViewModel> CreateAsync(string userAId, string userBId);
 
         Task<ChatViewModel> GetByIdAsync(Guid chatId);
 
         Task<ICollection<ChatViewModel>> GetByUserAsync(string userId);
 
         Task<bool> IsValidAsync(Guid chatId);
+
+        Task<bool> CheckIfChatExists(string userAId, string userBId);
     }
 }

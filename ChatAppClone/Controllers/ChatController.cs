@@ -8,20 +8,23 @@
 
     public class ChatController : BaseController
     {
-        private readonly IHubContext<NotificationHub> hubContext;
+        private readonly IHubContext<ChatHub> chatHub;
+        private readonly IHubContext<NotificationHub> notificationHub;
 
         private readonly IUserService userService;
         private readonly IChatService chatService;
         private readonly INotificationService notificationService;
 
         public ChatController(
-            IHubContext<NotificationHub> hubContext, 
+            IHubContext<ChatHub> _chatHub,
+            IHubContext<NotificationHub> _hubContext, 
             IUserService _userService, 
             IChatService _chatService, 
             INotificationService _notificationService
             ) 
         {
-            this.hubContext = hubContext;
+            this.chatHub = _chatHub;
+            this.notificationHub = _hubContext;
             this.userService = _userService;
             this.chatService = _chatService;
             this.notificationService = _notificationService;
@@ -30,19 +33,37 @@
         [HttpGet]
         public async Task<IActionResult> StartChat(string userToChatId)
         {
-            var chat = await this.chatService.CreateAsync(this.GetAuthId(), userToChatId);
+            var isExisting = await this.chatService.CheckIfChatExists(this.GetAuthId(), userToChatId);
 
-            if (chat == null)
+            if (isExisting)
+            {
+                return RedirectToAction("Chats");
+            }
+
+            try
+            {
+                var chat = await this.chatService.CreateAsync(this.GetAuthId(), userToChatId);
+
+                var followerUserName = User.Identity!.Name;
+
+                await this.notificationService.CreateAsync(
+                    $"{followerUserName} added you to chat.", string.Empty, userToChatId);
+
+                await notificationHub.Clients.User(userToChatId).SendAsync("ReceiveNotification", $"{followerUserName} added you to chat.");
+
+                await chatHub.Clients.User(userToChatId).SendAsync("StartChat", new
+                {
+                    id = chat.Id,
+                    name = chat.Name,
+                    imageUrl = chat.ImageUrl,
+                    lastActive = chat.LastActive,
+                    lastMessage = chat.LastMessage
+                });
+            }
+            catch (Exception)
             {
                 return BadRequest("Chat could not be created.");
             }
-
-            var followerUserName = User.Identity!.Name;
-
-            await this.notificationService.CreateAsync(
-                $"{followerUserName} added you to chat.", string.Empty, userToChatId);
-
-            await hubContext.Clients.User(userToChatId).SendAsync("ReceiveNotification", $"{followerUserName} added you to chat.");
 
             return RedirectToAction("Chats");
         }

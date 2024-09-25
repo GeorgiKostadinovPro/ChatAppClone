@@ -29,7 +29,8 @@
                 Email = "georgi.kostadinov14@abv.bg",
                 EmailConfirmed = true,
                 ProfilePictureUrl = "https://res.cloudinary.com/de1i8aava/image/upload/v1726509898/ChatAppClone/assets/user-profile-pictures/profile-picture.jpg",
-                ProfilePicturePublicId = "ChatAppClone/assets/user-profile-pictures/profile-picture"
+                ProfilePicturePublicId = "ChatAppClone/assets/user-profile-pictures/profile-picture",
+                CreatedOn = DateTime.UtcNow.ToLocalTime()
             };
 
             ApplicationUser user2 = new ApplicationUser
@@ -38,31 +39,35 @@
                 Email = "user@mail.com",
                 EmailConfirmed = true,
                 ProfilePictureUrl = "https://res.cloudinary.com/de1i8aava/image/upload/v1725385674/ChatAppClone/assets/user-profile-pictures/profil1.jpg",
-                ProfilePicturePublicId = "ChatAppClone/assets/user-profile-pictures/profil1"
+                ProfilePicturePublicId = "ChatAppClone/assets/user-profile-pictures/profil1",
+                CreatedOn = DateTime.UtcNow.ToLocalTime()
             };
 
             ApplicationUser user3 = new ApplicationUser
             {
                 UserName = "Kris4o",
                 Email = "kris@mail.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                CreatedOn = DateTime.UtcNow.ToLocalTime()
             };
 
             ApplicationUser user4 = new ApplicationUser
             {
                 UserName = "Gogo",
                 Email = "gogo@mail.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                CreatedOn = DateTime.UtcNow.ToLocalTime()
             };
 
             ApplicationUser user5 = new ApplicationUser
             {
                 UserName = "Wang",
                 Email = "wang@mail.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                CreatedOn = DateTime.UtcNow.ToLocalTime()
             };
 
-            string password = "Gk123.";
+            string password = "User123.";
 
             await userManager.CreateAsync(user1, password);
             await userManager.CreateAsync(user2, password);

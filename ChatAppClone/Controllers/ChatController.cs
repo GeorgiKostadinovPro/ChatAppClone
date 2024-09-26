@@ -57,7 +57,8 @@
                     name = chat.Name,
                     imageUrl = chat.ImageUrl,
                     lastActive = chat.LastActive,
-                    lastMessage = chat.LastMessage
+                    lastMessage = chat.LastMessage,
+                    participantIds = chat.Participants.Select(p => p.Id).ToArray()
                 });
             }
             catch (Exception)
@@ -110,9 +111,10 @@
 
                 var deleted = await this.chatService.DeleteAsync(chatId.Value);
 
+                await this.chatHub.Clients.Group(chatId.Value.ToString()).SendAsync("DeleteChat", chatId.Value);
+
                 foreach (var participant in participants)
                 {
-                    await this.chatHub.Clients.User(participant.Id).SendAsync("DeleteChat", chatId.Value);
                     await this.notificationHub.Clients.User(participant.Id).SendAsync("ReceiveNotification", $"Chat {deleted.Name} was deleted.");
                 }
             }

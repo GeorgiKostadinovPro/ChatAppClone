@@ -6,14 +6,27 @@
 
     chatConnection.on("StartChat", function (chat) {
         appendToConversationArea(chat);
+
+        chatConnection.invoke("JoinChatAsync", chat.id).then(function () {
+            console.log("Joined chat group: " + chat.id);
+        }).catch(function (err) {
+            console.error("Error joining chat group:", err.toString());
+        });
     });
 
     chatConnection.on("DeleteChat", function (chatId) {
-        chatConnection.invoke("LeaveChat", chatId).then(function () {
+        chatConnection.invoke("LeaveChatAsync", chatId).then(function () {
             console.log("Leave chat group: " + chatId);
 
             removeChatCard(chatId);
             showNoChatCard();
+
+            const currChat = document.querySelector(".chat-area #chatId");
+
+            if (currChat && currChat.value == chatId) {
+                document.querySelector('.chat-area').style.display = 'none';
+                document.querySelector('.no-current-chat').style.display = 'block';
+            }
         }).catch(function (err) {
             console.error("Error leaving chat group:", err.toString());
         });
@@ -25,6 +38,16 @@
 
     chatConnection.start().then(function () {
         console.log("SignalR connection established");
+
+        document.querySelectorAll('.conversation-area .chat-card').forEach((chatElement) => {
+            const chatId = chatElement.querySelector('#chatCardId').value;
+
+            chatConnection.invoke("JoinChatAsync", chatId).then(function () {
+                console.log("Joined chat group: " + chatId);
+            }).catch(function (err) {
+                console.error("Error joining chat group:", err.toString());
+            });
+        });
     }).catch(function (err) {
         console.error("SignalR connection error:", err.toString());
     });
@@ -35,7 +58,7 @@
     });
 
     function loadChat(chatElement) {
-        const chatId = chatElement.querySelector('input').value;
+        const chatId = chatElement.querySelector('#chatCardId').value;
 
         const noChatMessage = document.querySelector('.no-current-chat');
         noChatMessage.style.display = 'none';
@@ -80,12 +103,6 @@
                 });
 
                 setupColorListeners();
-
-                chatConnection.invoke("JoinChat", chatId).then(function () {
-                    console.log("Joined chat group: " + chatId);
-                }).catch(function (err) {
-                    console.error("Error joining chat group:", err.toString());
-                });
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
@@ -117,11 +134,11 @@
         const conversationArea = document.querySelector('.conversation-area');
 
         const chatCard = document.createElement('div');
-        chatCard.classList.add('msg', 'chat-card');
+        chatCard.classList.add('msg', 'online', 'chat-card');
         chatCard.addEventListener('click', () => loadChat(chatCard));
 
         chatCard.innerHTML = `
-            <input type="hidden" value="${chat.id}" />
+            <input id="chatCardId" type="hidden" value="${chat.id}" />
                 <img class="msg-profile" src=${chat.imageUrl} alt="" />
                 <div class="msg-detail">
                     <div class="msg-username">${chat.name}</div>
@@ -168,7 +185,7 @@
         chat.closest('.chat-card').style.display = 'none';
     }
 
-    function hideNoChatCard(){
+    function hideNoChatCard() {
         const noChatCard = document.querySelector('.no-chats-card');
 
         if (noChatCard) {
@@ -187,7 +204,6 @@
             }
         }
     }
-
 
     function setupColorListeners() {
         const colors = document.querySelectorAll('.color');

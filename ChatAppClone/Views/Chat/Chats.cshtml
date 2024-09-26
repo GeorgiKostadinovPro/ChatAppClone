@@ -63,7 +63,7 @@
                 @foreach (var chat in Model.Chats)
                 {
                     <div class="msg online chat-card">
-                        <input id="chatId" type="hidden" value="@chat.Id" />
+                        <input id="chatCardId" type="hidden" value="@chat.Id" />
                         <img class="msg-profile" src=@chat.ImageUrl alt="" />
                         <div class="msg-detail">
                             <div class="msg-username">@chat.Name</div>

@@ -9,7 +9,7 @@
     });
 
     chatConnection.on("DeleteChat", function (chatId) {
-        chatConnection.invoke("LeaveChat", chatId).then(function () {
+        chatConnection.invoke("LeaveChatAsync", chatId).then(function () {
             console.log("Leave chat group: " + chatId);
 
             removeChatCard(chatId);
@@ -35,7 +35,7 @@
     });
 
     function loadChat(chatElement) {
-        const chatId = chatElement.querySelector('input').value;
+        const chatId = chatElement.querySelector('#chatId').value;
 
         const noChatMessage = document.querySelector('.no-current-chat');
         noChatMessage.style.display = 'none';
@@ -81,7 +81,7 @@
 
                 setupColorListeners();
 
-                chatConnection.invoke("JoinChat", chatId).then(function () {
+                chatConnection.invoke("JoinChatAsync", chatId).then(function () {
                     console.log("Joined chat group: " + chatId);
                 }).catch(function (err) {
                     console.error("Error joining chat group:", err.toString());
@@ -121,7 +121,7 @@
         chatCard.addEventListener('click', () => loadChat(chatCard));
 
         chatCard.innerHTML = `
-            <input type="hidden" value="${chat.id}" />
+            <input id="chatId" type="hidden" value="${chat.id}" />
                 <img class="msg-profile" src=${chat.imageUrl} alt="" />
                 <div class="msg-detail">
                     <div class="msg-username">${chat.name}</div>
@@ -168,7 +168,7 @@
         chat.closest('.chat-card').style.display = 'none';
     }
 
-    function hideNoChatCard(){
+    function hideNoChatCard() {
         const noChatCard = document.querySelector('.no-chats-card');
 
         if (noChatCard) {

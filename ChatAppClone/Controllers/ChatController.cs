@@ -57,7 +57,8 @@
                     name = chat.Name,
                     imageUrl = chat.ImageUrl,
                     lastActive = chat.LastActive,
-                    lastMessage = chat.LastMessage
+                    lastMessage = chat.LastMessage,
+                    participantIds = chat.Participants.Select(p => p.Id).ToArray()
                 });
             }
             catch (Exception)

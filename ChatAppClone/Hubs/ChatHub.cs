@@ -2,14 +2,19 @@
 {
     using Microsoft.AspNetCore.SignalR;
 
-    public class ChatHub : Hub 
+    /// <summary>
+    /// high-level pipeline for handling the real-time chat
+    /// OnConnectedAsync() is invoked automatically to handle the initial connection
+    /// OnDisconnectedAsync() is invoked automatically to close the initial connection
+    /// </summary>
+    public class ChatHub : Hub
     {
-        public async Task JoinChat(string chatId)
+        public async Task JoinChatAsync(string chatId)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
         }
 
-        public async Task LeaveChat(string chatId)
+        public async Task LeaveChatAsync(string chatId)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId);
         }

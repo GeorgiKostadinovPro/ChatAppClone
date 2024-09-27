@@ -1,23 +1,24 @@
 # ChatAppClone
-ChatAppClone is a simple real-time chat platform built with .NET Core 8.0, SignalR and Azure.
+<p>ChatAppClone is a simple real-time chat platform built with .NET Core 8.0, SignalR and Azure.</p>
+<p>To use the application you may register with valid email.</p>
+<p>For more information read the short documentation below.</p>
+<hr />
+
+## :star2: Deployment
+<img alt="Static Badge" src="https://img.shields.io/badge/Status-Deployed-4AC41C">
+
+<strong>View Demo</strong> - <a href="https://chatappclone.azurewebsites.net">https://chatappclone.azurewebsites.net</a>
+<hr />
+
+## :notebook_with_decorative_cover: Status
+<img alt="Static Badge" src="https://img.shields.io/badge/Status-Finished-%234AC41C">
 
 <hr />
 
-### Deployment
-<img alt="Static Badge" src="https://img.shields.io/badge/Status-Waiting-4AC41C">
-
-<strong>View Demo</strong> - <a href="/">chat-app-clone</a>
-<hr />
-
-### Status
-<img alt="Static Badge" src="https://img.shields.io/badge/Status-In_Progess-%234AC41C">
-
-<hr />
-
-### Tech Stack
+### :space_invader: Tech Stack
 
 <p>
- <img alt="Static Badge" src="https://img.shields.io/badge/.NET Core 6.0-%E2%9C%93-blue">
+ <img alt="Static Badge" src="https://img.shields.io/badge/.NET Core 8.0-%E2%9C%93-blue">
   <img alt="Static Badge" src="https://img.shields.io/badge/EF Core-%E2%9C%93-%23C21325">
   <img alt="Static Badge" src="https://img.shields.io/badge/SQL Server-%E2%9C%93-brightgreen">
   <img alt="Static Badge" src="https://img.shields.io/badge/SignalR-%E2%9C%93-%23F6546A">

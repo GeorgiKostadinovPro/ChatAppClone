@@ -11,7 +11,7 @@
 <hr />
 
 ## :notebook_with_decorative_cover: Status
-<img alt="Static Badge" src="https://img.shields.io/badge/Status-Finished-%234AC41C">
+<img alt="Static Badge" src="https://img.shields.io/badge/Status-In Progress-%234AC41C">
 
 <hr />
 

@@ -7,11 +7,11 @@
     [Authorize]
     public class BaseController : Controller 
     {
-        protected string GetAuthId()
+        protected (string, string) GetAuth()
         {
             string id = string.Empty;
 
-            if (this.User!.Identity!.IsAuthenticated
+            if (this.User.Identity!.IsAuthenticated
                 && this.User.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
             {
                 id = this.User
@@ -19,7 +19,7 @@
                     .ToString();
             }
 
-            return id;
+            return (id, this.User.Identity!.Name!);
         }
     }
 }

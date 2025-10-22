@@ -12,6 +12,7 @@
     public class MessageService : IMessageService
     {
         private readonly IRepository repository;
+
         public MessageService(IRepository _repository)
         {
             this.repository = _repository;

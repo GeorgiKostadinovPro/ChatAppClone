@@ -1,6 +1,7 @@
 # ChatAppClone
 <p>ChatAppClone is a simple real-time chat platform built with .NET Core 8.0, SignalR and Azure.</p>
-<p>To use the application you may register with valid email.</p>
+<p>To use the application you may register with valid email and confirm your account.</p>
+<p>The application utilizes the CQRS and Mediator design patterns.</p>
 <p>For more information read the short documentation below.</p>
 <hr />
 
@@ -28,6 +29,7 @@
   <img alt="Static Badge" src="https://img.shields.io/badge/HTML5-%E2%9C%93-%23800080">
   <img alt="Static Badge" src="https://img.shields.io/badge/CSS3-%E2%9C%93-%23008080">
   <img alt="Static Badge" src="https://img.shields.io/badge/Bootstrap-%E2%9C%93-red">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Javascript-%E2%9C%93-yellow">
 </p>
 
 <hr />

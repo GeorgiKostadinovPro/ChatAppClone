@@ -1,7 +1,6 @@
 # ChatAppClone
 <p>ChatAppClone is a simple real-time chat platform built with .NET Core 8.0, SignalR and Azure.</p>
 <p>To use the application you may register with valid email and confirm your account.</p>
-<p>The application utilizes the CQRS and Mediator design patterns.</p>
 <p>For more information read the short documentation below.</p>
 <hr />
 

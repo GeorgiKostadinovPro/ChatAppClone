@@ -7,7 +7,7 @@
     [ApiController]
     public class ApiController : ControllerBase 
     {
-        protected (string, string) GetAuth()
+        protected string GetAuthId()
         {
             string id = string.Empty;
 
@@ -19,7 +19,7 @@
                     .ToString();
             }
 
-            return (id, this.User.Identity!.Name!);
+            return id;
         }
     }
 }

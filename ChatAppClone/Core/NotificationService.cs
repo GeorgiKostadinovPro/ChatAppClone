@@ -2,11 +2,11 @@
 {
     using ChatAppClone.Common.Constants;
     using ChatAppClone.Common.Helpers;
+    using ChatAppClone.Common.Messages;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
     using ChatAppClone.Models.ViewModels.Notifications;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -14,12 +14,10 @@
     public class NotificationService : INotificationService
     {
         private readonly IRepository repository;
-        private readonly UserManager<ApplicationUser> userManager;
 
-        public NotificationService(IRepository _repository, UserManager<ApplicationUser> _userManager)
+        public NotificationService(IRepository _repository)
         {
             this.repository = _repository;
-            this.userManager = _userManager;
         }
 
         public async Task CreateAsync(string content, string url, string userId)
@@ -44,11 +42,13 @@
                 .AllReadonly<Notification>()
                 .FirstOrDefaultAsync(n => n.Id == notificationId);
 
-            if (notification != null)
+            if (notification == null)
             {
-                await this.repository.DeleteAsync<Notification>(notification.Id);
-                await this.repository.SaveChangesAsync();
+                throw new InvalidOperationException(NotificationMessages.DoesNotExist);
             }
+
+            await this.repository.DeleteAsync<Notification>(notification.Id);
+            await this.repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<NotificationViewModel>> GetAsync(string userId, int currPage)
@@ -63,7 +63,7 @@
                                  Id = n.Id,
                                  Content = n.Content,
                                  CreatedOn = DateHelper.GetDate(n.CreatedOn),
-                                 Type = "Info"
+                                 Type = NotificationConstants.Type
                              })
                              .ToArrayAsync();
 

@@ -3,6 +3,7 @@
     using System;
     using ChatAppClone.Common.Constants;
     using ChatAppClone.Common.Helpers;
+    using ChatAppClone.Common.Messages;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
@@ -71,7 +72,7 @@
 
             if (chat == null)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(ChatMessages.InvalidChatId);
             }
 
             await this.repository.DeleteAsync<Chat>(chatId);
@@ -92,7 +93,7 @@
 
             if (chat == null)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(ChatMessages.InvalidChatId);
             }
 
             ChatViewModel model = new ChatViewModel();

@@ -2,6 +2,7 @@
 {
     using ChatAppClone.Common.Constants;
     using ChatAppClone.Common.Helpers;
+    using ChatAppClone.Common.Messages;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
@@ -41,11 +42,13 @@
                 .AllReadonly<Notification>()
                 .FirstOrDefaultAsync(n => n.Id == notificationId);
 
-            if (notification != null)
+            if (notification == null)
             {
-                await this.repository.DeleteAsync<Notification>(notification.Id);
-                await this.repository.SaveChangesAsync();
+                throw new InvalidOperationException(NotificationMessages.DoesNotExist);
             }
+
+            await this.repository.DeleteAsync<Notification>(notification.Id);
+            await this.repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<NotificationViewModel>> GetAsync(string userId, int currPage)

@@ -33,7 +33,7 @@
 
             if (user == null)
             {
-                throw new InvalidOperationException(UserMessages.DoesNotExist);
+                throw new InvalidOperationException(UserMessages.AlreadyExists);
             }
 
             user.ProfilePictureUrl = user.ProfilePictureUrl ?? UserConstants.DefaultProfilePictureUrl;

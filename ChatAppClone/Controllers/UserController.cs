@@ -6,7 +6,6 @@
 
     using ChatAppClone.Utilities.Contracts;
     using ChatAppClone.Common.Constants;
-    using ChatAppClone.Common.Pages;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Data.Models;
     using ChatAppClone.Common.Messages;
@@ -30,21 +29,14 @@
         {
             try
             {
-                var (currUserId, currUserName) = this.GetAuth();
-
-                if (string.IsNullOrWhiteSpace(currUserId) || string.IsNullOrWhiteSpace(currUserName))
-                {
-                    return BadRequest(UserMessages.InvalidUserId);
-                }
-
-                model.Users = await this.userService.GetAsync(currUserId, model);
+                model.Users = await this.userService.GetAsync(this.GetAuthId(), model);
                 model.TotalUsersCount = await this.userService.GetCountAsync(model.SearchTerm);
 
                 return this.View(model);
             }
             catch (Exception)
             {
-                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { area = string.Empty, StatusCode = 404 });
+                return this.RedirectToAction("Error", "Home", new { area = "", StatusCode = 404 });
             }
         }
 
@@ -63,26 +55,18 @@
 
             try
             {
-                var currUserId = this.GetAuth().Item1;
+                ApplicationUser user = await this.userService.GetByIdAsync(this.GetAuthId());
 
-                if (string.IsNullOrWhiteSpace(currUserId))
-                {
-                    return this.BadRequest(UserMessages.InvalidUserId);
-                }
+                ImageUploadResult result = await this.cloudinaryService.UploadPictureAsync(file, CloudinaryConstants.ProfilePicturesFolder, user.ProfilePicturePublicId);
 
-                ApplicationUser user = await this.userService.GetByIdAsync(currUserId);
-
-                ImageUploadResult result = await this.cloudinaryService
-                    .UploadPictureAsync(file, CloudinaryConstants.ProfilePicturesFolder, user.ProfilePicturePublicId);
-
-                await this.userService.SetProfilePictureAsync(currUserId, result.SecureUrl.ToString(), result.PublicId);
-
-                return this.Json(new { success = true });
+                await this.userService.SetProfilePictureAsync(this.GetAuthId(), result.SecureUrl.ToString(), result.PublicId);
             }
             catch (Exception ex)
             {
                 return this.Json(new { success = false, error = ex.Message });
             }
+
+            return this.Json(new { success = true });
         }
 
         [HttpPost]
@@ -90,25 +74,18 @@
         {
             try
             {
-                var currUserId = this.GetAuth().Item1;
-
-                if (string.IsNullOrWhiteSpace(currUserId))
-                {
-                    return this.BadRequest(UserMessages.InvalidUserId);
-                }
-
-                ApplicationUser user = await this.userService.GetByIdAsync(currUserId);
+                ApplicationUser user = await this.userService.GetByIdAsync(this.GetAuthId());
 
                 await this.cloudinaryService.DeletePictureAsync(user.ProfilePicturePublicId!);
 
-                await this.userService.DeleteProfilePictureAsync(currUserId);
-
-                return this.Json(new { success = true });
+                await this.userService.DeleteProfilePictureAsync(this.GetAuthId());
             }
             catch (Exception ex)
             {
                 return this.Json(new { success = false, error = ex.Message });
             }
+
+            return this.Json(new { success = true });
         }
     }
 }

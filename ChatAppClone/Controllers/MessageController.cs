@@ -6,7 +6,6 @@
     using ChatAppClone.Models.ViewModels.Messages;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
-    using ChatAppClone.Common.Messages;
 
     public class MessageController : ApiController
     {
@@ -29,44 +28,32 @@
             this.messageService = _messageService;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] MessageRequest request)
         {
-            if (!this.ModelState.IsValid)
+            if (!(await this.chatService.IsValidAsync(request.ChatId)))
             {
-                return this.BadRequest(this.ModelState);
+                return this.BadRequest("invalid chat id");
             }
 
-            try
+            string currUserId = this.GetAuthId();
+
+            if (string.IsNullOrWhiteSpace(currUserId))
             {
-                var (currUserId, currUserName) = this.GetAuth();
-
-                if (string.IsNullOrWhiteSpace(currUserId))
-                {
-                    return this.BadRequest(UserMessages.InvalidUserId);
-                }
-
-                if (!await this.chatService.IsValidAsync(request.ChatId))
-                {
-                    return this.BadRequest(ChatMessages.InvalidChatId);
-                }
-
-                MessageViewModel model = await this.messageService.CreateAsync(request.ChatId, currUserId, request.Message!);
-
-                await this.chatHub.Clients.Group(request.ChatId.ToString()).SendAsync(ChatMessages.ReceiveMessage, new
-                {
-                    creatorId = model.CreatorId,
-                    creatorProfilePictureUrl = (await userService.GetByIdAsync(currUserId)).ProfilePictureUrl,
-                    content = model.Content,
-                    createdOn = model.CreatedOn
-                });
-
-                return this.Ok(model);
+                return this.BadRequest("invalid user Id");
             }
-            catch (Exception)
+
+            MessageViewModel model = await this.messageService.CreateAsync(request.ChatId, currUserId, request.Message);
+
+            await this.chatHub.Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", new
             {
-                return this.BadRequest();
-            }
+                creatorId = model.CreatorId,
+                creatorProfilePictureUrl = (await userService.GetByIdAsync(currUserId)).ProfilePictureUrl,
+                content = model.Content,
+                createdOn = model.CreatedOn
+            });
+
+            return Ok(model);
         }
     }
 }

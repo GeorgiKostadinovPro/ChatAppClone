@@ -32,6 +32,11 @@
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] MessageRequest request)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
             try
             {
                 var (currUserId, currUserName) = this.GetAuth();

@@ -1,7 +1,5 @@
 ﻿namespace ChatAppClone.Common.Constants
 {
-    using System.Configuration;
-
     public static class UserConstants
     {
         public const int UsersPerPage = 3;

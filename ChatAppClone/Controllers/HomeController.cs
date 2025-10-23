@@ -1,9 +1,12 @@
 ﻿namespace ChatAppClone.Controllers
 {
-    using ChatAppClone.Models;
+    using System.Diagnostics;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using System.Diagnostics;
+
+    using ChatAppClone.Models;
+    using ChatAppClone.Common.Pages;
 
     public class HomeController : Controller
     {
@@ -16,35 +19,45 @@
 
         public IActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return this.View();
         }
 
         public IActionResult About() 
         {
-            return View();
+            return this.View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {
-            if (statusCode == 404)
+            if (statusCode == 400)
             {
-                return this.View("Error404");
+                return this.View(GeneralPages.Error400);
             }
 
             if (statusCode == 401)
             {
-                return this.View("Error401");
+                return this.View(GeneralPages.Error401);
             }
 
             if (statusCode == 403)
             {
-                return this.View("Error403");
+                return this.View(GeneralPages.Error403);
+            }
+
+            if (statusCode == 404)
+            {
+                return this.View(GeneralPages.Error404);
+            }
+
+            if (statusCode == 500)
+            {
+                return this.View(GeneralPages.Error500);
             }
 
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

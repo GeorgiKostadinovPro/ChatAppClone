@@ -1,11 +1,14 @@
 ﻿namespace ChatAppClone.Utilities
-{
-    using ChatAppClone.Common.Messages;
-    using ChatAppClone.Utilities.Contracts;
+{   
+    using System.Threading.Tasks;
+
+    using Microsoft.AspNetCore.Http;
+
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
-    using Microsoft.AspNetCore.Http;
-    using System.Threading.Tasks;
+
+    using ChatAppClone.Common.Messages;
+    using ChatAppClone.Utilities.Contracts;
 
     public class CloudinaryService : ICloudinaryService
     {

@@ -1,13 +1,16 @@
 ﻿namespace ChatAppClone.Extensions
 {
-    using ChatAppClone.Utilities.Contracts;
-    using ChatAppClone.Utilities;
     using CloudinaryDotNet;
 
     using Microsoft.Extensions.Configuration;
-    using ChatAppClone.Core.Contracts;
+
     using ChatAppClone.Core;
+    using ChatAppClone.Core.Contracts;
+    
     using ChatAppClone.Data.Repositories;
+
+    using ChatAppClone.Utilities;
+    using ChatAppClone.Utilities.Contracts;
 
     public static class ServiceCollectionExtensions
     {

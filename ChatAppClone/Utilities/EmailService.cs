@@ -1,10 +1,11 @@
 ﻿namespace ChatAppClone.Utilities
 {
-    using ChatAppClone.Utilities.Contracts;
-    using MailKit.Net.Smtp;
-    using MailKit.Security;
     using MimeKit;
     using MimeKit.Text;
+    using MailKit.Net.Smtp;
+    using MailKit.Security;
+    
+    using ChatAppClone.Utilities.Contracts;
 
     public class EmailService : IEmailService
     {

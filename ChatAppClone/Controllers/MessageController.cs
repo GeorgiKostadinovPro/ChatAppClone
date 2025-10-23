@@ -37,14 +37,14 @@
         {
             try
             {
-                var (currUserId, currUserName) = this.GetAuth();
+                var currUserId = this.GetAuth().Item1;
 
                 if (string.IsNullOrWhiteSpace(currUserId))
                 {
-                    return this.BadRequest(UserMessages.InvalidUserId);
+                    return this.Unauthorized(UserMessages.InvalidUserId);
                 }
 
-                if (!await this.chatService.IsValidAsync(request.ChatId.Value))
+                if (!await this.chatService.IsValidAsync(request.ChatId!.Value))
                 {
                     return this.BadRequest(ChatMessages.InvalidChatId);
                 }

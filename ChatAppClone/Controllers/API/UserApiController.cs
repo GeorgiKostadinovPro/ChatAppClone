@@ -1,13 +1,17 @@
 ﻿namespace ChatAppClone.Controllers.API
 {
+    using Microsoft.AspNetCore.Mvc;
+
+    using CloudinaryDotNet.Actions;
+
+    using ChatAppClone.Data.Models;
+    using ChatAppClone.Core.Contracts;
+
+    using ChatAppClone.Utilities.Contracts;
+
     using ChatAppClone.Common.Constants;
     using ChatAppClone.Common.Messages;
     using ChatAppClone.Common.Pages;
-    using ChatAppClone.Core.Contracts;
-    using ChatAppClone.Data.Models;
-    using ChatAppClone.Utilities.Contracts;
-    using CloudinaryDotNet.Actions;
-    using Microsoft.AspNetCore.Mvc;
 
     public class UserApiController : ApiController
     {

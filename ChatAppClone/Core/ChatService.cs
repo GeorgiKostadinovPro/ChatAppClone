@@ -1,13 +1,17 @@
 ﻿namespace ChatAppClone.Core
-{
+{   
     using System;
-    using ChatAppClone.Common.Constants;
-    using ChatAppClone.Common.Helpers;
-    using ChatAppClone.Core.Contracts;
+
+    using Microsoft.EntityFrameworkCore;
+
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
+    using ChatAppClone.Core.Contracts;
     using ChatAppClone.Models.ViewModels.Chats;
-    using Microsoft.EntityFrameworkCore;
+
+    using ChatAppClone.Common.Constants;
+    using ChatAppClone.Common.Helpers;
+    using ChatAppClone.Common.Messages;
 
     public class ChatService : IChatService
     {
@@ -33,10 +37,10 @@
 
             var chat = new Chat
             {
-                Name = $"{userA.UserName} & {userB.UserName}",
+                Name = string.Format(ChatConstants.ChatName, userA.UserName, userB.UserName),
                 ImageUrl = ChatConstants.DefaultChatImage,
                 IsGroupChat = false,
-                LastMessage = "No messages yet",
+                LastMessage = ChatConstants.NoMessagesYet,
                 LastActive = DateTime.UtcNow.ToLocalTime(),
                 CreatedOn = DateTime.UtcNow.ToLocalTime(),
                 ModifiedOn = DateTime.UtcNow.ToLocalTime()
@@ -64,26 +68,49 @@
             return model;
         }
 
-        public async Task<ChatViewModel> GetByIdAsync(Guid chatId)
+        public async Task<ChatViewModel> DeleteAsync(Guid chatId)
         {
-            Chat? chat = await this.repository.AllReadonly<Chat>()
-                .FirstOrDefaultAsync(c => c.Id == chatId);
-
-            ChatViewModel model = new ChatViewModel();
+            var chat = await this.repository.AllReadonly<Chat>()
+                .FirstOrDefaultAsync(uc => uc.Id == chatId);
 
             if (chat == null)
             {
-                return model;
+                throw new InvalidOperationException(ChatMessages.InvalidChatId);
             }
 
-            model.Id = chat.Id;
-            model.Name = chat.Name;
-            model.ImageUrl = chat.ImageUrl;
-            model.CreatedOn = DateHelper.GetDate(chat.CreatedOn);
+            await this.repository.DeleteAsync<Chat>(chatId);
 
-            model.Participants = await this.userService.GetByChatAsync(chat.Id);
+            await this.repository.SaveChangesAsync();
 
-            model.Messages = await this.messageService.GetByChatId(chatId);
+            ChatViewModel model = new ChatViewModel
+            {
+                Id = chatId,
+                Name = chat.Name
+            };
+
+            return model;
+        }
+
+        public async Task<ChatViewModel> GetByIdAsync(Guid chatId)
+        {
+            var chat = await this.repository.AllReadonly<Chat>()
+                .FirstOrDefaultAsync(c => c.Id == chatId);
+
+            if (chat == null)
+            {
+                throw new InvalidOperationException(ChatMessages.InvalidChatId);
+            }
+
+
+            ChatViewModel model = new ChatViewModel
+            {
+                Id = chat.Id,
+                Name = chat.Name,
+                ImageUrl = chat.ImageUrl,
+                CreatedOn = DateHelper.GetDate(chat.CreatedOn),
+                Participants = await this.userService.GetByChatAsync(chat.Id),
+                Messages = await this.messageService.GetByChatId(chatId)
+            };
 
             return model;
         }
@@ -101,7 +128,7 @@
                             Name = c.Name,
                             ImageUrl = c.ImageUrl,
                             LastMessage = c.LastMessage == null
-                                ? "No messages yet"
+                                ? ChatConstants.NoMessagesYet
                                 : c.LastMessage.Length < 30 ? c.LastMessage : c.LastMessage.Substring(0, 30) + "...",
                             LastActive = DateHelper.TimeAgo(c.LastActive)
                         })
@@ -134,27 +161,6 @@
             }
 
             return true;
-        }
-
-        public async Task<ChatViewModel> DeleteAsync(Guid chatId)
-        {
-            var chat = await this.repository.AllReadonly<Chat>()
-                .FirstOrDefaultAsync(uc => uc.Id == chatId);
-
-            if (chat == null)
-            {
-                throw new InvalidOperationException();
-            }
-
-            await this.repository.DeleteAsync<Chat>(chatId);
-
-            await this.repository.SaveChangesAsync();
-
-            return new ChatViewModel
-            {
-                Id = chatId,
-                Name = chat.Name
-            };
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿namespace ChatAppClone.Data.Configurations
 {
-    using ChatAppClone.Data.Models;
-    using Microsoft.EntityFrameworkCore.Metadata.Builders;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using ChatAppClone.Data.Models;
 
     public class ChatConfiguration : IEntityTypeConfiguration<Chat>
     {

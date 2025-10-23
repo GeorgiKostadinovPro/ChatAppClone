@@ -1,19 +1,21 @@
 ﻿namespace ChatAppClone.Core
 {
+    using System;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Identity;
-
-    using ChatAppClone.Common.Messages;
-    using ChatAppClone.Core.Contracts;
-    using ChatAppClone.Data.Models;
     using System.Collections.Generic;
-    using ChatAppClone.Models.ViewModels.Users;
-    using ChatAppClone.Data.Repositories;
+
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+
+    using ChatAppClone.Data.Models;
+    using ChatAppClone.Data.Repositories;
+    using ChatAppClone.Core.Contracts;
+    using ChatAppClone.Models.ViewModels.Chats;
+    using ChatAppClone.Models.ViewModels.Users;
+    
     using ChatAppClone.Common.Constants;
     using ChatAppClone.Common.Helpers;
-    using System;
-    using ChatAppClone.Models.ViewModels.Chats;
+    using ChatAppClone.Common.Messages;
 
     public class UserService : IUserService
     {
@@ -23,10 +25,10 @@
 
         public UserService(IRepository _repository, UserManager<ApplicationUser> _userManager)
         {
-            this.repository = _repository;  
+            this.repository = _repository;
             this.userManager = _userManager;
         }
-       
+
         public async Task<ApplicationUser> GetByIdAsync(string userId)
         {
             ApplicationUser? user = await userManager.FindByIdAsync(userId);
@@ -110,8 +112,8 @@
             user.ProfilePicturePublicId = publicId;
 
             await this.userManager.UpdateAsync(user);
-        } 
-        
+        }
+
         public async Task DeleteProfilePictureAsync(string userId)
         {
             ApplicationUser user = await this.GetByIdAsync(userId);

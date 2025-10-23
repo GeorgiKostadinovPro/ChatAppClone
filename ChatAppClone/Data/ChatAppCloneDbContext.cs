@@ -1,9 +1,11 @@
 ﻿namespace ChatAppClone.Data
 {
-    using ChatAppClone.Data.Models;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
     using System.Reflection;
+
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+    using ChatAppClone.Data.Models;
 
     public class ChatAppCloneDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {

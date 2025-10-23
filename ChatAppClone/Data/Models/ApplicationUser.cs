@@ -1,8 +1,9 @@
 ﻿namespace ChatAppClone.Data.Models
 {
-    using ChatAppClone.Data.Common.Models;
     using Microsoft.AspNetCore.Identity;
 
+    using ChatAppClone.Data.Common.Models;
+    
     public class ApplicationUser : IdentityUser<string>, IBaseEntityModel
     {
         public ApplicationUser()

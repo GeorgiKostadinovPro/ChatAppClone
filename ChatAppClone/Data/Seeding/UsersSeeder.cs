@@ -1,11 +1,13 @@
 ﻿namespace ChatAppClone.Data.Seeding
 {
-    using ChatAppClone.Data.Models;
-    using ChatAppClone.Data.Seeding.Contracts;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Threading.Tasks;
+ 
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+
+    using ChatAppClone.Data.Models;
+    using ChatAppClone.Data.Seeding.Contracts;
 
     public class UsersSeeder : ISeeder
     {

@@ -1,8 +1,9 @@
 ﻿namespace ChatAppClone.Data.Seeding
 {
-    using ChatAppClone.Data.Seeding.Contracts;
     using System;
     using System.Threading.Tasks;
+
+    using ChatAppClone.Data.Seeding.Contracts;
 
     public class ChatAppCloneDbContextSeeder : ISeeder
     {

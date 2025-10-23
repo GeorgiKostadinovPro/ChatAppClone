@@ -1,17 +1,21 @@
 ﻿namespace ChatAppClone.Core
 {
-    using ChatAppClone.Common.Helpers;
-    using ChatAppClone.Core.Contracts;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+
+    using Microsoft.EntityFrameworkCore;
+
     using ChatAppClone.Data.Models;
     using ChatAppClone.Data.Repositories;
+    using ChatAppClone.Core.Contracts;
     using ChatAppClone.Models.ViewModels.Messages;
-    using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+
+    using ChatAppClone.Common.Helpers;
 
     public class MessageService : IMessageService
     {
         private readonly IRepository repository;
+
         public MessageService(IRepository _repository)
         {
             this.repository = _repository;

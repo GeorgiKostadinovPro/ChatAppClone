@@ -1,5 +1,9 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
+    ///
+    ///   SIGNALR HUB BUILDFER & INITIALIZATION
+    /// 
+
     const chatConnection = new signalR.HubConnectionBuilder()
         .withUrl("/chatHub")
         .build();
@@ -18,13 +22,16 @@
         chatConnection.invoke("LeaveChatAsync", chatId).then(function () {
             console.log("Leave chat group: " + chatId);
 
+            // Remove the chat card from both users
             removeChatCard(chatId);
             showNoChatCard();
 
+            // If user is in the deleted chat, remove it
             const currChat = document.querySelector(".chat-area #chatId");
 
             if (currChat && currChat.value == chatId) {
                 document.querySelector('.chat-area').style.display = 'none';
+                document.querySelector('.detail-area').style.display = 'none';
                 document.querySelector('.no-current-chat').style.display = 'block';
             }
         }).catch(function (err) {
@@ -52,6 +59,9 @@
         console.error("SignalR connection error:", err.toString());
     });
 
+    ///
+    ///   CHAT API HANDLERS
+    /// 
 
     document.querySelectorAll('.chat-card').forEach((chatElement) => {
         chatElement.addEventListener('click', () => loadChat(chatElement));
@@ -102,6 +112,12 @@
                     }
                 });
 
+                const deleteButton = document.querySelector('.delete-btn');
+
+                if (deleteButton) {
+                    deleteButton.addEventListener('click', (e) => deleteChat(e));
+                }
+
                 setupColorListeners();
             })
             .catch(error => {
@@ -119,16 +135,39 @@
                 },
                 body: JSON.stringify({ chatId: chatId, message: messageContent })
             })
-                .then((res) => {
-                    if (!res.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
+            .then((res) => {
+                 if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                 }
+            })
+            .catch(() => {
+                 window.location.href = '/Home/Error?statusCode=400';
+            });
         }
     }
+
+    function deleteChat(e) {
+        e.preventDefault();
+
+        const chatId = e.currentTarget.dataset.chatId;
+        if (!chatId) return;
+
+        fetch(`/api/ChatApi/Delete?chatId=${chatId}`, {
+            method: 'POST'
+        })
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .catch(() => {
+            window.location.href = '/Home/Error?statusCode=400';
+        });
+    }
+
+    ///
+    ///   HELPER HANDLERS
+    ///
 
     function appendToConversationArea(chat) {
         const conversationArea = document.querySelector('.conversation-area');
@@ -182,7 +221,7 @@
 
     function removeChatCard(chatId) {
         const chat = document.querySelector(`.chat-card input[value="${chatId}"]`);
-        chat.closest('.chat-card').style.display = 'none';
+        if (chat) chat.closest('.chat-card').remove();
     }
 
     function hideNoChatCard() {
@@ -195,13 +234,14 @@
 
     function showNoChatCard() {
         const noChatCard = document.querySelector('.no-chats-card');
+        const chatCards = document.querySelectorAll('.conversation-area .chat-card');
 
-        if (noChatCard) {
-            const chatCards = document.querySelectorAll('.conversation-area div.chat-card');
+        if (!noChatCard) return;
 
-            if (chatCards.length <= 1) {
-                noChatCard.style.display = 'block';
-            }
+        if (chatCards.length <= 1) {
+            noChatCard.style.display = 'block';
+        } else {
+            noChatCard.style.display = 'none';
         }
     }
 

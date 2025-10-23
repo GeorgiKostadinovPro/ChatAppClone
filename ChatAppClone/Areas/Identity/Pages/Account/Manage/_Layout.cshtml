@@ -60,10 +60,12 @@
                 var formData = new FormData();
                 formData.append('file', file);
 
+                console.log(file);
+
                 $('#loading-overlay').show();
 
                 $.ajax({
-                    url: '@Url.Action("UploadProfilePicture", "User")',
+                    url: '@Url.Action("UploadProfilePicture", "UserApi")',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -75,8 +77,21 @@
                             $('#validation-message').text(response.error);
                         }
                     },
-                    error: function () {
-                        $('#validation-message').text('An error occurred while uploading the picture.');
+                    error: function (xhr) {
+                        let message = 'An error occurred while uploading the picture.';
+                        console.log(xhr);
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            message = xhr.responseJSON.error;
+                        } else if (xhr.responseText) {
+                            try {
+                                const parsed = JSON.parse(xhr.responseText);
+                                if (parsed.error) message = parsed.error;
+                            } catch { }
+                        }
+
+                        console.log(message);
+
+                        $('#validation-message').text(message);
                     },
                     complete: function () {
                         $('#loading-overlay').hide();
@@ -92,16 +107,12 @@
                 $('#loading-overlay').show();
 
                 $.ajax({
-                    url: '@Url.Action("DeleteProfilePicture", "User")',
+                    url: '@Url.Action("DeleteProfilePicture", "UserApi")',
                     type: 'POST',
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        if (response.success) {
-                            location.reload();
-                        } else {
-                            $('#validation-message').text(response.error);
-                        }
+                        location.reload();
                     },
                     error: function () {
                         $('#validation-message').text('An error occurred while deleting the picture.');

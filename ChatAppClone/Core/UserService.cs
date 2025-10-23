@@ -31,7 +31,7 @@
 
         public async Task<ApplicationUser> GetByIdAsync(string userId)
         {
-            ApplicationUser? user = await userManager.FindByIdAsync(userId);
+            ApplicationUser? user = await this.userManager.FindByIdAsync(userId);
 
             if (user == null)
             {

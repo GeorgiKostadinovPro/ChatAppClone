@@ -1,7 +1,8 @@
 ﻿namespace ChatAppClone.Data.Repositories
 {
-    using ChatAppClone.Data.Common.Models;
     using System.Linq.Expressions;
+
+    using ChatAppClone.Data.Common.Models;
 
     /// <summary>
     /// Abstraction of repository access methods

@@ -1,10 +1,10 @@
 ﻿namespace ChatAppClone.Data.Repositories
 {
-    using Microsoft.EntityFrameworkCore.ChangeTracking;
-    using Microsoft.EntityFrameworkCore;
-
     using System.Linq.Expressions;
 
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+    using Microsoft.EntityFrameworkCore;
+    
     /// <summary>
     /// Implementation of repository access methods
     /// for Relational Database Engine

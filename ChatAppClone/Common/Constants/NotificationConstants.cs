@@ -6,5 +6,7 @@
 
         public const int NotificationsPerPage = 3;
         public const int DefaultPage = 1;
+
+        public const string Type = "Info";
     }
 }

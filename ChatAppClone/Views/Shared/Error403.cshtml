@@ -1,0 +1,12 @@
+﻿@{
+    TempData["Title"] = "Bad Request";
+}
+
+<link rel="stylesheet" href="~/css/error403.css" asp-append-version="true" />
+
+<section class="error403">
+    <div class="wrapper">
+        <img src="~/assets/403.jpg" alt="403" />
+        <a asp-controller="Home" asp-action="Index">Go to Home</a>
+    </div>
+</section>

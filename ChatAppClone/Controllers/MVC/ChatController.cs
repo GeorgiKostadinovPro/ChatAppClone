@@ -1,13 +1,15 @@
-﻿namespace ChatAppClone.Controllers
+﻿namespace ChatAppClone.Controllers.MVC
 {
-    using ChatAppClone.Common.Messages;
-    using ChatAppClone.Common.Pages;
-    using ChatAppClone.Core.Contracts;
-    using ChatAppClone.Hubs;
-    
-    using ChatAppClone.Models.ViewModels.Chats;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
+    
+    using ChatAppClone.Hubs;
+    using ChatAppClone.Core.Contracts;
+    
+    using ChatAppClone.Models.ViewModels.Chats;
+
+    using ChatAppClone.Common.Messages;
+    using ChatAppClone.Common.Pages;
 
     public class ChatController : BaseController
     {

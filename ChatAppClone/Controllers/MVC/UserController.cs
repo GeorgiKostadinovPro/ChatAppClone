@@ -1,10 +1,12 @@
-﻿namespace ChatAppClone.Controllers
+﻿namespace ChatAppClone.Controllers.MVC
 {
-    using ChatAppClone.Common.Pages;
+    using Microsoft.AspNetCore.Mvc;
+
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Models.ViewModels.Users;
+
     using ChatAppClone.Utilities.Contracts;
-    using Microsoft.AspNetCore.Mvc;
+    using ChatAppClone.Common.Pages;
 
     public class UserController : BaseController
     {

@@ -1,9 +1,10 @@
-﻿namespace ChatAppClone.Controllers
+﻿namespace ChatAppClone.Controllers.MVC
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
 
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    
     [Authorize]
     public class BaseController : Controller 
     {

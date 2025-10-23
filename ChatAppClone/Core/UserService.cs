@@ -108,6 +108,11 @@
         {
             ApplicationUser user = await this.GetByIdAsync(userId);
 
+            if (url == null || publicId == null)
+            {
+                throw new InvalidOperationException(UserMessages.NOTUploadedPicture);
+            }
+
             user.ProfilePictureUrl = url;
             user.ProfilePicturePublicId = publicId;
 

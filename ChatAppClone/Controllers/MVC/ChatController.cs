@@ -153,11 +153,14 @@
 
                 foreach (var participant in participants)
                 {
+                    await this.notificationService
+                        .CreateAsync(NotificationMessages.UserDeletedChat, string.Empty, participant.Id);
+
                     await this.notificationHub.Clients.User(participant.Id)
                         .SendAsync(NotificationMessages.ReceiveNotification, string.Format(ChatMessages.ChatWasDeleted, deleted.Name));
                 }
 
-                return this.RedirectToAction(ChatPages.Chats);
+                return this.Ok();
             }
             catch (Exception)
             {

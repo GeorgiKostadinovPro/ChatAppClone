@@ -7,5 +7,7 @@
         public const string ReceiveNotification = "ReceiveNotification";
 
         public const string UserAddedYouToChat = "{0} added you to chat.";
+
+        public const string UserDeletedChat = "A chat with you was deleted.";
     }
 }

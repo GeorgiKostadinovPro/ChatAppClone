@@ -135,14 +135,14 @@
                 },
                 body: JSON.stringify({ chatId: chatId, message: messageContent })
             })
-                .then((res) => {
-                    if (!res.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                })
-                .catch(() => {
-                    window.location.href = '/Home/Error?statusCode=400';
-                });
+            .then((res) => {
+                 if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                 }
+            })
+            .catch(() => {
+                 window.location.href = '/Home/Error?statusCode=400';
+            });
         }
     }
 
@@ -152,19 +152,17 @@
         const chatId = e.currentTarget.dataset.chatId;
         if (!chatId) return;
 
-        fetch('/Chat/Delete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ chatId: chatId })
+        fetch(`/api/ChatApi/Delete?chatId=${chatId}`, {
+            method: 'POST'
         })
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error('Network response was not ok');
-                }
-            })
-            .catch(() => {
-                window.location.href = '/Home/Error?statusCode=400';
-            });
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+        })
+        .catch(() => {
+            window.location.href = '/Home/Error?statusCode=400';
+        });
     }
 
     ///

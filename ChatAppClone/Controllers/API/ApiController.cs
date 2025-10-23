@@ -1,4 +1,4 @@
-﻿namespace ChatAppClone.Controllers
+﻿namespace ChatAppClone.Controllers.API
 {
     using Microsoft.AspNetCore.Mvc;
     using System.Security.Claims;
@@ -11,15 +11,15 @@
         {
             string id = string.Empty;
 
-            if (this.User!.Identity!.IsAuthenticated
-                && this.User.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
+            if (User!.Identity!.IsAuthenticated
+                && User.HasClaim(c => c.Type == ClaimTypes.NameIdentifier))
             {
-                id = this.User
+                id = User
                     .FindFirstValue(ClaimTypes.NameIdentifier)!
                     .ToString();
             }
 
-            return (id, this.User.Identity!.Name!);
+            return (id, User.Identity!.Name!);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ChatAppClone.Controllers
+﻿namespace ChatAppClone.Controllers.MVC
 {
     using System.Diagnostics;
 
@@ -27,7 +27,7 @@
             return this.View();
         }
 
-        public IActionResult About() 
+        public IActionResult About()
         {
             return this.View();
         }

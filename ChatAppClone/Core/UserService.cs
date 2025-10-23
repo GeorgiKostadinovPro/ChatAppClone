@@ -31,7 +31,7 @@
 
         public async Task<ApplicationUser> GetByIdAsync(string userId)
         {
-            ApplicationUser? user = await userManager.FindByIdAsync(userId);
+            ApplicationUser? user = await this.userManager.FindByIdAsync(userId);
 
             if (user == null)
             {
@@ -107,6 +107,11 @@
         public async Task SetProfilePictureAsync(string userId, string url, string publicId)
         {
             ApplicationUser user = await this.GetByIdAsync(userId);
+
+            if (url == null || publicId == null)
+            {
+                throw new InvalidOperationException(UserMessages.NOTUploadedPicture);
+            }
 
             user.ProfilePictureUrl = url;
             user.ProfilePicturePublicId = publicId;

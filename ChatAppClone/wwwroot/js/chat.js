@@ -112,7 +112,7 @@
     function sendMessage(messageContent) {
         if (messageContent) {
             const chatId = document.getElementById("chatId").value;
-            fetch(`/api/Message/Create`, {
+            fetch(`/api/MessageApi/Create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

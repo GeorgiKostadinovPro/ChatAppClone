@@ -6,6 +6,7 @@
         public const string ValidTypes = "The valid types are .jpg, .jpeg, .png";
         public const string NOTExistingPicture = "You do NOT have picture to remove.";
 
-        public const string AlreadyExists = "User with such id does not exist.";
+        public const string InvalidUserId = "Invalid User ID.";
+        public const string DoesNotExist = "User with such id does not exist.";
     }
 }

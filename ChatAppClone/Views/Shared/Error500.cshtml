@@ -1,0 +1,12 @@
+﻿@{
+    TempData["Title"] = "Bad Request";
+}
+
+<link rel="stylesheet" href="~/css/error500.css" asp-append-version="true" />
+
+<section class="error500">
+    <div class="wrapper">
+        <img src="~/assets/500.jpg" alt="500" />
+        <a asp-controller="Home" asp-action="Index">Go to Home</a>
+    </div>
+</section>

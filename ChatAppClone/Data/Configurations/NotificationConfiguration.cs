@@ -1,9 +1,11 @@
 ﻿namespace ChatAppClone.Data.Configurations
 {
-    using ChatAppClone.Common.Constants;
-    using ChatAppClone.Data.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    using ChatAppClone.Data.Models;
+
+    using ChatAppClone.Common.Constants;
 
     public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
     {

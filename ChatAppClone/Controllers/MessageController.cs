@@ -1,15 +1,13 @@
 ﻿namespace ChatAppClone.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.SignalR;
-
-    using ChatAppClone.Hubs;
+    using ChatAppClone.Common.Messages;
     using ChatAppClone.Core.Contracts;
+    using ChatAppClone.Hubs;
   
     using ChatAppClone.Models.RequestModels;
     using ChatAppClone.Models.ViewModels.Messages;
-
-    using ChatAppClone.Common.Messages;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
 
     public class MessageController : ApiController
     {
@@ -63,7 +61,7 @@
             }
             catch (Exception)
             {
-                return this.BadRequest();
+                return this.BadRequest(ChatMessages.ChatNotDeletedSuccessfully);
             }
         }
     }

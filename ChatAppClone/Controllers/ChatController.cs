@@ -1,7 +1,10 @@
 ﻿namespace ChatAppClone.Controllers
 {
+    using ChatAppClone.Common.Messages;
+    using ChatAppClone.Common.Pages;
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Hubs;
+    
     using ChatAppClone.Models.ViewModels.Chats;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
@@ -33,25 +36,29 @@
         [HttpGet]
         public async Task<IActionResult> Start(string userToChatId)
         {
-            var isExisting = await this.chatService.CheckIfChatExists(this.GetAuthId(), userToChatId);
-
-            if (isExisting)
-            {
-                return this.RedirectToAction("Chats");
-            }
-
             try
             {
-                var chat = await this.chatService.CreateAsync(this.GetAuthId(), userToChatId);
+                var (currUserId, currentUserName) = this.GetAuth();
 
-                var followerUserName = User.Identity!.Name;
+                if (string.IsNullOrWhiteSpace(currUserId) || string.IsNullOrWhiteSpace(currentUserName))
+                {
+                    return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 401 });
+                }
 
-                await this.notificationService.CreateAsync(
-                    $"{followerUserName} added you to chat.", string.Empty, userToChatId);
+                if (await this.chatService.CheckIfChatExists(currUserId, userToChatId))
+                {
+                    return this.RedirectToAction(ChatPages.Chats);
+                }
 
-                await notificationHub.Clients.User(userToChatId).SendAsync("ReceiveNotification", $"{followerUserName} added you to chat.");
+                var chat = await this.chatService.CreateAsync(currUserId, userToChatId);
 
-                await chatHub.Clients.User(userToChatId).SendAsync("StartChat", new
+                await this.notificationService
+                    .CreateAsync(string.Format(NotificationMessages.UserAddedYouToChat, currentUserName), string.Empty, userToChatId);
+
+                await this.notificationHub.Clients.User(userToChatId)
+                    .SendAsync(NotificationMessages.ReceiveNotification, string.Format(NotificationMessages.UserAddedYouToChat, currentUserName));
+
+                await this.chatHub.Clients.User(userToChatId).SendAsync(ChatMessages.StartChat, new
                 {
                     id = chat.Id,
                     name = chat.Name,
@@ -60,26 +67,40 @@
                     lastMessage = chat.LastMessage,
                     participantIds = chat.Participants.Select(p => p.Id).ToArray()
                 });
+
+                return this.RedirectToAction(ChatPages.Chats);
             }
             catch (Exception)
             {
-                this.RedirectToAction("Error", "Home", new { statusCode = 404 });
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 400 });
             }
-
-            return this.RedirectToAction("Chats");
         }
 
         [HttpGet]
         public async Task<IActionResult> Chats()
         {
-            var chats = await this.chatService.GetByUserAsync(this.GetAuthId());
-
-            GeneralChatViewModel model = new GeneralChatViewModel
+            try
             {
-                Chats = chats
-            };
+                var currUserId = this.GetAuth().Item1;
 
-            return this.View(model);
+                if (string.IsNullOrWhiteSpace(currUserId))
+                {
+                    return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 401 });
+                }
+
+                var chats = await this.chatService.GetByUserAsync(currUserId);
+
+                var model = new GeneralChatViewModel
+                {
+                    Chats = chats
+                };
+
+                return this.View(model);
+            }
+            catch (Exception ex)
+            {
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 400 });
+            }
         }
 
         [HttpGet]
@@ -87,14 +108,28 @@
         {
             if (!chatId.HasValue)
             {
-                return this.RedirectToAction("Chats");
+                return this.RedirectToAction(ChatPages.Chats);
             }
 
-            var chatModel = await this.chatService.GetByIdAsync(chatId.Value);
+            try
+            {
+                var currUserId = this.GetAuth().Item1;
 
-            ViewBag.CurrentUserId = this.GetAuthId();
+                if (string.IsNullOrWhiteSpace(currUserId))
+                {
+                    return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 401 });
+                }
 
-            return this.PartialView("_ChatDetailsPartial", chatModel);
+                ViewBag.CurrentUserId = currUserId;
+
+                var chatModel = await this.chatService.GetByIdAsync(chatId.Value);
+
+                return this.PartialView("_ChatDetailsPartial", chatModel);
+            }
+            catch (Exception)
+            {
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 404 });
+            }
         }
 
         [HttpPost]
@@ -104,26 +139,28 @@
             {
                 return this.RedirectToAction("Chats");
             }
-           
+
             try
             {
                 var participants = await this.userService.GetByChatAsync(chatId.Value);
 
                 var deleted = await this.chatService.DeleteAsync(chatId.Value);
 
-                await this.chatHub.Clients.Group(chatId.Value.ToString()).SendAsync("DeleteChat", chatId.Value);
+                await this.chatHub.Clients.Group(chatId.Value.ToString())
+                    .SendAsync(ChatMessages.DeleteChat, chatId.Value);
 
                 foreach (var participant in participants)
                 {
-                    await this.notificationHub.Clients.User(participant.Id).SendAsync("ReceiveNotification", $"Chat {deleted.Name} was deleted.");
+                    await this.notificationHub.Clients.User(participant.Id)
+                        .SendAsync(NotificationMessages.ReceiveNotification, string.Format(ChatMessages.ChatWasDeleted, deleted.Name));
                 }
+
+                return this.RedirectToAction(ChatPages.Chats);
             }
             catch (Exception)
             {
-                this.RedirectToAction("Error", "Home", new { statusCode = 404 });
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 400 });
             }
-
-            return this.RedirectToAction("Chats");
         }
     }
 }

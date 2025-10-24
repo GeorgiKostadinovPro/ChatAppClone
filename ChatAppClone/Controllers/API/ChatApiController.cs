@@ -40,30 +40,24 @@
                 return this.BadRequest(ChatMessages.InvalidChatId);
             }
 
-            try
+            
+            var participants = await this.userService.GetByChatAsync(chatId.Value);
+
+            var deleted = await this.chatService.DeleteAsync(chatId.Value);
+
+            await this.chatHub.Clients.Group(chatId.Value.ToString())
+                .SendAsync(ChatMessages.DeleteChat, chatId.Value);
+
+            foreach (var participant in participants)
             {
-                var participants = await this.userService.GetByChatAsync(chatId.Value);
+                await this.notificationService
+                    .CreateAsync(NotificationMessages.UserDeletedChat, string.Empty, participant.Id);
 
-                var deleted = await this.chatService.DeleteAsync(chatId.Value);
-
-                await this.chatHub.Clients.Group(chatId.Value.ToString())
-                    .SendAsync(ChatMessages.DeleteChat, chatId.Value);
-
-                foreach (var participant in participants)
-                {
-                    await this.notificationService
-                        .CreateAsync(NotificationMessages.UserDeletedChat, string.Empty, participant.Id);
-
-                    await this.notificationHub.Clients.User(participant.Id)
-                        .SendAsync(NotificationMessages.ReceiveNotification, string.Format(ChatMessages.ChatWasDeleted, deleted.Name));
-                }
-
-                return this.Ok();
+                await this.notificationHub.Clients.User(participant.Id)
+                    .SendAsync(NotificationMessages.ReceiveNotification, string.Format(ChatMessages.ChatWasDeleted, deleted.Name));
             }
-            catch (Exception)
-            {
-                return this.BadRequest(ChatMessages.ChatNotDeletedSuccessfully);
-            }
+
+            return this.Ok();
         }
     }
 }

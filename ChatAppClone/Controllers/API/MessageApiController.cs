@@ -35,36 +35,29 @@
         [HttpPost("Create")]
         public async Task<IActionResult> Create([FromBody] MessageRequest request)
         {
-            try
+            var currUserId = this.GetAuth().Item1;
+            
+            if (string.IsNullOrWhiteSpace(currUserId))
             {
-                var currUserId = this.GetAuth().Item1;
-
-                if (string.IsNullOrWhiteSpace(currUserId))
-                {
-                    return this.Unauthorized(UserMessages.InvalidUserId);
-                }
-
-                if (!await chatService.IsValidAsync(request.ChatId!.Value))
-                {
-                    return this.BadRequest(ChatMessages.InvalidChatId);
-                }
-
-                MessageViewModel model = await this.messageService.CreateAsync(request.ChatId.Value, currUserId, request.Message!);
-
-                await this.chatHub.Clients.Group(request.ChatId.Value.ToString()).SendAsync(ChatMessages.ReceiveMessage, new
-                {
-                    creatorId = model.CreatorId,
-                    creatorProfilePictureUrl = (await this.userService.GetByIdAsync(currUserId)).ProfilePictureUrl,
-                    content = model.Content,
-                    createdOn = model.CreatedOn
-                });
-
-                return this.Ok(model);
+                return this.Unauthorized(UserMessages.InvalidUserId);
             }
-            catch (Exception)
+            
+            if (!await chatService.IsValidAsync(request.ChatId!.Value))
             {
-                return this.BadRequest(ChatMessages.MessageNotCreatedSuccessfully);
+                return this.BadRequest(ChatMessages.InvalidChatId);
             }
+            
+            MessageViewModel model = await this.messageService.CreateAsync(request.ChatId.Value, currUserId, request.Message!);
+            
+            await this.chatHub.Clients.Group(request.ChatId.Value.ToString()).SendAsync(ChatMessages.ReceiveMessage, new
+            {
+                creatorId = model.CreatorId,
+                creatorProfilePictureUrl = (await this.userService.GetByIdAsync(currUserId)).ProfilePictureUrl,
+                content = model.Content,
+                createdOn = model.CreatedOn
+            });
+            
+            return this.Ok(model);
         }
     }
 }

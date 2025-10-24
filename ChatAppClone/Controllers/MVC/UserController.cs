@@ -20,24 +20,17 @@
         [HttpGet]
         public async Task<IActionResult> Explore([FromQuery] ExploreUsersQueryModel model)
         {
-            try
+            var currUserId = this.GetAuth().Item1;
+
+            if (string.IsNullOrWhiteSpace(currUserId))
             {
-                var currUserId = this.GetAuth().Item1;
-
-                if (string.IsNullOrWhiteSpace(currUserId))
-                {
-                    return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 401 });
-                }
-
-                model.Users = await this.userService.GetAsync(currUserId, model);
-                model.TotalUsersCount = await this.userService.GetCountAsync(model.SearchTerm);
-
-                return this.View(model);
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 401 });
             }
-            catch (Exception)
-            {
-                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { area = string.Empty, StatusCode = 400 });
-            }
+
+            model.Users = await this.userService.GetAsync(currUserId, model);
+            model.TotalUsersCount = await this.userService.GetCountAsync(model.SearchTerm);
+
+            return this.View(model);
         }
     }
 }

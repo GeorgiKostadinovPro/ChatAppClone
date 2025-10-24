@@ -1,6 +1,13 @@
 # ChatAppClone
-<p>ChatAppClone is a simple real-time chat platform built with .NET Core 8.0, SignalR and Azure.</p>
+<p>ChatAppClone is a simple real-time chat platform built with .NET Core 8.0, EF Core and SignalR.</p>
 <p>To use the application you may register with valid email and confirm your account.</p>
+<p>Implemented: </p>
+<ul>
+   <li>Full Authentication Flow via Microsoft Identity.</li>
+   <li>Full User Profile Management.</li>
+   <li>Custom Middlewares for Exception Handling.</li>
+   <li>Real-time Chat & Notifications via SignalR.</li>
+</ul>
 <p>For more information read the short documentation below.</p>
 <hr />
 
@@ -22,7 +29,6 @@
   <img alt="Static Badge" src="https://img.shields.io/badge/EF Core-%E2%9C%93-%23C21325">
   <img alt="Static Badge" src="https://img.shields.io/badge/SQL Server-%E2%9C%93-brightgreen">
   <img alt="Static Badge" src="https://img.shields.io/badge/SignalR-%E2%9C%93-%23F6546A">
-  <img alt="Static Badge" src="https://img.shields.io/badge/Azure-%E2%9C%93-%23764ABC">
   <img alt="Static Badge" src="https://img.shields.io/badge/MailKit-%E2%9C%93-%23FFC0CB">
   <img alt="Static Badge" src="https://img.shields.io/badge/Cloudinary-%E2%9C%93-%233442CD">
   <img alt="Static Badge" src="https://img.shields.io/badge/HTML5-%E2%9C%93-%23800080">
@@ -79,8 +85,8 @@ The following features are available.
   <ul>
     <li>Communicate real-time with your friends</li>
     <li>Send messages real-time</li>
-    <li>Receive new massanges</li>
+    <li>Receive new massages</li>
     <li>Delete chats you no longer want</li>
-   <li>Real-time chats updates</li>
+   <li>Real-time chat updates</li>
   </ul>
 </details>

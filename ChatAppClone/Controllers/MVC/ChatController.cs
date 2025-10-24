@@ -110,7 +110,7 @@
         {
             if (!chatId.HasValue)
             {
-                return this.RedirectToAction(ChatPages.Chats);
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 404 });
             }
 
             try
@@ -130,7 +130,7 @@
             }
             catch (Exception)
             {
-                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 404 });
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { statusCode = 400 });
             }
         }
     }

@@ -46,8 +46,6 @@ else
     app.UseHsts();
 }
 
-app.UseMiddleware<GeneralExceptionHandlerMiddleware>();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -55,6 +53,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<GeneralExceptionHandlerMiddleware>();
 
 app.MapControllerRoute(
     name: "default",

@@ -5,6 +5,7 @@
 <ul>
    <li>Full Authentication Flow via Microsoft Identity.</li>
    <li>Full User Profile Management.</li>
+   <li>Email Service & Cloud Service for Data Storage.</li>
    <li>Custom Middlewares for Exception Handling.</li>
    <li>Real-time Chat & Notifications via SignalR.</li>
 </ul>

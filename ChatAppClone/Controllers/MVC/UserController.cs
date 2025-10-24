@@ -36,7 +36,7 @@
             }
             catch (Exception)
             {
-                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { area = string.Empty, StatusCode = 404 });
+                return this.RedirectToAction(GeneralPages.Error, GeneralPages.Home, new { area = string.Empty, StatusCode = 400 });
             }
         }
     }

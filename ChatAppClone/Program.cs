@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ChatAppClone.Extensions;
 using ChatAppClone.Data.Seeding;
 using ChatAppClone.Hubs;
+using ChatAppClone.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,8 @@ else
     app.UseStatusCodePagesWithRedirects("/Home/Error?statusCode={0}");
     app.UseHsts();
 }
+
+app.UseMiddleware<GeneralExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

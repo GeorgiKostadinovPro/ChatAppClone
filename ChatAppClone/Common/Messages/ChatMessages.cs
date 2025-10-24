@@ -12,5 +12,8 @@
 
         public const string ReceiveMessage = "ReceiveMessage";
 
-        public const string ChatWasDeleted = "Chat {0} was deleted.";    }
+        public const string ChatWasDeleted = "Chat {0} was deleted.";
+
+        public const string MessageNotCreatedSuccessfully = "Message was NOT created successfully.";
+    }
 }

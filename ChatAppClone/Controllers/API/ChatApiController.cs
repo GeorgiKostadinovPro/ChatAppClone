@@ -37,7 +37,7 @@
         {
             if (!chatId.HasValue)
             {
-                return this.BadRequest();
+                return this.BadRequest(ChatMessages.InvalidChatId);
             }
 
             try
@@ -62,7 +62,7 @@
             }
             catch (Exception)
             {
-                return this.BadRequest();
+                return this.BadRequest(ChatMessages.ChatNotDeletedSuccessfully);
             }
         }
     }

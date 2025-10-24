@@ -63,7 +63,7 @@
             }
             catch (Exception)
             {
-                return this.BadRequest(ChatMessages.ChatNotDeletedSuccessfully);
+                return this.BadRequest(ChatMessages.MessageNotCreatedSuccessfully);
             }
         }
     }

@@ -5,15 +5,19 @@
     using ChatAppClone.Core.Contracts;
     using ChatAppClone.Models.ViewModels.Users;
 
-    using ChatAppClone.Utilities.Contracts;
     using ChatAppClone.Common.Pages;
+    using ChatAppClone.Common.Constants;
 
     public class UserController : BaseController
     {
+        private readonly ILogger<UserController> logger;
+
         private readonly IUserService userService;
 
-        public UserController(ICloudinaryService _cloudinaryService, IUserService _userService)
+        public UserController(ILogger<UserController> _logger, IUserService _userService)
         {
+            this.logger = _logger;
+
             this.userService = _userService;
         }
 
@@ -29,6 +33,8 @@
 
             model.Users = await this.userService.GetAsync(currUserId, model);
             model.TotalUsersCount = await this.userService.GetCountAsync(model.SearchTerm);
+
+            this.logger.LogInformation(GeneralConstants.ExploreUsersSuccessful);
 
             return this.View(model);
         }

@@ -10,9 +10,12 @@
     using ChatAppClone.Models.ViewModels.Messages;
 
     using ChatAppClone.Common.Messages;
+    using ChatAppClone.Common.Constants;
 
     public class MessageApiController : ApiController
     {
+        private readonly ILogger<MessageApiController> logger;
+
         private readonly IHubContext<ChatHub> chatHub;
 
         private readonly IChatService chatService;
@@ -20,16 +23,18 @@
         private readonly IMessageService messageService;
 
         public MessageApiController(
-            IHubContext<ChatHub> hubContext, 
+            IHubContext<ChatHub> _chatHub, 
+            ILogger<MessageApiController> _logger,
             IChatService _chatService, 
             IUserService _userService,
             IMessageService _messageService
             )
         {
-            chatHub = hubContext;
-            chatService = _chatService;
-            userService = _userService;
-            messageService = _messageService;
+            this.chatHub = _chatHub;
+            this.logger = _logger;
+            this.chatService = _chatService;
+            this.userService = _userService;
+            this.messageService = _messageService;
         }
 
         [HttpPost("Create")]
@@ -42,7 +47,7 @@
                 return this.Unauthorized(UserMessages.InvalidUserId);
             }
             
-            if (!await chatService.IsValidAsync(request.ChatId!.Value))
+            if (!await this.chatService.IsValidAsync(request.ChatId!.Value))
             {
                 return this.BadRequest(ChatMessages.InvalidChatId);
             }
@@ -56,6 +61,8 @@
                 content = model.Content,
                 createdOn = model.CreatedOn
             });
+
+            this.logger.LogInformation(GeneralConstants.CreateMessageSuccessful);
             
             return this.Ok(model);
         }

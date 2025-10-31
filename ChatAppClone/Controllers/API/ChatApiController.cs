@@ -7,9 +7,12 @@
     using ChatAppClone.Core.Contracts;
 
     using ChatAppClone.Common.Messages;
+    using ChatAppClone.Common.Constants;
 
     public class ChatApiController : ApiController
     {
+        private readonly ILogger<ChatApiController> logger;
+
         private readonly IHubContext<ChatHub> chatHub;
         private readonly IHubContext<NotificationHub> notificationHub;
 
@@ -18,6 +21,7 @@
         private readonly INotificationService notificationService;
 
         public ChatApiController(
+            ILogger<ChatApiController> _logger,
             IHubContext<ChatHub> _chatHub,
             IHubContext<NotificationHub> _hubContext,
             IUserService _userService,
@@ -25,8 +29,11 @@
             INotificationService _notificationService
             )
         {
+            this.logger = _logger;
+
             this.chatHub = _chatHub;
             this.notificationHub = _hubContext;
+
             this.userService = _userService;
             this.chatService = _chatService;
             this.notificationService = _notificationService;
@@ -39,7 +46,6 @@
             {
                 return this.BadRequest(ChatMessages.InvalidChatId);
             }
-
             
             var participants = await this.userService.GetByChatAsync(chatId.Value);
 
@@ -56,6 +62,8 @@
                 await this.notificationHub.Clients.User(participant.Id)
                     .SendAsync(NotificationMessages.ReceiveNotification, string.Format(ChatMessages.ChatWasDeleted, deleted.Name));
             }
+
+            this.logger.LogInformation(GeneralConstants.DeleteChatSuccessful);
 
             return this.Ok();
         }

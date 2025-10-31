@@ -7,14 +7,15 @@
 
     using ChatAppClone.Models;
     using ChatAppClone.Common.Pages;
+    using ChatAppClone.Common.Constants;
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> _logger)
         {
-            _logger = logger;
+            this.logger = _logger;
         }
 
         public IActionResult Index()
@@ -35,6 +36,9 @@
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int statusCode)
         {
+            this.logger
+                .LogInformation(string.Format(GeneralConstants.EnterErrorPage, statusCode));
+
             if (statusCode == 400)
             {
                 return this.View(GeneralPages.Error400);
@@ -60,7 +64,7 @@
                 return this.View(GeneralPages.Error500);
             }
 
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

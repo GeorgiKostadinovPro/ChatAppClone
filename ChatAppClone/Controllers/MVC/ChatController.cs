@@ -10,9 +10,12 @@
 
     using ChatAppClone.Common.Messages;
     using ChatAppClone.Common.Pages;
+    using ChatAppClone.Common.Constants;
 
     public class ChatController : BaseController
     {
+        private readonly ILogger<ChatController> logger;
+
         private readonly IHubContext<ChatHub> chatHub;
         private readonly IHubContext<NotificationHub> notificationHub;
 
@@ -21,6 +24,7 @@
         private readonly INotificationService notificationService;
 
         public ChatController(
+            ILogger<ChatController> _logger,
             IHubContext<ChatHub> _chatHub,
             IHubContext<NotificationHub> _hubContext,
             IUserService _userService,
@@ -28,6 +32,8 @@
             INotificationService _notificationService
             )
         {
+            this.logger = _logger;
+
             this.chatHub = _chatHub;
             this.notificationHub = _hubContext;
             this.userService = _userService;
@@ -67,6 +73,8 @@
                 lastMessage = chat.LastMessage,
                 participantIds = chat.Participants.Select(p => p.Id).ToArray()
             });
+
+            this.logger.LogInformation(GeneralConstants.StartChatSuccessful);
             
             return this.RedirectToAction(ChatPages.Chats);
         }
@@ -87,6 +95,8 @@
             {
                 Chats = chats
             };
+
+            this.logger.LogInformation(GeneralConstants.LoadingChatsSuccessful);
             
             return this.View(model);
         }
@@ -109,7 +119,9 @@
             ViewBag.CurrentUserId = currUserId;
             
             var chatModel = await this.chatService.GetByIdAsync(chatId.Value);
-            
+
+            this.logger.LogInformation(GeneralConstants.LoadingChatSuccessful);
+
             return this.PartialView("_ChatDetailsPartial", chatModel);
         }
     }

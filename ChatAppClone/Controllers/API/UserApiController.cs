@@ -15,14 +15,21 @@
 
     public class UserApiController : ApiController
     {
+        private readonly ILogger<UserApiController> logger;
+
         private readonly ICloudinaryService cloudinaryService;
 
         private readonly IUserService userService;
 
-        public UserApiController(ICloudinaryService _cloudinaryService, IUserService _userService)
+        public UserApiController(
+            ILogger<UserApiController> _logger, 
+            ICloudinaryService _cloudinaryService, 
+            IUserService _userService
+            )
         {
-            this.cloudinaryService = _cloudinaryService;
+            this.logger = _logger;
 
+            this.cloudinaryService = _cloudinaryService;
             this.userService = _userService;
         }
 
@@ -53,6 +60,8 @@
 
             await this.userService.SetProfilePictureAsync(currUserId, result.SecureUrl.ToString(), result.PublicId);
 
+            this.logger.LogInformation(GeneralConstants.UploadProfilePictureSuccessful);
+
             return this.Ok(new { success = true });
         }
 
@@ -71,7 +80,9 @@
             await this.cloudinaryService.DeletePictureAsync(user.ProfilePicturePublicId!);
             
             await this.userService.DeleteProfilePictureAsync(currUserId);
-            
+
+            this.logger.LogInformation(GeneralConstants.DeleteProfilePictureSuccessful);
+
             return this.Ok(new { success = true });
         }
     }

@@ -13,7 +13,7 @@ using ChatAppClone.Common.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Register Host Logger Serilog to be the main logging provider
+// Register Logger Serilog as Host to be the main logging provider
 string currentDirectory = Environment.CurrentDirectory;
 string logFolderPath = Path.Combine(currentDirectory, GeneralConstants.LogsFolder);
 Directory.CreateDirectory(logFolderPath);
@@ -24,7 +24,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .CreateLogger();
 
-// Register Serilog as the app logger
+// Register Serilog as the app host-level logger
 builder.Host.UseSerilog();
 
 // Register DB Context and SQL Server
@@ -93,4 +93,18 @@ app.MapRazorPages();
 app.MapHub<NotificationHub>("/notificationHub");
 app.MapHub<ChatHub>("/chatHub");
 
-app.Run();
+// Capture Unhandled Exceptions Globally
+try
+{
+    Log.Information(GeneralConstants.StartingApplication);
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, GeneralConstants.TerminatingApplication);
+}
+finally
+{
+    Log.CloseAndFlush();
+}

@@ -6,6 +6,10 @@
         public const string LogsFolder = "Logs";
         public const string LogFile = "logFile.txt";
 
+        // Global Exception Handling
+        public const string StartingApplication = "Starting ChatAppClone...";
+        public const string TerminatingApplication = "Application terminated unexpectedly";
+
         // Home Logging
         public const string EnterErrorPage = "Entered error page {0}.";
 

@@ -1,12 +1,14 @@
 # ChatAppClone
-<p>ChatAppClone is a simple real-time chat platform built with .NET Core 8.0, EF Core and SignalR.</p>
+<p>A simple real-time chat platform for instant communication where users can chat, manage their chats,
+user profiles and notifications.</p>
 <p>To use the application you may register with valid email and confirm your account.</p>
 <p>Implemented: </p>
 <ul>
    <li>Full Authentication Flow via Microsoft Identity.</li>
    <li>Full User Profile Management.</li>
-   <li>Email Service & Cloud Service for Data Storage.</li>
    <li>Custom Middlewares for Exception Handling.</li>
+   <li>Custom Host-Level Logger via Serilog.</li>
+   <li>Email Service & Cloud Service for Data Storage.</li>
    <li>Real-time Chat & Notifications via SignalR.</li>
    <li>Unit Testing using In-Memory Database + Mocking Techniques.</li>
 </ul>
